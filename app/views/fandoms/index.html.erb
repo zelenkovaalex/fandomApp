@@ -1,0 +1,16 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Fandoms" %>
+
+<h1>Fandoms</h1>
+
+<div id="fandoms">
+  <% @fandoms.each do |fandom| %>
+    <%= render fandom %>
+    <p>
+      <%= link_to "Show this fandom", fandom %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New fandom", new_fandom_path %>
