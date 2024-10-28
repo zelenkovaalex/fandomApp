@@ -1,10 +1,14 @@
-<div id="<%= dom_id trail %>">
+<% @trails.each do |trail| %>
+  <div id="<%= dom_id trail %>">
+    <h2><%= trail.title %></h2>
+    <p><strong>Фандом:</strong> <%= trail.fandom.name %></p>
+    <p><strong>Время создания:</strong> <%= trail.trail_time %></p>
+    <p><strong>Уровень:</strong> <%= trail.trail_level %></p>
+    <p><strong>Содержание:</strong> <%= trail.body %></p>
 
-  <h2><%= @trail.title %></h2>
-  <p><strong>Фандом:</strong> <%= @trail.fandom.name %></p>
-  <p><strong>Trail time:</strong> <%= @trail.trail_time %></p>
-  <p><strong>Trail level:</strong> <%= @trail.trail_level %></p>
-  <p><%= @trail.body %></p>
-  
-</div>
-
+    <h3>Комментарии:</h3>
+    <% trail.comments.each do |comment| %>
+      <p><%= comment.body %></p>
+    <% end %>
+  </div>
+<% end %>

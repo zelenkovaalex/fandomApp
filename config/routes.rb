@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :fandoms
   resources :trails do
-     get 'show', on: :member
+    get 'show', on: :member
+    resources :comments
   end
   resources :welcomes
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

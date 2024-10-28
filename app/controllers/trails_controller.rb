@@ -1,13 +1,17 @@
 class TrailsController < ApplicationController
   before_action :set_trail, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
 
   # GET /trails or /trails.json
   def index
     @trails = Trail.all
+    @trails = current_user.trails
   end
 
   # GET /trails/1 or /trails/1.json
   def show
+    @trail = Trail.find(params[:id])
+    @trails = Trail.all
     set_trail
   end
 
@@ -22,7 +26,8 @@ class TrailsController < ApplicationController
 
   # POST /trails or /trails.json
   def create
-    @trail = Trail.new(trail_params)
+    # trail_params.merge(trail: {user_id: current_user.id})
+    @trail = current_user.trails.new(trail_params)
 
     respond_to do |format|
       if @trail.save

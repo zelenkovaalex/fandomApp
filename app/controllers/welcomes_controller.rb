@@ -1,5 +1,6 @@
 class WelcomesController < ApplicationController
   before_action :set_welcome, only: %i[ show edit update destroy ]
+  # before_action :authenticate_user!
 
   # GET /welcomes or /welcomes.json
   def index

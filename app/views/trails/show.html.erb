@@ -9,3 +9,16 @@
   <%= button_to "Destroy this trail", @trail, method: :delete %>
 
 </div>
+
+<p>Add a comment:</p>
+
+<%= form_for([@trail, @trail.comments.build]) do |form| %>
+  <div>
+    <%= form.label :body, style: "display: block" %>
+    <%= form.text_area :body %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
