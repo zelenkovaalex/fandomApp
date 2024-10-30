@@ -6,12 +6,11 @@
       <%= render partial: "trail", locals: { trail: trail } %>
     <% end %>
 
+    
+  </div>
+
     <% if can? :create, Trail %>
       <%= link_to 'New Trail', new_admin_trail_path %>
     <% end %>
-
-    <div id="projects">
-      <%= render collection: @projects, partial: "projects/project" %>
-    </div>
-  </div>
+    
 </body>

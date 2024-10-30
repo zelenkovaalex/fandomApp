@@ -7,7 +7,7 @@
     <div class='butts'>
       <%= link_to 'посмотреть', trail_path(trail) %>
       <%= link_to 'редактировать', edit_admin_trail_path(trail) %>
-      <%= link_to 'убить', admin_trail_path(trail), method: :delete, data: { confirm: 'Убить пересмешника?' } %>
+      <%= button_to 'удалить', trail_path(trail), method: :delete %>
     </div>
   <% else %>
     <%= link_to 'посмотреть', trail_path(trail) %>

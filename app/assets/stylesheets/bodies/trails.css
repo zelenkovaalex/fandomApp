@@ -17,7 +17,7 @@ body.trails {
 
         .trail {
             width: 16vw;
-            height: auto;
+            height: fit-content;
             padding: 1vw;
     
             background-color: var(--light-grey);

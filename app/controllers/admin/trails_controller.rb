@@ -3,7 +3,7 @@ class Admin::TrailsController < ApplicationController
 
   # GET /trails or /trails.json
   def index
-    @trails = trail.all
+    @trails = Trail.all
   end
 
   # GET /trails/1 or /trails/1.json

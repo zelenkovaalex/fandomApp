@@ -21,17 +21,13 @@ class CommentsController < ApplicationController
 
   # trail /comments or /comments.json
   def create
-    @comment = current_user.comments.new(comment_params)
-    @trail = trail.find(params[:trail_id])
-
-    respond_to do |format|
-      if @comment.save
-        format.html { redirect_to @comment.trail, notice: "Comment was successfully created." }
-        format.json { render :show, status: :created, location: @comment }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
-      end
+    @trail = Trail.find(params[:trail_id])
+    @comment = @trail.comments.new(comment_params)
+    @comment.user = current_user
+    if @comment.save
+      redirect_to trail_path(@trail)
+    else
+      render 'trails/show'
     end
   end
 
@@ -65,7 +61,9 @@ class CommentsController < ApplicationController
     end
 
     # Only allow a list of trusted parameters through.
+  private
+
     def comment_params
-      params.require(:comment).permit(:body).merge(trail_id: params[:trail_id])
+      params.require(:comment).permit(:body)
     end
 end

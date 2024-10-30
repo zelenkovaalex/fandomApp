@@ -10,22 +10,10 @@
 
       <% if user_signed_in? && current_user.admin? %>
         <%= link_to "редактировать", edit_admin_trail_path(@trail) %> |
-        <%= link_to "убить", trail_path(@trail), method: :delete, data: { confirm: 'убить пересмешника?' } %>
+        <%= button_to 'удалить', @trail, method: :delete %>
       <% end %>
   </div>
 
-
-  <div class='comment'>
-    <p>добавить комментарий</p>
-
-    <%= form_for([@trail, @trail.comments.build]) do |form| %>
-      <div class='boobs'>
-        <%= form.text_area :body %>
-        <%= form.submit "опубликовать", class: 'submit'%>
-      </div>
-    <% end %>
-
-  </div>
 
   <%= link_to "вернуться", trails_path, class: 'back' %>
 

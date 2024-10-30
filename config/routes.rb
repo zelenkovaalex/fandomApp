@@ -3,12 +3,12 @@ Rails.application.routes.draw do
   
 
   resources :trails, only: [:index, :show] do
-    resource :comments, only: [:create] 
+    resource :comments
   end
   
   resources :welcomes
   resources :subscriptions, only: [:create]
-  resources :comments, only: [:show]
+  resources :comments, only: [:create]
 
   namespace :admin do
     resources :fandoms
