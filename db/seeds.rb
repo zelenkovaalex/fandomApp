@@ -1,72 +1,95 @@
+@allFandoms = [
+    { id: 1, name: 'Атлантида' }, { id: 2, name: 'Шерлок' }, { id: 3, name: 'Star Wars' }, { id: 4, name: 'My Little Pony' }, { id: 5, name: 'Доктор Кто' },
+    { id: 6, name: 'Ван Пис' }, { id: 7, name: 'Голодные игры' }, { id: 8, name: '1984' }, { id: 9, name: 'Игра Престолов' }, { id: 10, name: 'Хроники Нарнии' },
+    { id: 11, name: 'Звёздный десант' }, { id: 12, name: 'Атака Титанов' }, { id: 13, name: 'DC Comics' }, { id: 14, name: 'Властелин Колец' }, { id: 15, name: 'Marvel' },
+    { id: 16, name: 'Баскетбол Куроко' }, { id: 17, name: 'Мы' }, { id: 1, name: 'Гарри Поттер' }, { id: 18, name: 'Наруто' }, { id: 19, name: 'Сумерки' },
+    { id: 20, name: 'Клуб романтики' }, { id: 21, name: 'Космическая Одиссея' }, { id: 22, name: 'Однажды в сказке' }, { id: 23, name: 'Великолепный век' }
+]
+
 def reset_db
   Rake::Task['db:drop'].invoke
   Rake::Task['db:create'].invoke
   Rake::Task['db:migrate'].invoke
 end
 
-def seed 
+def seed
   reset_db
-  create_users(10)
+  create_users(6)
+  create_fandom
+  create_trail(2...5)
+  # create_trails_and_comments
 end
 
-Fandom.create([
-    { name: 'Атлантида' }, { name: 'Шерлок' }, { name: 'Star Wars' }, { name: 'My Little Pony' }, { name: 'Доктор Кто' }, 
-    { name: 'Ван Пис' }, { name: 'Голодные игры' }, { name: '1984' }, { name: 'Игра Престолов' }, { name: 'Хроники Нарнии' },  
-    { name: 'Звёздный десант' }, { name: 'Атака Титанов' }, { name: 'DC Comics' }, { name: 'Властелин Колец' }, { name: 'Marvel' }, 
-    { name: 'Баскетол Куроко' }, { name: 'Мы' }, { name: 'Гарри Поттер' }, { name: 'Наруто' }, { name: 'Сумерки' }, 
-    { name: 'Клуб романтики' }, { name: 'Космическая Одиссея' }, { name: 'Однажды в сказке' }, { name: 'Великолепный век' }
-])  
+def create_users(quantity)
+  i = 0
 
+  quantity.times do
+    user_data = {
+      email: "user#{i}@email.com",
+      password: "password"
+    }
 
-# Удаляем существующие посты (если есть)
-Trail.destroy_all
-Comment.destroy_all
+    if i == 0
+      user_data[:admin] = true
+    end
 
-# Получаем список всех фандомов
-fandoms = Fandom.all
+    user = User.create!(user_data)
+    puts "User created with id #{user.id}"
 
-# Создаем пользователей
-users = []
-5.times do |i|
-  users << User.create!(
-    name: "Пользователь #{i + 1}",
-    email: "user#{i + 1}@example.com",
-    password: "password"
-  )
-end
-
-# Создаем посты
-def create_trail(fandom, user)
-  Trail.create!(
-    title: "Пост о #{fandom.name}", # Заголовок с названием фандома
-    user: user,
-    fandom: fandom, # Передаем объект фандома, а не его имя
-    trail_time: Time.now.strftime('%H:%M'), # Текущее время
-    trail_level: rand(1..5), # Случайный уровень поста
-    body: "рандомный текст"
-  )
-end
-
-users = User.all
-
-10.times do |i|
-  create_trail(fandoms.sample, users.sample)
-end
-
-# Создаем комментарии к постам
-def create_comment(trail)
-  Comment.create!(
-    trail_id: trail.id,
-    body: "еще более рандомный текст"
-  )
-end
-
-Trail.all.each do |trail|
-  rand(1..5).times do
-    create_comment(trail)
+    i += 1
   end
 end
 
-# Выводим информацию о созданных постах
-puts "Создано #{Trail.count} постов"
-puts "Создано #{Comment.count} комментариев"
+def get_random_bool
+  [true, false].sample
+end
+
+def get_random_time
+  (30...90).to_a.sample
+end
+
+def get_random_level
+  (1...10).to_a.sample
+end
+
+def create_trail(quantity)
+  Fandom.all.each do |fandom|
+    rand(quantity).times do 
+      if fandom.present?
+        user = User.all.sample
+        trail = fandom.trails.create!(title: "trail_name", fandom: fandom, user: user, trail_time: get_random_time, trail_level: get_random_level, body: "рандомный текст", public: get_random_bool)
+        puts "Trail with title #{trail.title} for fandom #{trail.fandom.name} just created"
+      end
+    end
+  end
+end
+
+def create_fandom
+  @allFandoms.each do
+    fandom = Fandom.create!(name: @allFandoms.sample[:name], description: "рандомный текст")
+    puts "Fandom with name #{fandom.name} just created"
+  end
+end
+
+# def create_trails_and_comments
+#   users = User.all
+#   fandoms = Fandom.all
+
+#   # Создаем посты (trails)
+#   10.times do |i|
+#     create_trail(fandoms.sample, users.sample)
+#   end
+
+#   # Создаем комментарии к постам
+#   Trail.all.each do |trail|
+#     rand(1..5).times do
+#       Comment.create!(
+#         trail_id: trail.id,
+#         body: "еще более рандомный текст"
+#       )
+#     end
+#   end
+# end
+
+
+seed

@@ -1,0 +1,11 @@
+<%= form_with(model: Subscription.build) do |form| %>
+  <div class='mailer'>
+    <div>
+      <%= form.email_field :email, class: 'email' %>
+    </div>
+
+    <div>
+      <%= form.submit "отправить", class: 'submit' %>
+    </div>
+  </div>
+<% end %>

@@ -1,4 +1,4 @@
-class FandomsController < ApplicationController
+class Admin::FandomsController < ApplicationController
   before_action :set_fandom, only: %i[ show edit update destroy ]
 
   # GET /fandoms or /fandoms.json

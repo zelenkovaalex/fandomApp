@@ -1,11 +1,23 @@
 Rails.application.routes.draw do
-  devise_for :users
-  resources :fandoms
-  resources :trails do
-    get 'show', on: :member
-    resources :comments
+  devise_for :users 
+  
+
+  resources :trails, only: [:index, :show] do
+    resource :comments
   end
+  
   resources :welcomes
+  resources :subscriptions, only: [:create]
+  resources :comments, only: [:create]
+
+  namespace :admin do
+    resources :fandoms
+    resources :trails do
+      delete :destroy, on: :member
+    end
+    resources :subscriptions
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

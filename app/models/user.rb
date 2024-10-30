@@ -4,7 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :trails
-
-  attr_accessor :name
+  has_many :trails 
+  has_many :comments, dependent: :destroy
+  
+  # attr_accessor :name
 end

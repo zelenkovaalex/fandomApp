@@ -6,6 +6,13 @@ class WelcomesController < ApplicationController
   def index
     @welcomes = Welcome.all
     @fandoms = Fandom.all
+    @allFandoms = [
+      { name: 'Атлантида' }, { name: 'Шерлок' }, { name: 'Star Wars' }, { name: 'My Little Pony' }, { name: 'Доктор Кто' },
+      { name: 'Ван Пис' }, { name: 'Голодные игры' }, { name: '1984' }, { name: 'Игра Престолов' }, { name: 'Хроники Нарнии' },
+      { name: 'Звёздный десант' }, { name: 'Атака Титанов' }, { name: 'DC Comics' }, { name: 'Властелин Колец' }, { name: 'Marvel' },
+      { name: 'Баскетбол Куроко' }, { name: 'Мы' }, { name: 'Гарри Поттер' }, { name: 'Наруто' }, { name: 'Сумерки' },
+      { name: 'Клуб романтики' }, { name: 'Космическая Одиссея' }, { name: 'Однажды в сказке' }, { name: 'Великолепный век' }
+    ]
   end
 
   # GET /welcomes/1 or /welcomes/1.json
@@ -20,6 +27,7 @@ class WelcomesController < ApplicationController
   # GET /welcomes/1/edit
   def edit
   end
+
 
   # POST /welcomes or /welcomes.json
   def create

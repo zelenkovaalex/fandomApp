@@ -1,14 +1,15 @@
-<% @trails.each do |trail| %>
-  <div id="<%= dom_id trail %>">
-    <h2><%= trail.title %></h2>
-    <p><strong>Фандом:</strong> <%= trail.fandom.name %></p>
-    <p><strong>Время создания:</strong> <%= trail.trail_time %></p>
-    <p><strong>Уровень:</strong> <%= trail.trail_level %></p>
-    <p><strong>Содержание:</strong> <%= trail.body %></p>
+<div class="trail">
+  <h2><%= trail.title %></h2>
+  <h3><%= trail.fandom.name %></h3>
+  <p><%= trail.body %></p>
 
-    <h3>Комментарии:</h3>
-    <% trail.comments.each do |comment| %>
-      <p><%= comment.body %></p>
-    <% end %>
-  </div>
-<% end %>
+  <% if user_signed_in? && current_user.admin? %>
+    <div class='butts'>
+      <%= link_to 'посмотреть', trail_path(trail) %>
+      <%= link_to 'редактировать', edit_admin_trail_path(trail) %>
+      <%#= button_to 'удалить', trail_path(trail.id), method: :delete %>
+    </div>
+  <% else %>
+    <%= link_to 'посмотреть', trail_path(trail) %>
+  <% end %>
+</div>
