@@ -1,20 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<body class='trails'>
+  <h1>Маршруты</h1>
 
+  <div class='briks'>
+    <% @trails.each do |trail| %>
+      <%= render partial: "trail", locals: { trail: trail } %>
+    <% end %>
 
-<% content_for :title, "Trails" %>
+    <% if can? :create, Trail %>
+      <%= link_to 'New Trail', new_admin_trail_path %>
+    <% end %>
 
-<h1>Маршруты</h1>
-
-<div id="trails">
-  <% @trails.each do |trail| %>
-    <%= render trail %>
-    <p>
-      <%= link_to "Show this trail", trail %>
-    </p>
-  <% end %>
-</div>
-
-<%= link_to "New trail", new_trail_path %>
-
-
-
+    <div id="projects">
+      <%= render collection: @projects, partial: "projects/project" %>
+    </div>
+  </div>
+</body>

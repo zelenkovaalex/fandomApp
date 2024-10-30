@@ -1,0 +1,10 @@
+:root {
+    --white: #FDFDFD;
+    --black: #000000;
+    --dark-grey: #6A6A6A;
+    --grey: #9C9C9C;
+    --light-grey: #E3E3E3;
+    --yellow: #FEFE34;
+    --gridHeight: calc(100vw / 16 * 8.5);
+    --transitionTiming: 0.3s;
+}

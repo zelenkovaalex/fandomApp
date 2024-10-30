@@ -1,24 +1,32 @@
-<p style="color: green"><%= notice %></p>
+<body class='show'>
+  <p style="color: green"><%= notice %></p>
 
-<%= render @trail %>
+  <div class='info'>
+    <h2><%= @trail.title %></h2>
+    <h3><%= @trail.fandom.name %></h3>
+    <p><%= @trail.body %></p>
 
-<div>
-  <%= link_to "Edit this trail", edit_trail_path(@trail) %> |
-  <%= link_to "Back to trails", trails_path %>
+    <br>
 
-  <%= button_to "Destroy this trail", @trail, method: :delete %>
-
-</div>
-
-<p>Add a comment:</p>
-
-<%= form_for([@trail, @trail.comments.build]) do |form| %>
-  <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.text_area :body %>
+      <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "редактировать", edit_admin_trail_path(@trail) %> |
+        <%= link_to "убить", trail_path(@trail), method: :delete, data: { confirm: 'убить пересмешника?' } %>
+      <% end %>
   </div>
 
-  <div>
-    <%= form.submit %>
+
+  <div class='comment'>
+    <p>добавить комментарий</p>
+
+    <%= form_for([@trail, @trail.comments.build]) do |form| %>
+      <div class='boobs'>
+        <%= form.text_area :body %>
+        <%= form.submit "опубликовать", class: 'submit'%>
+      </div>
+    <% end %>
+
   </div>
-<% end %>
+
+  <%= link_to "вернуться", trails_path, class: 'back' %>
+
+</body>
