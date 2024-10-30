@@ -12,7 +12,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :fandoms
-    resources :trails 
+    resources :trails do
+      delete :destroy, on: :member
+    end
     resources :subscriptions
   end
 
