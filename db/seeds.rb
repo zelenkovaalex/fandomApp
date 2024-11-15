@@ -71,25 +71,4 @@ def create_fandom
   end
 end
 
-# def create_trails_and_comments
-#   users = User.all
-#   fandoms = Fandom.all
-
-#   # Создаем посты (trails)
-#   10.times do |i|
-#     create_trail(fandoms.sample, users.sample)
-#   end
-
-#   # Создаем комментарии к постам
-#   Trail.all.each do |trail|
-#     rand(1..5).times do
-#       Comment.create!(
-#         trail_id: trail.id,
-#         body: "еще более рандомный текст"
-#       )
-#     end
-#   end
-# end
-
-
 seed
