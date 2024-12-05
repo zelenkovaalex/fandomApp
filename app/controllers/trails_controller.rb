@@ -16,4 +16,5 @@ class TrailsController < ApplicationController
 
         @comment = @trail.comments.build
     end
+
 end

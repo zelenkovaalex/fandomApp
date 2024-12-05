@@ -53,13 +53,32 @@ def get_random_level
 end
 
 def create_trail(quantity)
+  
   Fandom.all.each do |fandom|
     rand(quantity).times do 
       if fandom.present?
         user = User.all.sample
-        trail = fandom.trails.create!(title: "trail_name", fandom: fandom, user: user, trail_time: get_random_time, trail_level: get_random_level, body: "рандомный текст", public: get_random_bool)
+
+        trail = fandom.trails.create!(
+          title: "trail_name", 
+          fandom: fandom, 
+          user: user, 
+          trail_time: get_random_time, 
+          trail_level: get_random_level, 
+          body: "рандомный текст", 
+          public: get_random_bool)
+          
         puts "Trail with title #{trail.title} for fandom #{trail.fandom.name} just created"
       end
+    end
+  end
+end
+
+def create_comments(quantity)
+  Trail.all.esch do |trail|
+    rand(quantity).times do
+      comment = Comment.create(trail_id: trail.id, body: create_sentence)
+      puts "Comment with id #{comment.id} for  with id #{comment.trail.id} just created"
     end
   end
 end

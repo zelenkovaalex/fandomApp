@@ -4,8 +4,11 @@ source "https://rubygems.org"
 gem "rails", "~> 7.2.1", ">= 7.2.1.2"
 
 gem "carrierwave", '~> 2.0'
-
 gem "devise"
+gem "sassc"
+gem "meta-tags"
+gem "acts-as-taggable-on"
+gem "rack-cors"
 
 gem "cancancan"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]

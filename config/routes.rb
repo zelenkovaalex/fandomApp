@@ -1,9 +1,21 @@
 Rails.application.routes.draw do
+  get "like/toggle"
+
+  resources :profiles
+
   devise_for :users 
   
+  namespace :api, format: 'json' do
+    namespace :v1 do
+      resources :trails, only: [:index, :show]
+      get "welcome/index"
+    end
+  end
 
   resources :trails, only: [:index, :show] do
     resource :comments
+
+    get "/by_tag/:tag", to: "trails#by_tag", on: :collection, as: "tagged"
   end
   
   resources :welcomes

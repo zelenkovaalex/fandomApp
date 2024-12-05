@@ -7,4 +7,10 @@ class Trail < ApplicationRecord
     validates :body, presence: true, length: { minimum: 10 }
     
     has_many :comments, dependent: :destroy
+    has_many :likes, as: :likeable
+
+    acts_as_taggable_on :tags
+    acts_as_taggable_on :categories
+
+    default_scope { order(created_at: "DESC") }
 end

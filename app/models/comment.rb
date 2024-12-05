@@ -4,5 +4,5 @@ class Comment < ApplicationRecord
 
   # after_create_commit { broadcast_prepend_to('comments') }
 
-  # default_scope { order(created_at: :desc ) }
+  default_scope { order(created_at: "DESC") }
 end

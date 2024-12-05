@@ -19,28 +19,47 @@
     </div>
   <% end %>
 
+  <br>
+
   <div class="field">
-    <%= form.label :title %>
+    <label for="">Title</label>
+  <br>
     <%= form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= form.label :fandom_id %>
+    <label for="">Fandom</label>
+  <br>
     <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
   </div>
 
   <div class="field">
-    <%= form.label :trail_time %>
+  <label for="">Tags</label>
+  <br>
+  <%= form.text_area :tag_list %>
+  </div>
+
+  <div class="field">
+  <label for="">Categories</label>
+  <br>
+  <%= form.text_area :category_list %>
+  </div>
+
+  <div class="field">
+    <label for="">Trail time</label>
+  <br>
     <%= form.number_field :trail_time %>
   </div>
 
   <div class="field">
-    <%= form.label :trail_level %>
+    <label for="">Trail level</label>
+  <br>
     <%= form.number_field :trail_level %>
   </div>
 
   <div class="field">
-    <%= form.label :body %>
+    <label for="">Body</label>
+  <br>
     <%= form.text_area :body %>
   </div>
 

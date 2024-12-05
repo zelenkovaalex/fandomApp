@@ -1,12 +1,26 @@
 <body class='trails'>
-  <h1>Маршруты</h1>
+
+  <h1>
+    <%= link_to "All trails", trails_path %>
+    
+    <% Trail.tag_counts_on(:categories).each do |tag| %>
+      <%= link_to tag.name, tagged_trails_path(tag.name) %>
+    <% end %>
+  </h1> 
+
+  <h1>
+    <%= link_to "All trails", trails_path %>
+    
+    <% Trail.tag_counts_on(:tags).each do |tag| %>
+      <%= link_to tag.name, tagged_trails_path(tag.name) %>
+    <% end %>
+  </h1>
+
 
   <div class='briks'>
     <% @trails.each do |trail| %>
       <%= render partial: "trail", locals: { trail: trail } %>
     <% end %>
-
-    
   </div>
 
     <% if can? :create, Trail %>

@@ -6,6 +6,10 @@ class User < ApplicationRecord
 
   has_many :trails, dependent: :destroy
   has_many :comments, dependent: :destroy
-  
-  # attr_accessor :name
+  has_one :profile
+  has_many :likes
+
+  after_create :create_profile
+
 end
+ 

@@ -6,6 +6,13 @@ class Admin::TrailsController < ApplicationController
     @trails = Trail.all
   end
 
+
+  def by_tag
+      @trails = Trail.tagged_with(params[:tag])
+
+      render :index
+  end
+
   # GET /trails/1 or /trails/1.json
   def show
   end
@@ -65,6 +72,6 @@ class Admin::TrailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def trail_params
-      params.require(:trail).permit(:title, :fandom_id, :trail_time, :trail_level, :body)
+      params.require(:trail).permit(:title, :fandom_id, :trail_time, :trail_level, :body, :tag_list, :category_list)
     end
 end
