@@ -1,0 +1,41 @@
+<div> 
+  <body class='trails'>
+
+    <h1>
+      <%= link_to "All trails", trails_path %>
+      
+      <% Trail.tag_counts_on(:categories).each do |tag| %>
+        <%= link_to tag.name, tagged_trails_path(tag.name) %>
+      <% end %>
+    </h1> 
+
+    <h1>
+      <%= link_to "All trails", trails_path %>
+      
+      <% Trail.tag_counts_on(:tags).each do |tag| %>
+        <%= link_to tag.name, tagged_trails_path(tag.name) %>
+      <% end %>
+    </h1>
+
+
+    <div class='briks'>
+      <% @trails.each do |trail| %>
+        <%= render partial: "trail", locals: { trail: trail } %>
+      <% end %>
+    </div>
+
+    <% if can? :create, Trail %>
+      <%= link_to 'New Trail', new_admin_trail_path %>
+    <% end %>
+      
+  </body>
+  <div id="fandoms">
+      <% @allFandoms.each do |fandom| %>
+          <li><%= fandom[:name] %></li>
+      <p>
+        <%= link_to "Show this fandom", fandom %>
+      </p>
+      <% end %>
+    <%= link_to "New fandom", new_admin_fandom_path %>
+  </div>
+</div>

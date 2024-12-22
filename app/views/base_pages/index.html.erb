@@ -36,11 +36,11 @@
       <% @allFandoms.each do |fandom| %>
         <% yellow_background_fandoms = ["Шерлок", "My Little Pony", "Ван Пис", "Игра Престолов", "Звёздный десант", "Властелин Колец", "Баскетол Куроко", "Наруто", "Клуб романтики", "Великолепный век"] %>
         <% grey_background_fandoms = ["Атлантида", "1984", "Хроники Нарнии", "DC Comics", "Marvel", "Гарри Поттер", "Однажды в сказке"] %>
-        <div class="fandom-block 
-          <%= 'yellow' if yellow_background_fandoms.include?(fandom[:name]) %>
-          <%= 'grey' if grey_background_fandoms.include?(fandom[:name]) %>
-          <%= 'white' unless yellow_background_fandoms.include?(fandom[:name]) || grey_background_fandoms.include?(fandom[:name]) %>">
-          <%= fandom[:name] %>
+        <div class="fandom-block
+          <%= 'yellow' if yellow_background_fandoms.include?(fandom) %>
+          <%= 'grey' if grey_background_fandoms.include?(fandom) %>
+          <%= 'white' unless yellow_background_fandoms.include?(fandom) || grey_background_fandoms.include?(fandom) %>">
+          <%= fandom %>
         </div>
       <% end %>
     </div>

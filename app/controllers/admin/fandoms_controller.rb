@@ -1,9 +1,11 @@
 class Admin::FandomsController < ApplicationController
-  before_action :set_fandom, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_fandom, only: [:update, :destroy, :edit, :new]
 
   # GET /fandoms or /fandoms.json
   def index
     @fandoms = Fandom.all
+    @trails = Trail.all
   end
 
   # GET /fandoms/1 or /fandoms/1.json

@@ -10,13 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_04_183133) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_22_174448) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
+    t.integer "user_id", null: false
     t.integer "trail_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "comment_id"
     t.index ["trail_id"], name: "index_comments_on_trail_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "fandoms", force: :cascade do |t|
@@ -24,6 +27,15 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_183133) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "favourites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "trail_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trail_id"], name: "index_favourites_on_trail_id"
+    t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -41,12 +53,24 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_183133) do
     t.string "avatar"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "city"
+    t.string "nickname"
+    t.integer "fandom_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tag_selecteds", force: :cascade do |t|
+    t.integer "trail_id", null: false
+    t.integer "tag_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["tag_id"], name: "index_tag_selecteds_on_tag_id"
+    t.index ["trail_id"], name: "index_tag_selecteds_on_trail_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -112,5 +136,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_04_183133) do
   end
 
   add_foreign_key "comments", "trails"
+  add_foreign_key "comments", "users"
+  add_foreign_key "favourites", "trails"
+  add_foreign_key "favourites", "users"
+  add_foreign_key "tag_selecteds", "tags"
+  add_foreign_key "tag_selecteds", "trails"
   add_foreign_key "taggings", "tags"
 end

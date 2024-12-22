@@ -1,5 +1,10 @@
 class SubscriptionsController < ApplicationController
+  before_action :authenticate_user!
 #   load_and_authorize_resource
+
+  def new
+    @subscription = Subscription.new
+  end
 
   def create
     @subscription = Subscription.new(subscription_params)

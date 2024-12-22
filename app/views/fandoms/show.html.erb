@@ -1,0 +1,20 @@
+<p style="color: green"><%= notice %></p>
+
+  <div class='info'>
+    <h2><%= @fandom.name %></h2>
+    <p><%= @fandom.description %></p>
+
+    <br>
+
+      <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "редактировать", edit_admin_fandom_path(@fandom) %> |
+        <%#= button_to 'удалить', @fandom, method: :delete %>
+      <% end %>
+  </div>
+
+  <div>
+  <%= link_to "Edit this fandom", edit_admin_fandom_path(@fandom) %> |
+  <%= link_to "Back to fandoms", fandoms_path %>
+
+  <%= button_to "Destroy this fandom", @fandom, method: :delete %>
+</div>

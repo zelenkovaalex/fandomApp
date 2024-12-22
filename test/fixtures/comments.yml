@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  body: MyText
   trail: one
+  user: one
+  body: MyString
+  answer_image: MyString
 
 two:
-  body: MyText
   trail: two
+  user: two
+  body: MyString
+  answer_image: MyString

@@ -1,5 +1,6 @@
 class Admin::TrailsController < ApplicationController
-  before_action :set_trail, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_trail, only: [:update, :destroy, :edit, :new, :show]
 
   # GET /trails or /trails.json
   def index
@@ -32,7 +33,7 @@ class Admin::TrailsController < ApplicationController
 
     respond_to do |format|
       if @trail.save
-        format.html { redirect_to @trail, notice: "trail was successfully created." }
+        format.html { redirect_to @trail, notice: "Trail was successfully created." }
         format.json { render :show, status: :created, location: @trail }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,7 +46,7 @@ class Admin::TrailsController < ApplicationController
   def update
     respond_to do |format|
       if @trail.update(trail_params)
-        format.html { redirect_to @trail, notice: "trail was successfully updated." }
+        format.html { redirect_to @trail, notice: "Trail was successfully updated." }
         format.json { render :show, status: :ok, location: @trail }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -59,7 +60,7 @@ class Admin::TrailsController < ApplicationController
     @trail.destroy!
 
     respond_to do |format|
-      format.html { redirect_to trails_path, status: :see_other, notice: "trail was successfully destroyed." }
+      format.html { redirect_to trails_path, status: :see_other, notice: "Trail was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -72,6 +73,6 @@ class Admin::TrailsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def trail_params
-      params.require(:trail).permit(:title, :fandom_id, :trail_time, :trail_level, :body, :tag_list, :category_list)
+      params.require(:trail).permit(:title, :description, :trail_image, :trail_time, :trail_level, :fandom_id)
     end
 end

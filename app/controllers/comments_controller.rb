@@ -26,9 +26,9 @@ class CommentsController < ApplicationController
     @comment = @trail.comments.new(comment_params)
     @comment.user = current_user
     if @comment.save
-      redirect_to trail_path(@trail)
+      redirect_to trail_path(@trail), notice: "Comment was successfully created."
     else
-      render 'trails/show'
+      render 'trails/show', status: :unprocessable_entity
     end
   end
 

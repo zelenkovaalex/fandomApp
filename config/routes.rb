@@ -1,46 +1,61 @@
 Rails.application.routes.draw do
   get "like/toggle"
+  get "/fandoms", to: "fandoms#index"
 
   resources :profiles
 
   devise_for :users 
   
-  namespace :api, format: 'json' do
-    namespace :v1 do
-      resources :trails, only: [:index, :show]
-      get "welcome/index"
-    end
-  end
-
-  resources :trails, only: [:index, :show] do
+  #trails
+  
+  resources :trails, only: [:index, :show, :new] do
     resource :comments
-
     get "/by_tag/:tag", to: "trails#by_tag", on: :collection, as: "tagged"
   end
-  
-  resources :welcomes
-  resources :subscriptions, only: [:create]
-  resources :comments, only: [:create]
 
+  #fandoms
+  
+  resources :fandoms, only: [:index, :show] do
+    resource :trails do
+      resources :comments, only: [:create]
+    end
+  end
+  
+  # admin
+  
   namespace :admin do
     resources :fandoms
     resources :trails
     resources :subscriptions
   end
+  
+  # api // v1
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  namespace :api, format: 'json' do
+    namespace :v1 do
+      resources :trails, only: [:index, :show]
+    end
+  end
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
 
+  
+  get "base_pages/index"
+  get "about", to: 'base_pages#about'
+  # get "community", to: 'profiles#community'
+  
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
-
-  get "welcomes/index"
-  get 'about', to: 'welcomes#about', as: :about 
+  
+  get "up" => "rails/health#show", as: :rails_health_check
 
   # Defines the root path route ("/")
-  root "welcomes#index"
+  root "base_pages#index"
 end
+
+
+
+# Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+# Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
+# Can be used by load balancers and uptime monitors to verify that the app is live.

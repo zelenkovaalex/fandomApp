@@ -1,0 +1,50 @@
+<%#
+  if current_user && current_user.admin?
+    trail_model = [:admin, trail]
+  elsif can? :edit, trail
+    trail_model = trail
+  end
+%>
+
+<%= form_with model: @trail, url: trails_path, local: true do |form| %> 
+  <% if trail.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
+
+      <ul>
+        <% trail.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <br>
+
+  <%= form.label :title %>
+  <%= form.text_field :title %>
+
+  <%= form.label :description %>
+  <%= form.text_area :description %>
+
+  <%= form.label :trail_image %>
+  <%= form.text_field :trail_image %>
+
+  <%= form.label :trail_time %>
+  <%= form.number_field :trail_time %>
+
+  <%= form.label :trail_level %>
+  <%= form.number_field :trail_level %>
+
+  <%= form.label :fandom_id %>
+  <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
+
+  <%= form.label :tag %>
+  <%= form.text_area :tag_list %>
+
+  <%= form.label :body %>
+  <%= form.text_area :body %>
+
+  <%= form.submit 'Create Trail' %>
+
+<% end %>

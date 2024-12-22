@@ -22,4 +22,14 @@
 
   <%= link_to "вернуться", trails_path, class: 'back' %>
 
+
+  <h2>Comments</h2>
+  <%= render "comments/form", comment: Comment.new %>
+
+  <% @trail.comments.each do |comment| %>
+    <p>
+      <%= comment.body %>
+    </p>
+  <% end %>
+
 </body>

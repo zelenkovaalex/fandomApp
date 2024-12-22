@@ -1,10 +1,31 @@
 @allFandoms = [
-    { id: 1, name: 'Атлантида' }, { id: 2, name: 'Шерлок' }, { id: 3, name: 'Star Wars' }, { id: 4, name: 'My Little Pony' }, { id: 5, name: 'Доктор Кто' },
-    { id: 6, name: 'Ван Пис' }, { id: 7, name: 'Голодные игры' }, { id: 8, name: '1984' }, { id: 9, name: 'Игра Престолов' }, { id: 10, name: 'Хроники Нарнии' },
-    { id: 11, name: 'Звёздный десант' }, { id: 12, name: 'Атака Титанов' }, { id: 13, name: 'DC Comics' }, { id: 14, name: 'Властелин Колец' }, { id: 15, name: 'Marvel' },
-    { id: 16, name: 'Баскетбол Куроко' }, { id: 17, name: 'Мы' }, { id: 1, name: 'Гарри Поттер' }, { id: 18, name: 'Наруто' }, { id: 19, name: 'Сумерки' },
-    { id: 20, name: 'Клуб романтики' }, { id: 21, name: 'Космическая Одиссея' }, { id: 22, name: 'Однажды в сказке' }, { id: 23, name: 'Великолепный век' }
+                { name: 'Атлантида' }, { name: 'Шерлок' }, { name: 'Star Wars' }, { name: 'My Little Pony' },
+                { name: 'Доктор Кто' }, { name: 'Ван Пис' }, { name: 'Голодные игры' }, { name: '1984' },
+                { name: 'Игра Престолов' }, { name: 'Хроники Нарнии' }, { name: 'Звёздный десант' },
+                { name: 'Атака Титанов' }, { name: 'DC Comics' }, { name: 'Властелин Колец' },
+                { name: 'Marvel' }, { name: 'Баскетбол Куроко' }, { name: 'Мы' }, { name: 'Гарри Поттер' },
+                { name: 'Наруто' }, { name: 'Сумерки' }, { name: 'Клуб романтики' }, { name: 'Космическая Одиссея' },
+                { name: 'Однажды в сказке' }, { name: 'Великолепный век' }
 ]
+            
+@nicknames = [ "sashaiskatel", "igorveber", "spookypirate", "flobara", "dachanacha", "nebozhitel", "lenabistra", "pupsik"]
+@cities = [ "калининград", "санкт-петербург", "владивосток", "париж", "москва", "тюмень" ]
+@bios = [
+          "люблю гулять и пиццу",
+          "самый преданный фанат своего фандома (спорьте с воздухом, кто не согласен)",
+          "продам твою душу за початок кукурузы",
+          "геодезист",
+          "люблю прикольные картинки и ходилки",
+          "профессиональный исследователь человеческих душ"
+        ]
+
+@raw_text = "Путешествие — открытие новых горизонтов. Когда мы отправляемся в путешествие, оказываемся в незнакомой среде, где каждый день приносит новые впечатления и вызовы.
+Путешествие — изучение собственных реакций. Мы сталкиваемся с новыми ситуациями и вызовами во время путешествия, это ставит нас перед необходимостью принимать решения и анализировать свои реакции. Мы учимся управлять стрессом, развивать навыки решения проблемных ситуаций и становимся более уверенными в своих собственных способностях, где бы мы не были мы можем легко решить любой вопрос, который жизнь поставит перед нами жизнь."
+@words = @raw_text.downcase.gsub(/[—.—,«»:;()]/, '').gsub(/  /, ' ').split(' ')
+
+@allFandoms.each do |fandom|
+  test = Fandom.create(name: fandom[:name])
+end
 
 def reset_db
   Rake::Task['db:drop'].invoke
@@ -14,10 +35,29 @@ end
 
 def seed
   reset_db
-  create_users(6)
   create_fandom
+  create_users(6)
   create_trail(2...5)
-  # create_trails_and_comments
+  create_comments(2..4)
+end
+
+# def upload_random_avatar
+#   uploader = AvatarUploader.new(Profile.new, :avatar)
+#    file = Dir.glob(File.join(Rails.root, 'public/uploads/avatars', '*')).sample
+#    if file.present?
+#     uploader.cache!(File.open(file))
+#     uploader
+#   else
+#     nil
+#   end
+# end
+
+def create_fandom
+  @allFandoms.each do
+    fandom = Fandom.create!(name: @allFandoms.sample[:name], description: "описание фандома")
+    puts "Fandom with name #{fandom.name} just created"
+    # create_trail(3)
+  end
 end
 
 def create_users(quantity)
@@ -26,7 +66,7 @@ def create_users(quantity)
   quantity.times do
     user_data = {
       email: "user#{i}@email.com",
-      password: "password"
+      password: "passpass"
     }
 
     if i == 0
@@ -35,6 +75,34 @@ def create_users(quantity)
 
     user = User.create!(user_data)
     puts "User created with id #{user.id}"
+
+    profile_data = {
+      user_id: user.id,
+      nickname: @nicknames.sample,
+      bio: @bios.sample,
+      city: @cities.sample,
+      # avatar: upload_random_avatar,
+      fandom_id: Fandom.all.sample.id
+      # fandom: Fandom.create(name: @allFandoms.sample, description: "описание фандома")
+    }
+
+    puts profile_data
+
+    Profile.create(profile_data)
+
+    # profile_data = {
+    #   nickname: @nicknames.sample,
+    #   bio: @bios.sample,
+    #   city: @cities.sample,
+    #   # avatar: upload_random_avatar,
+    #   fandom_id: Fandom.all.sample.id
+    #   # fandom: Fandom.create(name: @allFandoms.sample, description: "описание фандома")
+    # }
+
+    # puts profile_data
+
+    # user.create_profile!(profile_data)
+    puts "Profile created for user with id #{user.id}: #{profile_data[:nickname]}"
 
     i += 1
   end
@@ -52,7 +120,21 @@ def get_random_level
   (1...10).to_a.sample
 end
 
+def create_sentence
+  sentence_words = []
+
+  (10..20).to_a.sample.times do
+    sentence_words << @words.sample
+  end
+  sentence = sentence_words.join(' ').capitalize + '.'
+end
+
 def create_trail(quantity)
+
+  if User.count == 0
+    puts "There are no users."
+    return
+  end
   
   Fandom.all.each do |fandom|
     rand(quantity).times do 
@@ -66,7 +148,8 @@ def create_trail(quantity)
           trail_time: get_random_time, 
           trail_level: get_random_level, 
           body: "рандомный текст", 
-          public: get_random_bool)
+          public: get_random_bool
+        )
           
         puts "Trail with title #{trail.title} for fandom #{trail.fandom.name} just created"
       end
@@ -75,7 +158,7 @@ def create_trail(quantity)
 end
 
 def create_comments(quantity)
-  Trail.all.esch do |trail|
+  Trail.all.each do |trail|
     rand(quantity).times do
       comment = Comment.create(trail_id: trail.id, body: create_sentence)
       puts "Comment with id #{comment.id} for  with id #{comment.trail.id} just created"
@@ -83,11 +166,14 @@ def create_comments(quantity)
   end
 end
 
-def create_fandom
-  @allFandoms.each do
-    fandom = Fandom.create!(name: @allFandoms.sample[:name], description: "рандомный текст")
-    puts "Fandom with name #{fandom.name} just created"
+def create_comment_replies(quantity)
+  Comment.all.each do |comment|
+    rand(quantity).times do
+      comment = Comment.create(trail_id: trail.id, body: create_sentence)
+      puts "Comment reply with id #{comment_reply.id} for pin with id #{comment_reply.pin.id} just created"
+    end
   end
 end
+
 
 seed

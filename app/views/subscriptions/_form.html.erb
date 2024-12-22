@@ -1,4 +1,4 @@
-<%= form_with(model: Subscription.build) do |form| %>
+<%= form_with(model: @subscription) do |form| %>
   <div class='mailer'>
     <div>
       <%= form.email_field :email, class: 'email' %>
