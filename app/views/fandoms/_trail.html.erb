@@ -2,11 +2,11 @@
   <h2><%= trail.title %></h2>
   <h3><%= trail.fandom.name %></h3>
   <h3>
-    <% trail.tags.each do |tag| %>
-      <%=  link_to tag.name, tagged_trails_path(tag.name) %>
-    <% end%>
+    <%# trail.tags.each do |tag| %>
+      <%#=  link_to tag.name, tagged_trails_path(tag.name) %>
+    <%# end%>
   </h3>
-  <p><%= trail.body %></p>
+  <p><% trail.body %></p>
 
   <% if user_signed_in? && current_user.admin? %>
     <div class='butts'>

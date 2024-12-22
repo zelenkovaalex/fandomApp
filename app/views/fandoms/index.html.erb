@@ -4,14 +4,6 @@
     <h1>
       <%= link_to "All trails", trails_path %>
       
-      <% Trail.tag_counts_on(:categories).each do |tag| %>
-        <%= link_to tag.name, tagged_trails_path(tag.name) %>
-      <% end %>
-    </h1> 
-
-    <h1>
-      <%= link_to "All trails", trails_path %>
-      
       <% Trail.tag_counts_on(:tags).each do |tag| %>
         <%= link_to tag.name, tagged_trails_path(tag.name) %>
       <% end %>

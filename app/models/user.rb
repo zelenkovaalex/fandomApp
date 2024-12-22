@@ -9,13 +9,12 @@ class User < ApplicationRecord
   has_one :profile
   has_many :likes
 
-  after_create :create_user_profile
+  # after_create :create_user_profile
 
-  private
+  # private
 
-    def create_user_profile
-      self.create_profile! unless self.profile.present?
-    end
-
+  #   def create_user_profile
+  #     self.create_profile! unless self.profile.present?
+  #   end
 end
  

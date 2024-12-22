@@ -10,7 +10,7 @@
 
 
   <div class='briks'>
-    <% @trails.each do |trail| %>
+    <% Trail.all.each do |trail| %>
       <%= render partial: "trail", locals: { trail: trail } %>
     <% end %>
   </div>

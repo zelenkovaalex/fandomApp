@@ -75,6 +75,7 @@ def create_users(quantity)
 
     user = User.create!(user_data)
     puts "User created with id #{user.id}"
+    # puts Profile.all
 
     profile_data = {
       user_id: user.id,
@@ -83,12 +84,14 @@ def create_users(quantity)
       city: @cities.sample,
       # avatar: upload_random_avatar,
       fandom_id: Fandom.all.sample.id
+      # fandom: Fandom.name
       # fandom: Fandom.create(name: @allFandoms.sample, description: "описание фандома")
     }
 
     puts profile_data
 
     Profile.create(profile_data)
+    # puts Profile.all
 
     # profile_data = {
     #   nickname: @nicknames.sample,
@@ -101,11 +104,13 @@ def create_users(quantity)
 
     # puts profile_data
 
-    # user.create_profile!(profile_data)
+    # user.profile.create!(profile_data)
     puts "Profile created for user with id #{user.id}: #{profile_data[:nickname]}"
 
     i += 1
   end
+
+  # puts Profile.all
 end
 
 def get_random_bool
@@ -155,6 +160,8 @@ def create_trail(quantity)
       end
     end
   end
+
+  puts Trail.count  
 end
 
 def create_comments(quantity)
@@ -170,7 +177,7 @@ def create_comment_replies(quantity)
   Comment.all.each do |comment|
     rand(quantity).times do
       comment = Comment.create(trail_id: trail.id, body: create_sentence)
-      puts "Comment reply with id #{comment_reply.id} for pin with id #{comment_reply.pin.id} just created"
+      puts "Comment reply with id #{comment_reply.id} for pin with id #{comment_reply.trail.id} just created"
     end
   end
 end
