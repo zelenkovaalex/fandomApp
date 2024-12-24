@@ -3,7 +3,7 @@
   <h3><%= trail.fandom.name %></h3>
   <p><% trail.body %></p>
 
-  <% if current_user.id == trail.user_id %>
+  <% if current_user != nil && (current_user.id == trail.user_id || current_user.admin?) %>
     <div class='butts'>
       <%= render partial: "like/button", locals: {likeable: trail} %>
       <%= link_to 'редактировать', edit_admin_trail_path(trail) %>

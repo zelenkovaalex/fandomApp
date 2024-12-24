@@ -6,41 +6,41 @@
   end
 %>
 
-<%= form_with model: @trail, url: trails_path, local: true do |form| %> 
-  <% if trail.errors.any? %>
+<%= form_with(model: trail_model, url: trails_path, local: true) do |form| %> 
+  <%# if trail.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
+      <h2><%#= pluralize(trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
 
       <ul>
-        <% trail.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
+        <%# trail.errors.each do |error| %>
+          <li><%#= error.full_message %></li>
+        <%# end %>
       </ul>
     </div>
-  <% end %>
+  <%# end %>
 
   <br>
 
   <%= form.label :title %>
-  <%= form.text_field :title %>
+  <%= form.text_field :title %> <br>
 
   <%= form.label :description %>
-  <%= form.text_area :description %>
+  <%= form.text_area :description %> <br>
 
   <%= form.label :trail_image %>
-  <%= form.text_field :trail_image %>
+  <%= form.text_field :trail_image %> <br>
 
   <%= form.label :trail_time %>
-  <%= form.number_field :trail_time %>
+  <%= form.number_field :trail_time %> <br>
 
   <%= form.label :trail_level %>
-  <%= form.number_field :trail_level %>
+  <%= form.number_field :trail_level %> <br>
 
   <%= form.label :fandom_id %>
-  <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
+  <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %> <br>
 
   <%= form.label :body %>
-  <%= form.text_area :body %>
+  <%= form.text_area :body %> <br>
 
   <%= form.submit 'Create Trail' %>
 

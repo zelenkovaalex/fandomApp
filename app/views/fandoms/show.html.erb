@@ -7,13 +7,11 @@
     <br>
 
       <% if user_signed_in? && current_user.admin? %>
-        <%= link_to "редактировать", edit_admin_fandom_path(@fandom) %> |
-        <%#= button_to 'удалить', @fandom, method: :delete %>
+        <%= link_to "редактировать", edit_admin_fandom_path(@fandom) %> 
+        <%= button_to "удалить", admin_fandom_path(@fandom.id), method: :delete %>    
       <% end %>
   </div>
 
-  <div>
   <%= link_to "Back to fandoms", fandoms_path %>
 
-  <%= button_to "Destroy this fandom", admin_fandom_path(@fandom.id), method: :delete %>
 </div>

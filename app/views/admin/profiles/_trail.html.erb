@@ -1,0 +1,11 @@
+<div class="trail">
+  <h2><%= trail.title %></h2>
+  <h3><%= trail.fandom.name %></h3>
+  <p><% trail.body %></p>
+  
+  <%= link_to 'посмотреть', trail_path(trail) %>
+    <% if user_signed_in? && (current_user.admin? || current_user == trail.user) %>
+      <%= link_to 'редактировать', edit_admin_trail_path(trail) %>
+      <%= button_to 'удалить', trail, data: { turbo_method: :delete} %>
+    <% end %>
+</div>

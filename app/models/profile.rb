@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
     belongs_to :user
-    belongs_to :fandom, optional: true
+    has_and_belongs_to_many :fandom, optional: true
     
     has_many :created_trails, class_name: 'Trail'
 

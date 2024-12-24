@@ -1,4 +1,4 @@
-class ProfilesController < ApplicationController
+class Admin::ProfilesController < ApplicationController
   before_action :authenticate_user!
   # load_and_authorize_resource
   before_action :set_profile, only: %i[ show edit update destroy ]
@@ -13,17 +13,15 @@ class ProfilesController < ApplicationController
   
   # GET /profiles/1 or /profiles/1.json
   def show
-    @profile = Profile.find(params[:id]) #находим профиль по id
-    @user = @profile.user  #получаем пользователя, связанного с профилем
-    @trails = @user.trails
-
-    @trails = Trail.where(params[:id])
     if current_user && current_user.admin?
-      @trails = Trail.all.order(created_at: :desc)
+      @user_trails = @trails
+      @other_trails = []
     elsif current_user
-      @trails = current_user.trails  
+      @user_trails = current_user.trails  
+      @other_trails = @trails.where(public: true).where.not(id: @user_trails.pluck(:id))  
     else
-      @trail = Trail.where(public: true)  
+      @user_trails = []
+      @other_trails = @trails.where(public: true)  
     end
   end
 

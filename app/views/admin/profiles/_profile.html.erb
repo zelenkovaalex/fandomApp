@@ -1,0 +1,21 @@
+<div id="<%= dom_id profile %>">
+  <p>
+    <strong><%= profile.avatar %></strong>
+  </p>
+
+  <p>
+    <strong><%= profile.nickname %></strong>
+  </p>
+
+  <p>
+    <strong><%= profile.city %></strong>
+  </p>
+
+  <p>
+    <strong><%= profile.bio %></strong>
+  </p>
+
+  <p>
+    <strong><%=  Fandom.all.where(id: profile.fandom_id).first.name %></strong>
+  </p>
+</div>

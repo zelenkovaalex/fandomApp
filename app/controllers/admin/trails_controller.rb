@@ -59,6 +59,11 @@ class Admin::TrailsController < ApplicationController
 
   # DELETE /trails/1 or /trails/1.json
   def destroy
+    @trail = Trail.find(params[:id]) # Essential: Find the correct trail
+    
+    # Check if the record exists
+    return render_not_found if @trail.nil?
+
     @trail.destroy!
 
     respond_to do |format|

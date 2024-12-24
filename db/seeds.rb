@@ -58,10 +58,25 @@ end
 
 def create_users(quantity)
   i = 0
+  created_emails = []
+  created_nicknames = []
 
   quantity.times do
+    email = "user#{i}@email.com"
+
+    # Check for duplicate email
+    while created_emails.include?(email)
+      i += 1
+      email = "user#{i}@email.com"
+    end
+
+    nickname = @nicknames.sample
+    while created_nicknames.include?(nickname)
+      nickname = @nicknames.sample
+    end
+
     user_data = {
-      email: "user#{i}@email.com",
+      email: email,
       password: "passpass"
     }
 
@@ -70,43 +85,34 @@ def create_users(quantity)
     end
 
     user = User.create!(user_data)
+    created_emails << email
     puts "User created with id #{user.id}"
-    # puts Profile.all
 
     profile_data = {
       user_id: user.id,
-      nickname: @nicknames.sample,
+      nickname: nickname,
       bio: @bios.sample,
       city: @cities.sample,
       # avatar: upload_random_avatar,
       fandom_id: Fandom.all.sample.id
-      # fandom: Fandom.name
-      # fandom: Fandom.create(name: @allFandoms.sample, description: "описание фандома")
     }
+
+    created_nicknames << nickname
 
     puts profile_data
 
     Profile.create(profile_data)
-    # puts Profile.all
-
-    # profile_data = {
-    #   nickname: @nicknames.sample,
-    #   bio: @bios.sample,
-    #   city: @cities.sample,
-    #   # avatar: upload_random_avatar,
-    #   fandom_id: Fandom.all.sample.id
-    #   # fandom: Fandom.create(name: @allFandoms.sample, description: "описание фандома")
-    # }
-
-    # puts profile_data
-
-    # user.profile.create!(profile_data)
     puts "Profile created for user with id #{user.id}: #{profile_data[:nickname]}"
+
+    random_fandoms = Fandom.all.sample(rand(2..5)) # Assign 2 to 5 random fandoms
+    random_fandoms.each do |fandom|
+      # user.fandoms << fandom # Assuming you have a has_and_belongs_to_many relationship between user and fandom
+      puts "Fandom #{fandom.name} assigned to user #{user.id}"
+    end
 
     i += 1
   end
 
-  # puts Profile.all
 end
 
 def get_random_bool
