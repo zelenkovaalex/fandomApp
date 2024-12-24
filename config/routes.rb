@@ -26,7 +26,9 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :fandoms
     resources :trails
+    resources :comments
     resources :subscriptions
+    resources :profiles
   end
   
   # api // v1

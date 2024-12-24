@@ -2,22 +2,23 @@
 
   <div class="fanfan">
       <div class='trails'>
-        <h1>
-          <%= link_to "All trails", trails_path %>
-
-          <% Trail.tag_counts_on(:tags).each do |tag| %>
-            <%= link_to tag.name, tagged_trails_path(tag.name) %>
-          <% end %>
-
-          <br>
-
-          <% if can? :create, Trail %>
-            <%= link_to 'New Trail', new_admin_trail_path %>
+        <h1><% if can? :create, Trail %>
+            <%= link_to 'новый маршрут', new_admin_trail_path %>
           <% end %>
         </h1>
 
+        <h1><%= link_to "Мои маршруты", trails_path %></h1>
+
         <div class='briks'>
-          <% @trails.each do |trail| %>
+          <% @user_trails.each do |trail| %>
+            <%= render partial: "trail", locals: { trail: trail } %>
+          <% end %>
+        </div>
+
+        <h1><%= link_to "Все маршруты", trails_path %></h1>
+
+        <div class='briks'>
+          <% @other_trails.each do |trail| %>
             <%= render partial: "trail", locals: { trail: trail } %>
           <% end %>
         </div>
@@ -28,7 +29,7 @@
           <% @fandoms.each do |fandom| %>
             <%= render partial: "fandom", locals: { fandom: fandom } %>
           <% end %>
-        <%= link_to "New fandom", new_admin_fandom_path %>
+        <%= link_to "новый фандом", new_admin_fandom_path %>
       </div>
   </div>
 

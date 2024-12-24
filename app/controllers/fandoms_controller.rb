@@ -7,14 +7,18 @@ class FandomsController < ApplicationController
   def index
     @fandoms = Fandom.all
     @allFandoms = Fandom.all
-    @trails = Trail.all
+    # @trails = Trail.find_by(id: params[:id])
+    @trails = Trail.all.order(created_at: :desc)
 
     if current_user && current_user.admin?
-      @trails = Trail.all.order(created_at: :desc)
+      @user_trails = @trails
+      @other_trails = []
     elsif current_user
-      @trails = current_user.trails  
+      @user_trails = current_user.trails  
+      @other_trails = @trails.where(public: true).where.not(id: @user_trails.pluck(:id))  
     else
-      @trail = Trail.where(public: true)  
+      @user_trails = []
+      @other_trails = @trails.where(public: true)  
     end
   end
 

@@ -1,12 +1,39 @@
+<div class="profileInf">
 <p style="color: green"><%= notice %></p>
 
 <%= render @profile %>
 
 <div>
-  <% if current_user.admin? %>
-    <%= link_to "Edit this profile", edit_profile_path(@profile) %> |
-  <%= button_to "Destroy this profile", @profile, method: :delete %>
+  <% if current_user.admin? || current_user.id == @profile.user_id %>
+    <%= link_to "редактировать", edit_profile_path(@profile) %> |
+  <%= button_to "удалить", @profile, method: :delete %>
   <% end %>
 
-  <%= link_to "Back to profiles", profiles_path %>
+  <%= link_to "вернуться", profiles_path %>
+</div>
+</div>
+
+<br>
+
+<div class='trails'>
+  <h1>
+    <%= link_to "Мои маршруты", trails_path %>
+
+    <% Trail.tag_counts_on(:tags).each do |tag| %>
+      <%= link_to tag.name, tagged_trails_path(tag.name) %>
+    <% end %>
+
+    <br>
+
+    <% if can? :create, Trail %>
+      <%= link_to 'Новый маршрут', new_admin_trail_path %>
+    <% end %>
+  </h1>
+
+  <div class='briks'>
+    <% @trails.each do |trail| %>
+      <%= render partial: "trail", locals: { trail: trail } %>
+    <% end %>
+  </div>
+
 </div>

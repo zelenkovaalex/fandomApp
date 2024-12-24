@@ -7,12 +7,20 @@ class ProfilesController < ApplicationController
   def index
     @profiles = Profile.all
   end
-
+  
   def community
   end
-
+  
   # GET /profiles/1 or /profiles/1.json
   def show
+    @trails = Trail.where(params[:id])
+    if current_user && current_user.admin?
+      @trails = Trail.all.order(created_at: :desc)
+    elsif current_user
+      @trails = current_user.trails  
+    else
+      @trail = Trail.where(public: true)  
+    end
   end
 
   # GET /profiles/new

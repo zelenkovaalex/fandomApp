@@ -39,9 +39,6 @@
   <%= form.label :fandom_id %>
   <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
 
-  <%#= form.label :tag %>
-  <%#= form.text_area :tag_list %>
-
   <%= form.label :body %>
   <%= form.text_area :body %>
 
