@@ -1,0 +1,24 @@
+<div class="comment <%= 'reply' if comment.comment_id != nil %>" id="<%= dom_id comment %>">
+  <%= turbo_frame_tag dom_id(comment) do %>
+  <p>
+    <%= comment.created_at %>
+  </p>
+
+  <p>
+    <%= comment.body %>
+    <%#= link_to "Edit", edit_trail_comments_path(comment.trail, comment) %>
+  </p>
+  <%#= render partial: "like/button", locals: { likeable: comment } %>
+  <% end %>
+
+  <%= render partial: "comments/form",
+             locals: {
+               comment: Comment.new,
+               parent_comment_id: comment.id,
+               url: trail_comments_path(comment.trail)
+             } %>
+
+  <% if comment.replies.any? %>
+  <%= render comment.replies, partial: "comments/comment", as: :comment %>
+  <% end %>
+</div>

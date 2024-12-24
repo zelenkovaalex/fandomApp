@@ -1,5 +1,6 @@
 class Admin::TrailsController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_trail, only: [:update, :destroy, :edit, :new, :show]
 
   # GET /trails or /trails.json
@@ -16,6 +17,7 @@ class Admin::TrailsController < ApplicationController
 
   # GET /trails/1 or /trails/1.json
   def show
+    @trail = Trail.where(params[:id])
   end
 
   # GET /trails/new
@@ -68,7 +70,7 @@ class Admin::TrailsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trail
-      @trail = Trail.find(params[:id])
+      @trail = Trail.where(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   
   #trails
   
-  resources :trails, only: [:index, :show, :new] do
+  resources :trails, only: [:index, :show, :new, :edit, :destroy] do
     resource :comments
     get "/by_tag/:tag", to: "trails#by_tag", on: :collection, as: "tagged"
   end

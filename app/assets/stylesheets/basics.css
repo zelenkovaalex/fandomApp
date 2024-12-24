@@ -4,7 +4,7 @@
 
 @media only screen and (min-device-width: 1680px) {
 body {
-    font-family: 'InterDisplay', sans-serif;
+    font-family: 'Formular', sans-serif;
     
     nav {
         width: 100%;
@@ -97,7 +97,7 @@ body {
 @media only screen and (max-device-width: 430px) {
 
 body {
-    font-family: 'InterDisplay', sans-serif;
+    font-family: 'Formular', sans-serif;
     
     nav {
         width: 100%;

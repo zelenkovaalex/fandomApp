@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_comment, only: %i[ show edit update destroy ]
 
   # GET /comments or /comments.json
@@ -18,6 +19,7 @@ class CommentsController < ApplicationController
 
   # GET /comments/1/edit
   def edit
+    @comment = Comment.find(params[:id])
   end
 
   # trail /comments or /comments.json
@@ -50,7 +52,7 @@ class CommentsController < ApplicationController
     @comment.destroy!
 
     respond_to do |format|
-      format.html { redirect_to comments_path, status: :see_other, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to trail_comments_path, status: :see_other, notice: "Commeny was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -58,13 +60,11 @@ class CommentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_comment
-      @comment = Comment.find(params[:id])
+      @comment = Comment.where(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-  private
-
     def comment_params
-      params.require(:comment).permit(:body)
+      params.require(:comment).permit(:body, :comment_id).merge(trail_id: params[:trail_id])
     end
 end

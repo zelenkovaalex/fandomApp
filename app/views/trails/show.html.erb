@@ -4,11 +4,6 @@
   <div class='info'>
     <h2><%= @trail.title %></h2>
     <h3><%= @trail.fandom.name %></h3>
-    <h3>
-      <%# @trail.tags.each do |tag| %>
-        <%#=  link_to tag.name, tagged_trails_path(tag.name) %>
-      <%# end%>
-    </h3>
     <p><%= @trail.body %></p>
 
     <br>
@@ -20,16 +15,22 @@
   </div>
 
 
-  <%= link_to "вернуться", trails_path, class: 'back' %>
+  <%= link_to "вернуться", fandoms_url, class: 'back' %>
 
 
   <h2>Comments</h2>
-  <%= render "comments/form", comment: Comment.new %>
 
-  <% @trail.comments.each do |comment| %>
-    <p>
-      <%= comment.body %>
-    </p>
-  <% end %>
+  <%= render partial: "comments/form", locals: { url: trail_comments_path(@trail), comment: Comment.new } %>
+
+  <%= turbo_stream_from "comments" %>
+
+  <div id="comments">
+    <% @trail.comments.no_replies.each do |comment| %>
+      <%= render "comments/comment", comment: comment %>
+      <%# if current_user && current_user.admin?%>
+        <%#= button_to 'удалить', @trail, method: :delete %>
+      <%# end%>
+    <% end %>
+  </div>
 
 </body>

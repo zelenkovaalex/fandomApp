@@ -13,8 +13,7 @@
   </div>
 
   <div>
-  <%= link_to "Edit this fandom", edit_admin_fandom_path(@fandom) %> |
   <%= link_to "Back to fandoms", fandoms_path %>
 
-  <%= button_to "Destroy this fandom", @fandom, method: :delete %>
+  <%= button_to "Destroy this fandom", admin_fandom_path(@fandom.id), method: :delete %>
 </div>

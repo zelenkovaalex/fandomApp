@@ -1,12 +1,13 @@
-<div id="<%= dom_id fandom %>">
-  <p>
-    <strong>Name:</strong>
-    <%= fandom.name %>
-  </p>
+<div class="fan">
 
-  <p>
-    <strong>Description:</strong>
-    <%= fandom.description %>
-  </p>
+  <h3>
+    <% if user_signed_in? && current_user.admin? %>
+      <%= link_to fandom.name, fandom %>
+    <% elsif user_signed_in? %>
+      <%= link_to fandom.name, fandom %>
+    <% else %>
+      <%= fandom.name %>
+    <% end %>
+  </h3>
 
 </div>

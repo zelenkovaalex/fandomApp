@@ -1,5 +1,6 @@
 class Admin::FandomsController < ApplicationController
   before_action :authenticate_user!
+  load_and_authorize_resource
   before_action :set_fandom, only: [:update, :destroy, :edit, :new]
 
   # GET /fandoms or /fandoms.json
@@ -10,6 +11,7 @@ class Admin::FandomsController < ApplicationController
 
   # GET /fandoms/1 or /fandoms/1.json
   def show
+    @trail = Trail.where(params[:id])
   end
 
   # GET /fandoms/new
@@ -62,7 +64,7 @@ class Admin::FandomsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fandom
-      @fandom = Fandom.find(params[:id])
+      @fandom = Fandom.where(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

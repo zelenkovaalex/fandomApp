@@ -23,10 +23,11 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_22_174448) do
   end
 
   create_table "fandoms", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_fandoms_on_name", unique: true
   end
 
   create_table "favourites", force: :cascade do |t|
@@ -128,11 +129,6 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_22_174448) do
     t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-  end
-
-  create_table "welcomes", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "comments", "trails"

@@ -1,10 +1,16 @@
-<body class='trails'>
+<div class='trails'>
 
   <h1>
     <%= link_to "All trails", trails_path %>
     
     <% Trail.tag_counts_on(:tags).each do |tag| %>
       <%= link_to tag.name, tagged_trails_path(tag.name) %>
+    <% end %>
+    
+    <br>
+
+    <% if can? :create, Trail %>
+      <%= link_to 'New Trail', new_trail_path %>
     <% end %>
   </h1>
 
@@ -15,8 +21,5 @@
     <% end %>
   </div>
 
-    <% if can? :create, Trail %>
-      <%= link_to 'New Trail', new_trail_path %>
-    <% end %>
     
-</body>
+</div>

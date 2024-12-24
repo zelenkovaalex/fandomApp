@@ -23,10 +23,6 @@
 Путешествие — изучение собственных реакций. Мы сталкиваемся с новыми ситуациями и вызовами во время путешествия, это ставит нас перед необходимостью принимать решения и анализировать свои реакции. Мы учимся управлять стрессом, развивать навыки решения проблемных ситуаций и становимся более уверенными в своих собственных способностях, где бы мы не были мы можем легко решить любой вопрос, который жизнь поставит перед нами жизнь."
 @words = @raw_text.downcase.gsub(/[—.—,«»:;()]/, '').gsub(/  /, ' ').split(' ')
 
-@allFandoms.each do |fandom|
-  test = Fandom.create(name: fandom[:name])
-end
-
 def reset_db
   Rake::Task['db:drop'].invoke
   Rake::Task['db:create'].invoke
@@ -53,9 +49,9 @@ end
 # end
 
 def create_fandom
-  @allFandoms.each do
-    fandom = Fandom.create!(name: @allFandoms.sample[:name], description: "описание фандома")
-    puts "Fandom with name #{fandom.name} just created"
+  @allFandoms.each do |fandom|
+    Fandom.create!(name: fandom[:name], description: "описание фандома")
+    puts "Fandom with name #{fandom[:name]} just created"
     # create_trail(3)
   end
 end
@@ -166,17 +162,22 @@ end
 
 def create_comments(quantity)
   Trail.all.each do |trail|
-    rand(quantity).times do
-      comment = Comment.create(trail_id: trail.id, body: create_sentence)
-      puts "Comment with id #{comment.id} for  with id #{comment.trail.id} just created"
+    quantity.to_a.sample.times do
+      user = User.all.sample
+      comment = Comment.create(
+        trail_id: trail.id,
+        user_id: user.id,
+        body: create_sentence
+      )
+      puts "Comment with id #{comment.id} for trail with id #{comment.trail.id} created by user #{user.email}"
     end
   end
 end
 
 def create_comment_replies(quantity)
   Comment.all.each do |comment|
-    rand(quantity).times do
-      comment = Comment.create(trail_id: trail.id, body: create_sentence)
+    if rand(1..3) == 1
+      comment_reply = comment.replies.create(trail_id: comment.trail_id, body: create_sentence)
       puts "Comment reply with id #{comment_reply.id} for pin with id #{comment_reply.trail.id} just created"
     end
   end
