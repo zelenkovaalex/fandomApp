@@ -5,6 +5,7 @@
 @media only screen and (min-device-width: 1680px) {
 body {
     font-family: 'Formular', sans-serif;
+    background-color: var(--white);
     
     nav {
         width: 100%;
@@ -15,7 +16,16 @@ body {
         justify-content: space-between;
         flex-direction: row;
 
-        background-color: var(--yellow);
+        a {
+            font-size: 1.375rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+        }
+
+        .A_Name {
+            font-weight: 600;
+        }
 
         .main, .slave {
             display: inline-flex;

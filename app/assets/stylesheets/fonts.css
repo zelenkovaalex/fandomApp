@@ -1,70 +1,70 @@
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-Thin.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-Thin.woff2') format('woff2');
     font-weight: 100;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-ExtraLight.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-ExtraLight.woff2') format('woff2');
     font-weight: 200;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-Light.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-Light.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-Regular.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-Regular.woff2') format('woff2');
     font-weight: 400;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-Medium.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-Medium.woff2') format('woff2');
     font-weight: 500;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-SemiBold.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-SemiBold.woff2') format('woff2');
     font-weight: 600;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-Bold.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-Bold.woff2') format('woff2');
     font-weight: 700;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-ExtraBold.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-ExtraBold.woff2') format('woff2');
     font-weight: 800;
     font-style: normal;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-Black.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-Black.woff2') format('woff2');
     font-weight: 900;
     font-style: normal;
     font-display: swap;
@@ -73,72 +73,72 @@
 /* italic */
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-ThinItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-ThinItalic.woff2') format('woff2');
     font-weight: 100;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-ExtraLightItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-ExtraLightItalic.woff2') format('woff2');
     font-weight: 200;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-LightItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-LightItalic.woff2') format('woff2');
     font-weight: 300;
     font-style: normal;
     font-style: italic;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-Italic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-Italic.woff2') format('woff2');
     font-weight: 400;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-MediumItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-MediumItalic.woff2') format('woff2');
     font-weight: 500;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-SemiBoldItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-SemiBoldItalic.woff2') format('woff2');
     font-weight: 600;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-BoldItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-BoldItalic.woff2') format('woff2');
     font-weight: 700;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-ExtraBoldItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-ExtraBoldItalic.woff2') format('woff2');
     font-weight: 800;
     font-style: italic;
     font-display: swap;
 }
 
 @font-face {
-    font-family: 'InterDisplay';
-    src: url('InterDisplay-BlackItalic.woff2') format('woff2');
+    font-family: 'Formular';
+    src: url('Formular-BlackItalic.woff2') format('woff2');
     font-weight: 900;
     font-style: italic;
     font-display: swap;

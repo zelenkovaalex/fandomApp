@@ -1,6 +1,6 @@
 <nav class="menuBar">
   <div class='main'>
-    <%= link_to "промо", root_url %>
+    <%= link_to "rutas", root_url, class: "A_Name"%>
     <%= link_to "о нас", about_path %>
     <%#= link_to "маршруты", trails_url %>
     <%= link_to "фандомы", fandoms_url %>
@@ -10,7 +10,7 @@
   <div class='slave'>
       <% if user_signed_in? %>
       <%#= link_to current_user.name, edit_user_registration_path %>
-      <%= link_to "Профиль", profile_path(current_user.profile) %>
+      <%= link_to "профиль", profile_path(current_user.profile) %>
       <%= link_to "выход", destroy_user_session_path, data: { "turbo-method": :delete } %>
     <% else %>
       <%= link_to "вход", new_user_session_path %>

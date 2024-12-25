@@ -4,7 +4,7 @@ class Profile < ApplicationRecord
     
     has_many :created_trails, class_name: 'Trail'
 
-    # mount_uploader :avatar, AvatarUploader
+    mount_uploader :avatar, AvatarUploader
 
     default_scope { order(created_at: "DESC") }
 end

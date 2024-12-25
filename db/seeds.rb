@@ -37,17 +37,6 @@ def seed
   create_comments(2..4)
 end
 
-# def upload_random_avatar
-#   uploader = AvatarUploader.new(Profile.new, :avatar)
-#    file = Dir.glob(File.join(Rails.root, 'public/uploads/avatars', '*')).sample
-#    if file.present?
-#     uploader.cache!(File.open(file))
-#     uploader
-#   else
-#     nil
-#   end
-# end
-
 def create_fandom
   @allFandoms.each do |fandom|
     Fandom.create!(name: fandom[:name], description: "описание фандома")
@@ -55,6 +44,12 @@ def create_fandom
     # create_trail(3)
   end
 end
+
+# def upload_random_avatar
+#   uploader = AvatarUploader.new(Profile.new, :avatar) # Используем загрузчик для аватаров
+#   uploader.cache!(File.open(Dir.glob(File.join(Rails.root, 'public/uploads/avatars', '*')).sample))
+#   uploader
+# end
 
 def create_users(quantity)
   i = 0
