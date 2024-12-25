@@ -1,17 +1,5 @@
 @media only screen and (min-device-width: 1680px) {
 body.fandoms {
-
-    h1 {
-        font-size: 32px;
-        font-weight: 600;
-
-        padding: 3vw 1vw 2vw 5vw;
-    }
-
-    .fanfan {
-        display: flex;
-        flex-direction: row;
-    }
     
     .briks {
         display: flex;
@@ -64,25 +52,7 @@ body.fandoms {
         }
     }
 
-    .fandoms {
-        h2 {
-            font-size: 28px;
-            font-weight: 650;
-        }
-        
-        a {
-            font-size: 22px;
-            font-weight: 400;
-        }
 
-        .fan {
-            display: flex;
-            padding: 0 5vw;
-            gap: 1.5vw;
-            flex-direction: column;
-        }
-
-    }
 }
 
 body.show {

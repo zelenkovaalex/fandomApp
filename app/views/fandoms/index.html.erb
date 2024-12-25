@@ -1,37 +1,43 @@
 <body class="fandoms"> 
 
-  <div class="fanfan">
-      <div class='trails'>
-      <% if can? :create, Trail %>
-        <h1>
-            <%= link_to 'новый маршрут', new_admin_trail_path %>
-        </h1>
-        <h1><%= link_to "Мои маршруты", trails_path %></h1>
+<div class="W_Fandoms">
+ <div class='O_trails'>
+    <% if can? :create, Trail %>
+      
+      <div class="W_titles">
+        <%= link_to 'новый маршрут', new_admin_trail_path %>
+        <%= link_to "мои маршруты", profile_path(current_user.profile) %>
+      </div>
 
-        <div class='briks'>
-          <% @user_trails.each do |trail| %>
-            <%= render partial: "trail", locals: { trail: trail } %>
-          <% end %>
-        </div>
+      <div class='M_briks'>
+        <% @user_trails.each do |trail| %>
+          <%= render partial: "trail", locals: { trail: trail } %>
+        <% end %>
+      </div>
+    <% end %>
+
+    <div class="W_titles">
+      <%= link_to "Все маршруты", trails_path %>
+    </div>
+
+    <div class='M_briks'>
+      <% @other_trails.each do |trail| %>
+        <%= render partial: "trails/trail", locals: { trail: trail } %>
       <% end %>
+    </div>
 
-
-        <h1><%= link_to "Все маршруты", trails_path %></h1>
-
-        <div class='briks'>
-          <% @other_trails.each do |trail| %>
-            <%= render partial: "trails/trail", locals: { trail: trail } %>
-          <% end %>
-        </div>
-
-      </div>
-
-      <div class="fandoms">
-          <% @fandoms.each do |fandom| %>
-            <%= render partial: "fandom", locals: { fandom: fandom } %>
-          <% end %>
-        <%= link_to "новый фандом", new_admin_fandom_path %>
-      </div>
   </div>
+
+    <div class="O_fandoms">
+      <h1>фандомы</h1>
+
+        <% @fandoms.each do |fandom| %>
+          <%= render partial: "fandom", locals: { fandom: fandom } %>
+        <% end %>
+
+      <%= link_to "новый фандом", new_admin_fandom_path %>
+    </div>
+  </div>
+</div>
 
 </body>

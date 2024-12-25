@@ -1,0 +1,95 @@
+/* fandoms block */
+.W_Fandoms {
+    display: flex;
+    flex-direction: row;
+
+    a {
+        font-size: 1.375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-decoration-line: none;
+        cursor: pointer;
+    }
+
+    a:hover {
+        text-decoration-line: underline;
+    }
+    
+    .fan {
+        display: flex;
+        padding: 0 5vw;
+        gap: 1.5vw;
+        flex-direction: column;
+    }
+}
+
+/* trails blocks */
+.W_titles {
+    
+    display: flex;
+    flex-direction: column;
+    padding: 1vw 5vw;
+    gap: 20px;
+
+    a {
+        font-size: 2.5rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 95.388%;
+        text-transform: lowercase;
+    }
+
+    h2 {
+        font-size: 28px;
+        font-weight: 650;
+        text-transform: lowercase;
+    }
+    
+}
+
+.W_trailHead {
+
+    h2 {
+        font-size: 2rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-transform: lowercase;
+        background-color: var(--black);
+        color: var(--white);
+    }
+
+    h3 {
+        font-size: 1.375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-decoration-line: underline;
+
+        margin: 0.5vw 0 0.7vw 0;
+        padding: 0.25vw 0.5vw;
+        width: fit-content;
+        text-transform: lowercase;
+    }
+}
+
+.W_buttons {
+
+    margin-top: 3vw;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5vw;
+
+    justify-content: space-between;
+    align-items: baseline;
+
+    a {
+        font-size: 1.375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-decoration-line: underline;
+        text-transform: lowercase;
+    }
+}

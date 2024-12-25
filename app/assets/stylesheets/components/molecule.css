@@ -1,0 +1,7 @@
+.M_briks {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1.5vw 5vw 4vw;
+    gap: 1.5vw;
+    justify-content: space-between;
+}

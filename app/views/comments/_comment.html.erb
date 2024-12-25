@@ -1,7 +1,11 @@
 <div class="comment <%= 'reply' if comment.comment_id != nil %>" id="<%= dom_id comment %>">
   <%= turbo_frame_tag dom_id(comment) do %>
   <p>
-    <%= comment.created_at %>
+    <% if comment.user.present? && comment.user.profile.present?%>
+         <%= comment.user.profile.nickname %>
+     <% else %>
+         User Deleted
+     <% end %>
   </p>
 
   <p>

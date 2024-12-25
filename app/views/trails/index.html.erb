@@ -1,25 +1,27 @@
-<div class='trails'>
-
-  <h1>
-    <%= link_to "All trails", trails_path %>
-    
-    <% Trail.tag_counts_on(:tags).each do |tag| %>
-      <%= link_to tag.name, tagged_trails_path(tag.name) %>
-    <% end %>
-    
-    <br>
-
+<div class='O_trails'>
     <% if can? :create, Trail %>
-      <%= link_to 'New Trail', new_trail_path %>
+      
+      <div class="W_titles">
+        <%= link_to 'новый маршрут', new_admin_trail_path %>
+        <%= link_to "мои маршруты", profile_path(current_user.profile) %>
+      </div>
+
+      <div class='M_briks'>
+        <% @user_trails.each do |trail| %>
+          <%= render partial: "trail", locals: { trail: trail } %>
+        <% end %>
+      </div>
     <% end %>
-  </h1>
 
 
-  <div class='briks'>
-    <% Trail.all.each do |trail| %>
-      <%= render partial: "trail", locals: { trail: trail } %>
-    <% end %>
-  </div>
+    <div class="W_titles">
+      <%= link_to "Все маршруты", trails_path %>
+    </div>
 
-    
-</div>
+    <div class='M_briks'>
+      <% @other_trails.each do |trail| %>
+        <%= render partial: "trails/trail", locals: { trail: trail } %>
+      <% end %>
+    </div>
+
+    </div>

@@ -7,13 +7,18 @@ class TrailsController < ApplicationController
 
 
     def index
-        if current_user && current_user.admin?
-          @trails = Trail.all.order(created_at: :desc)
-        elsif current_user
-          @trails = current_user.trails  
-        else
-            @trail = Trail.where(public: true)  
-        end
+      @trails = Trail.all.order(created_at: :desc)
+
+      if current_user && current_user.admin?
+        @user_trails = @trails
+        @other_trails = []
+      elsif current_user
+        @user_trails = current_user.trails  
+        @other_trails = @trails.where(public: true).where.not(id: @user_trails.pluck(:id))  
+      else
+        @user_trails = []
+        @other_trails = @trails.where(public: true)  
+      end
     end
 
     def by_tag

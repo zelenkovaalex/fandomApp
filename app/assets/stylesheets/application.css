@@ -4,4 +4,5 @@
   *= require fonts
   *= require basics
   *= require_tree ./bodies
+  *= require_tree ./components   
 */

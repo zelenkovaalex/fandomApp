@@ -1,8 +1,19 @@
-<div class="trail">
-  <h2><%= trail.title %></h2>
-  <h3><%= trail.fandom.name %></h3>
-  <p><%= trail.body %></p>
+<div class="O_trail">
+  
+  <div class="W_trailHead">
+    <h2><%= trail.title %></h2>
+    <h3><%= trail.fandom.name %></h3>
+    <p><%# trail.body %></p>
+  </div>
 
-  <%= link_to 'посмотреть', trail_path(trail) %>
+  <% if current_user != nil && (current_user.id == trail.user_id || current_user.admin?) %>
+    <div class='W_buttons'>
+      <%= render partial: "like/button", locals: {likeable: trail} %>
+      <%= link_to 'редактировать', edit_admin_trail_path(trail) %>
+      <%= link_to 'посмотреть', trail_path(trail) %>
+    </div>
+  <% else %>
+    <%= link_to 'посмотреть', trail_path(trail) %>
+  <% end %>
 
 </div>
