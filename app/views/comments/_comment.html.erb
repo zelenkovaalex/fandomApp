@@ -1,12 +1,12 @@
-<div class="comment <%= 'reply' if comment.comment_id != nil %>" id="<%= dom_id comment %>">
+<div class="M_comment <%= 'reply' if comment.comment_id != nil %>" id="<%= dom_id comment %>">
   <%= turbo_frame_tag dom_id(comment) do %>
-  <p>
+  <h3>
     <% if comment.user.present? && comment.user.profile.present?%>
          <%= comment.user.profile.nickname %>
      <% else %>
          User Deleted
      <% end %>
-  </p>
+  </h3>
 
   <p>
     <%= comment.body %>
@@ -23,6 +23,6 @@
              } %>
 
   <% if comment.replies.any? %>
-  <%= render comment.replies, partial: "comments/comment", as: :comment %>
+    <%= render comment.replies, partial: "comments/comment", as: :comment %>
   <% end %>
 </div>

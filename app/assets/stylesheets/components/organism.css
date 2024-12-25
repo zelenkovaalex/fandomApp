@@ -16,6 +16,83 @@
     }
 }
 
+.O_info {
+    margin: 3vw 0 1vw 5vw;
+
+    h2 {
+        font-size: 36px;
+        font-weight: 600;
+
+        margin-bottom: 0.7vw;
+    }
+
+    h3 {
+        font-size: 20px;
+        font-weight: 400;
+        text-decoration-line: underline;
+
+        color: var(--dark-grey);
+    }
+
+    p {
+        font-size: 28px;
+        font-weight: 400;
+        margin: 2vw 0 1vw 0;
+    }
+}
+
+/* comments */
+
+.O_newComent {
+
+    h2 {
+        padding: 0 0 1vw 0;
+    }
+
+    #comment_body {
+        outline: none;
+        border-bottom: 1px solid var(--black);
+    }
+
+    p {
+        width: 50%;
+        font-size: 22px;
+        font-weight: 400;
+        margin: 2vw 0 0.5vw 0;
+    }
+
+}
+
+.O_replyComment {
+
+    display: flex;
+    justify-content: flex-end;
+    width: 50%;
+
+    h2 {
+        padding: 0 0 1vw 0;
+    }
+
+    #comment_body {
+        width: 50%;
+        outline: none;
+        border-bottom: 1px solid var(--black);
+    }
+
+    p {
+        width: 50%;
+        font-size: 22px;
+        font-weight: 400;
+        margin: 2vw 0 0.5vw 0;
+    }
+
+}
+
+a.back {
+    margin: 2vw 0 0 5vw;
+}
+
+
 /* fandom blocks */
 .O_fandoms {
     display: flex;

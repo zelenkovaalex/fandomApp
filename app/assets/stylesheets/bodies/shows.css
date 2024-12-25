@@ -1,0 +1,10 @@
+body.profiles {
+    .directionBlocks {
+        width: auto;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .sizeBoxes {
+        width: 50%;
+    }
+}

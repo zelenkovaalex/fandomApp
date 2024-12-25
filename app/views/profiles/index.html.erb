@@ -1,14 +1,16 @@
-<p style="color: green"><%= notice %></p>
+<body class="community" style="width: 100%;">
 
-<% content_for :title, "Community" %>
+  <div class="A_title">
+    <h1>Сообщество</h1>
+  </div>
 
-<h1>Сообщество</h1>
+  <div class="W_profiles">
+    <% Profile.all.take(6).each do |profileShow| %>
+      <div style="display: flex; align-items: flex-end;">
+        <%= render 'profiles/profile', profile: profileShow %>
+        <%= link_to "глянуть чупачупс", profile_path(profileShow), class: "chillGuy"%>
+      </div>
+    <% end %>
+  </div>
 
-<div id="profiles">
-  <% Profile.all.take(6).each do |profile| %>
-    <%= render profile %>
-    <p>
-      <%= link_to "show this man", profile %> 
-    </p>
-  <% end %>
-</div>
+</body>

@@ -81,10 +81,44 @@
     flex-wrap: wrap;
     gap: 0.5vw;
 
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: baseline;
 
     a {
+        font-size: 1.375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-decoration-line: underline;
+        text-transform: lowercase;
+    }
+}
+
+.W_comments {
+    display: flex;
+    padding: 1vw 5vw;
+    flex-wrap: wrap;
+    flex-direction: column;
+
+    .comment {
+        margin: 0 0 0 5vw;
+
+        p {
+            width: 50%;
+            font-size: 22px;
+            font-weight: 400;
+            margin: 2vw 0 0.5vw 0;
+        }
+    }
+}
+
+.W_profiles {
+    display: flex;
+    flex-wrap: wrap;
+
+    .chillGuy {
+        padding: 1vw 0;
+        
         font-size: 1.375rem;
         font-style: normal;
         font-weight: 400;

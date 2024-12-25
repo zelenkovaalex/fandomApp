@@ -1,40 +1,38 @@
 <body class='show'>
   <p style="color: green"><%= notice %></p>
 
-  <div class='info'>
+  <div class='O_info'>
     <h2><%= @trail.title %></h2>
     <h3><%= @trail.fandom.name %></h3>
     <p><%= @trail.body %></p>
 
     <br>
 
-      <% if user_signed_in? && current_user.admin? %>
-        <%= link_to "редактировать", edit_admin_trail_path(@trail) %> |
-        <%#= button_to 'удалить', @trail, method: :delete %>
-      <% end %>
+    <div class="W_buttons">
+      <% if current_user && (current_user.admin? || current_user == @trail.user) %>
+        <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
+        <%= button_to 'удалить', admin_trail_path(@trail.id), method: :delete %>
+      <% end %> <br>
+    <%= link_to "вернуться", fandoms_url, class: 'back' %>
+    </div>
   </div>
 
+  <div class="W_comments">
+    
+    <div class="O_newComent">
+      <h2>комментарии</h2>
+      <%= render partial: "comments/form", locals: { url: trail_comments_path(@trail), comment: Comment.new } %>
+      <%= turbo_stream_from "comments" %>
+    </div>
 
-  <% if current_user && (current_user.admin? || current_user == @trail.user) %>
-    <%= button_to 'удалить', admin_trail_path(@trail.id), method: :delete %>
-  <% end %>
-
-  <%= link_to "вернуться", fandoms_url, class: 'back' %>
-
-
-  <h2>Comments</h2>
-
-  <%= render partial: "comments/form", locals: { url: trail_comments_path(@trail), comment: Comment.new } %>
-
-  <%= turbo_stream_from "comments" %>
-
-  <div id="comments">
-    <% @trail.comments.no_replies.each do |comment| %>
-      <%= render "comments/comment", comment: comment %>
-      <%# if current_user && current_user.admin?%>
-        <%#= button_to 'удалить', @trail, method: :delete %>
-      <%# end%>
-    <% end %>
+    <div id="O_replyComment">
+      <% @trail.comments.no_replies.each do |comment| %>
+        <%= render "comments/comment", comment: comment %>
+        <%# if current_user && current_user.admin?%>
+          <%#= button_to 'удалить', @trail, method: :delete %>
+        <%# end%>
+      <% end %>
+    </div>
   </div>
 
 </body>

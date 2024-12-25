@@ -177,6 +177,7 @@ def create_trail(quantity)
         trail = fandom.trails.create!(
           title: @titles.sample, 
           fandom: fandom, 
+          city: @cities.sample,
           user: user, 
           trail_time: get_random_time, 
           trail_level: get_random_level, 

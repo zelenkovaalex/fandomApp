@@ -6,6 +6,8 @@
 body {
     font-family: 'Formular', sans-serif;
     background-color: var(--white);
+
+    width: fit-content;
     
     nav {
         width: 100%;
