@@ -1,9 +1,11 @@
 <nav class="menuBar">
   <div class='main'>
     <%= link_to "rutas", root_url, class: "A_Name"%>
-    <%= link_to "фандомы", fandoms_url %>
-    <%= link_to "сообщество", profiles_url %>
-    <%= link_to "о нас", about_path %>
+    <div class="mainWeb">
+       <%= link_to "фандомы", fandoms_url %>
+      <%= link_to "сообщество", profiles_url %>
+      <%= link_to "о нас", about_path %>
+    </div>
   </div>
   
   <div class='slave'>
@@ -13,5 +15,8 @@
     <% else %>
       <%= link_to "вход", new_user_session_path %>
     <% end %>
+  </div>
+  <div class="burger">
+    <%= image_tag '/assets/burger.png', class: 'burger' %>
   </div>
 </nav>
