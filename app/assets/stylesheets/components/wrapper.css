@@ -145,6 +145,14 @@
     margin: 2vw 30%;
 }
 
+/* comments */
+
+.W_commentInputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
 /* basic pages --> about */
 
 .W_welcomeAbout {

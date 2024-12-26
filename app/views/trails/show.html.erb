@@ -20,7 +20,6 @@
   <div class="W_comments">
     
     <div class="O_newComent">
-      <h2>комментарии</h2>
       <%= render partial: "comments/form", locals: { url: trail_comments_path(@trail), comment: Comment.new } %>
       <%= turbo_stream_from "comments" %>
     </div>
