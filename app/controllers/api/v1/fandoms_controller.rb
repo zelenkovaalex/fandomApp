@@ -6,6 +6,7 @@ class Api::V1::FandomsController < ApplicationController
   end
 
   def show
-    @fandom = Fandom.find_by(id: params[:id])
+    @fandom = Fandom.find(params[:id])
+    render 'api/v1/fandoms/show' # Render the show view for JSON
   end
-
+end

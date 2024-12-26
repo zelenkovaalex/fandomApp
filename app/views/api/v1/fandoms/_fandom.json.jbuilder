@@ -1,2 +1,6 @@
 json.extract! fandom, :id, :name, :description
-json.url fandom_url(fandom, format: :json)
+
+json.profile do
+  json.name fandom.user.profile.name if fandom.user&.profile
+end
+

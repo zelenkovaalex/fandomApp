@@ -37,7 +37,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :trails, only: [:index, :show]
       resources :fandoms, only: [:index, :show]
-      resources :profiles, only: [:index, :show, :community]
+      resources :profiles, only: [:index, :show]
     end
   end
 

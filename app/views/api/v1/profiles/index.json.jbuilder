@@ -1,1 +1,3 @@
-json.array! @profiles, partial: "api/v1/profiles/profile", as: :profile
+json.array! @profiles do |profile|
+    json.extract! profile, :user_id, :name, :nickname, :fandom_id, :bio, :city
+end
