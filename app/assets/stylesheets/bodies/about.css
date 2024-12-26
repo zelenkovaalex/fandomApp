@@ -1,0 +1,123 @@
+@media only screen and (min-device-width: 1680px) {
+
+body#about {
+    /* background-image: url('about.jpg');
+    background-size: cover; */
+    width: 100%;
+
+    .laptopAboutBlur {
+        background-image: url('laptopBack.png');
+        background-size: cover;
+        width: 100%;
+        height: 29vw;
+
+        margin-top: 8vw;
+    }
+    .laptopAbout {
+        margin: -7vw 11vw;
+        width: 76vw;
+    }
+
+    .W_company {
+        .backBlurs {
+            background-image: url('backBlurs.jpg');
+            background-size: cover;
+            width: 83.94vw;
+            height: 21.22vw;
+
+            margin: 7vw 8vw;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .peoples {
+            display: flex;
+            flex-direction: row;
+            gap: 200px;
+            margin: 24vw 14vw;
+
+            .firstTwo {
+                display: flex;
+                gap: 20px
+            }
+            .secondTwo {
+                display: flex;
+                gap: 20px;
+            }
+        }
+
+        .M_person {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+
+            .chillGuy {
+                width: 14.86vw;
+                height: 14.76vw;
+            }
+        }
+    }
+
+    .W_inspAbout {
+        .backSher {
+            background-image: url('backSher.jpg');
+            background-size: cover;
+            width: 75.94vw;
+            height: 21.22vw;
+
+            margin: 4vw 9vw;
+            position: absolute;
+            z-index: -1;
+        }
+        .blures{
+            display: flex;
+            flex-direction: row;
+            gap: 20px;
+            margin: 14vw 4vw 0;
+            
+            .blur {
+                width: 22vw;
+                height: 22vw;
+            }
+
+            h1 {
+                color: #FEFEFE;
+                background-color: var(--black);
+
+                font-size: 2rem;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 103.233%;
+                text-transform: lowercase;
+
+                margin-top: -0.5vw
+            }
+        }
+    }
+
+    .W_favFandoms {
+        .twinPeaks{
+            width: 40vw;
+            height: 35vw;
+            margin: 7vw -2vw;
+        }
+    }
+
+    .W_mailer {
+        .byeBlur {
+            width: 100%;
+            margin: 17vw 0 0 0;
+        }
+
+        .grey {
+            width: 100%;
+            height: 26.30vw;
+            position: absolute;
+            z-index: -1;
+            background-color: var(--light-grey);
+            margin-top: -13vw;
+        }
+    }
+}
+
+}

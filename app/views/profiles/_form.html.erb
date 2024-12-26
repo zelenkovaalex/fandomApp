@@ -1,4 +1,4 @@
-<%= form_with(model: profile) do |form| %>
+<%= form_with(model: profile, html: { class: "W_inputs" }) do |form| %>
   <% if profile.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
@@ -11,32 +11,38 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
+  <div class="A_input">
+    <p>имя</p>
     <%= form.text_field :name %>
   </div>
 
-  <div>
-    <%= form.label :nickname, style: "display: block" %>
+  <div class="A_input">
+   <p>кликуха</p>
     <%= form.text_field :nickname %>
   </div>
 
-  <div>
-    <%= form.label :city, style: "display: block" %>
+  <div class="A_input">
+    <p>место проживания</p>
     <%= form.text_field :city %>
   </div>
 
-  <div>
-    <%= form.label :bio, style: "display: block" %>
+  <div class="A_input">
+    <p>обо мне</p>
     <%= form.text_area :bio %>
   </div>
 
-  <div>
-    <%= form.label :avatar, style: "display: block" %>
+  <div class="A_input">
+    <p>аватарочка</p> <br>
+    <h3>(мы работаем над ее реализацией)</h3>
     <%= form.text_field :avatar %>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="A_commit">
+    <%= form.submit "обновиться"%>
+  </div>
+
+  <div class="A_sessions">
+    <%= link_to "посмотреть мой профиль", @profile %> <br>
+    <%= link_to "назад в сообщество", profiles_path %>
   </div>
 <% end %>

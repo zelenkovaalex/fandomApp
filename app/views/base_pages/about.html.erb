@@ -1,62 +1,159 @@
-<body id='about'>
-    <div class='firstBlock'>
-        <div class='images'>
-        <%= image_tag '/assets/about01.jpg', class: 'photo01' %> 
-        <%= image_tag '/assets/about02.jpg', class: 'photo02' %> 
-        <%= image_tag '/assets/about03.jpg', class: 'photo03' %> 
-        <%= image_tag '/assets/about04.jpg', class: 'photo04' %> 
-        <%= image_tag '/assets/about05.jpg', class: 'photo05' %> 
-        </div>   
-
-        <h1>rutas</h1>
-        <p>медиа-сервис о кастомных маршрутах по фандомам</p>
-    </div>
-
-    <div class='secondBlock'>
-        <div class='titleBlock'>
-            <h2>Дарим приключения</h2>
-            <p>На нашем сайте ты можешь выбрать свой любимый фандом и отправиться исследовать мир по уникальным маршрутам</p>
-        </div>
-
-        <%= image_tag '/assets/mockup02.png', class: 'photo1' %> 
-    </div>
-
-    <div class='thirdBlock'>
-        <div class='images01'>
-        <%= image_tag '/assets/about06.jpg', class: 'photo2' %> 
-        <%= image_tag '/assets/card02.png', class: 'photo3' %> 
-        <%= image_tag '/assets/card03.png', class: 'photo4' %> 
-        </div>
-
-        <div class='titleBlock'>
-            <h2>Помогаем найти компаньонов для путешествий</h2>
-            <p>В нашем сообществе ты можешь найти единомышленников и разделить с ними яркие эмоции от прогулок</p>
+<body id="about">
+    <div class="W_welcomeAbout">
+        <div class="W_welTitle">
+            <h1>путешествуй</h1>
+            <h1>по следам героев</h1>
+            <h1>с rutas ––</h1>
+            <h1>твоим проводником</h1>
+            <h1>по миру фандомов</h1>
         </div>
     </div>
 
-    <div class='fourthBlock'>
-        <div class='images02'>
-        <%= image_tag '/assets/about07.jpg', class: 'photo5' %> 
-        <%= image_tag '/assets/about08.jpg', class: 'photo6' %> 
-        <%= image_tag '/assets/about09.jpg', class: 'photo7' %> 
+    <div class="W_adventure">
+        <div class="W_textTitles">
+            <h1>дарим приключения</h1>
+            <p>На&nbsp;нашем сайте ты&nbsp;можешь выбрать свой любимый фандом и&nbsp;отправиться исследовать мир по&nbsp;уникальным маршрутам</p>
         </div>
-
-        <div class='titleBlock'>
-            <h2>Вдохновляем делиться маршрутами</h2>
-            <p>На нашем сайте можно выбирать места на карте, создавать уникальные маршруты по фандомам и делиться ими с другими</p>
+        <div class="laptopAboutBlur">
+            <div><%= image_tag '/assets/laptopAbout.png', class: 'laptopAbout' %></div>
         </div>
     </div>
 
-    <div class='fifthBlock'>
-        <div class='titleBlock'>
-            <h2>Погнали вместе ходить-бродить?</h2>
-            <p>Оставь здесь свой e-mail, и мы предупредим тебя о запуске нашего сервиса</p>
+    <div class="W_company">
+        <div class="W_textTitles">
+            <h1>помогаем найти компаньонов</h1>
+            <p>В&nbsp;нашем сообществе ты&nbsp;можешь найти единомышленников и&nbsp;разделить с&nbsp;ними яркие эмоции от&nbsp;прогулок</p>
+        </div>
+        <div class="backBlurs"></div>
+        <div class="peoples">
+            <div class="firstTwo">
+                <div class="M_person">
+                    <%= image_tag '/assets/person1.jpg', class: 'chillGuy' %>
+                    <div class="W_textPerson">
+                        <h2>adventurer</h2>
+                        <div class="W_tags">
+                            <h3>владивосток</h3>
+                            <h3>властелин колец</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="M_person">
+                    <%= image_tag '/assets/person2.jpg', class: 'chillGuy' %>
+                    <div class="W_textPerson">
+                        <h2>elftrav</h2>
+                        <div class="W_tags">
+                            <h3>сочи</h3>
+                            <h3>властелин колец</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="secondTwo">
+                <div class="M_person">
+                    <%= image_tag '/assets/person3.jpg', class: 'chillGuy' %>
+                    <div class="W_textPerson">
+                        <h2>anabelle</h2>
+                        <div class="W_tags">
+                            <h3>тюмень</h3>
+                            <h3>сумерки</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="M_person">
+                    <%= image_tag '/assets/person4.jpg', class: 'chillGuy' %>
+                    <div class="W_textPerson">
+                        <h2>notclown</h2>
+                        <div class="W_tags">
+                            <h3>анапа</h3>
+                            <h3>сумерки</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="W_inspAbout">
+        <div class="W_textTitles">
+            <h1>вдохновляем делиться маршрутами</h1>
+            <p>На&nbsp;нашем сайте можно выбирать места на&nbsp;карте, создавать уникальные маршруты по&nbsp;фандомам и&nbsp;делиться ими с&nbsp;другими</p>
+        </div>
+        <div>
+            <div class="backSher"></div>
+            <div class="blures">
+                <div class="blur1">
+                    <%= image_tag '/assets/blur1.jpg', class: 'blur' %>
+                    <h1>шерлок и мистика</h1>
+                </div>
+                <div class="blur2">
+                    <%= image_tag '/assets/blur2.jpg', class: 'blur' %>
+                    <h1>призраки и тайны старых улиц</h1>
+                </div>
+                <div class="blur3">
+                    <%= image_tag '/assets/blur3.jpg', class: 'blur' %>
+                    <h1>дорогами ватсона</h1>
+                </div>
+                <div class="blur4">
+                    <%= image_tag '/assets/blur4.jpg', class: 'blur' %>
+                    <h1>на крыльях ветра и дедукции</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="W_favFandoms">
+        <div class="W_textTitles">
+            <h1>собираем все твои любимые фандомы</h1>
+            <p>На&nbsp;нашем сайте есть множество фАНДОМОВ на&nbsp;любой вкус и&nbsp;цвет&nbsp;&mdash; выбирай&nbsp;то, что придется по&nbsp;душе именно тебе</p>
+        </div>
+        <div style="display: flex;">
+            <div class="W_fandomAbout">
+                <div class="fandom">
+                    <p>(10)</p>
+                    <h3>сумерки</h3>
+                </div>
+                <div class="fandom">
+                    <p>(06)</p>
+                    <h3>твин пикс</h3>
+                </div>
+                <div class="fandom">
+                    <p>(08)</p>
+                    <h3>шерлок</h3>
+                </div>
+                <div class="fandom">
+                    <p>(14)</p>
+                    <h3>звёздные войны</h3>
+                </div>
+                <div class="fandom">
+                    <p>(09)</p>
+                    <h3>дом странных детей</h3>
+                </div>
+                <div class="fandom">
+                    <p>(12)</p>
+                    <h3>властелин колец</h3>
+                </div>
+                <div class="fandom">
+                    <p>(04)</p>
+                    <h3>наруто</h3>
+                </div>
+            </div>
+            <%= image_tag '/assets/twinPeaks.png', class: 'twinPeaks' %>
+        </div>
+    </div>
+
+    <div class="W_mailer">
+        <div class="W_textTitles">
+            <h1>погнали вместе ходить-бродить??</h1>
+            <p>Оставь здесь свой e-mail, и&nbsp;мы предупредим тебя о&nbsp;запуске rutas</p>
         </div>
 
         <div id="new_subscription">
             <%= render 'subscriptions/form' %>
         </div>
-    </div>
 
-<%= render 'application/footer' %>
+        <div><%= image_tag '/assets/byeBlur.png', class: 'byeBlur' %></div>
+
+        <div class="grey"></div>
+    </div>
+    
 </body>

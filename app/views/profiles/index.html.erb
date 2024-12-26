@@ -1,16 +1,14 @@
 <body class="community" style="width: 100%;">
-
   <div class="A_title">
     <h1>Сообщество</h1>
   </div>
-
-  <div class="W_profiles">
+  <div class="W_wrapprof">
     <% Profile.all.take(6).each do |profileShow| %>
-      <div style="display: flex; align-items: flex-end;">
-        <%= render 'profiles/profile', profile: profileShow %>
-        <%= link_to "глянуть чупачупс", profile_path(profileShow), class: "chillGuy"%>
+      <div class="W_profiles">
+        <div class="M_profInf">
+          <%= render 'profiles/profileShow', profile: profileShow %>
+        </div>
       </div>
     <% end %>
   </div>
-
 </body>

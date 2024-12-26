@@ -1,0 +1,33 @@
+body#welcome {
+    /* background-image: url('main.jpg');
+    background-size: cover; */
+    width: 100%;
+
+    .gameOgThrones {
+        width: 34vw;
+        margin: 13vw 10vw;
+        height: 18vw;
+    }
+
+    .W_favFandoms {
+        .W_fandomAbout {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 15vw 13vw;
+        }
+    }
+
+    .W_recsYoda {
+        .backYoda {
+            background-image: url('backYoda.jpg');
+            background-size: cover;
+            width: 75.94vw;
+            height: 21.22vw;
+
+            margin: 4vw 9vw;
+            position: absolute;
+            z-index: -1;
+        }
+    }
+}

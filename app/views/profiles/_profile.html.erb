@@ -11,11 +11,12 @@
   <p><%= profile.bio %></p>
 
   <div class="W_buttons">
-    <% if current_user.admin? || current_user.id == @profile.user_id %>
+    <% if profile && current_user && (current_user.admin? || current_user.id == profile.user_id) %>
       <%= link_to "редактировать", edit_profile_path(profile) %>
-      <%= button_to "удалить", @profile, method: :delete %>
+      <%= button_to "удалить", profile, method: :delete %>
     <% end %>
+  </div> 
 
-    <%= link_to "вернуться", profiles_path %>
+    <%#= link_to "вернуться", profiles_path %>
   </div>
 </div>

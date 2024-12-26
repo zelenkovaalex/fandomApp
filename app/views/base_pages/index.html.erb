@@ -1,76 +1,191 @@
 <body id='welcome'>
 
-  <div class='zeroBlock'>
-    <h1>rutas</h1>
-  
-    <div class='buttsNonClick'>
-      <h3>смотри</h3>
-      <h3>создавай</h3>
-      <h3>гуляй</h3>
-    </div>
+  <div class='W_welcome'>
+      <h2>фандомщик и путешественник</h2>
+      <h3>куда отправимся сегодня?</h3>
   </div>
 
-  <div class='fisrtBlock'>
-    <div class='hiBlock'>
-    <h2>Приветствуем тебя, путник!</h2>
-    <p>Наконец-то ты нашел нас: мы — rutas — <br> медиа-сервис о кастомных маршрутах</p>
-    </div>
+  <div class="W_recs">
+      <div class="W_textTitles">
+          <h1>рекомендуем</h1>
+      </div>
+      <div>
+          <div class="blures">
+              <div class="blur1">
+                  <%= image_tag '/assets/blur1.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>Путь через коноху</h1>
+                    <div class="W_tags">
+                        <h3>химки</h3>
+                        <h3>наруто</h3>
+                    </div>
+                  </div>
+              </div>
+              <div class="blur2">
+                  <%= image_tag '/assets/blur2.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>волшебный город: по следам Гарри поттера</h1>
+                    <div class="W_tags">
+                      <h3>москва</h3>
+                      <h3>гарри поттер</h3>
+                  </div>
+                  </div>
+              </div>
+              <div class="blur3">
+                  <%= image_tag '/assets/blur3.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>следуй за ФРОДО</h1>
+                    <div class="W_tags">
+                        <h3>тула</h3>
+                        <h3>властелин колец</h3>
+                    </div>
+                  </div>
+              </div>
+              <div class="blur4">
+                  <%= image_tag '/assets/blur4.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>маршрут для джедая: звёздный путь </h1>
+                    <div class="W_tags">
+                        <h3>Санкт-Петербург</h3>
+                        <h3>звёздные войны колец</h3>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 
-  <div class='secondBlock'>
-    <div class='hiBlock'>
-      <h2>Дарим приключения</h2>
-      <p>У нас ты можешь выбрать свой фандом и отправиться в путешествие по уникальным маршрутам</p>
-      
-      <%= image_tag '/assets/mockup01.jpg', class: 'photo1' %> 
-    </div>
+  <div class="W_recs">
+      <div class="W_textTitles">
+          <h1>сейчас проходят</h1>
+      </div>
+      <div>
+          <div class="blures">
+              <div class="blur5">
+                <%= image_tag '/assets/blur5.jpg', class: 'blurr' %>
+                <div class="inf">
+                  <h1>новые территории: по следам сатору годзё </h1>
+                  <div class="W_tags">
+                      <h3>токио</h3>
+                      <h3>магическая битва</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="blur6">
+                <%= image_tag '/assets/blur6.jpg', class: 'blurr' %>
+                <div class="inf">
+                  <h1>в гостях у мортиши</h1>
+                  <div class="W_tags">
+                    <h3>ижевск</h3>
+                    <h3>семейка аддамс</h3>
+                </div>
+                </div>
+              </div>
+          </div>
+      </div>
   </div>
 
-  <div class="thirdBlock">
-    <div class='hiBlock'>
-      <h2>Время создавать маршруты!</h2>
-      <p>Мы предлагаем неограниченный выбор фандомов для создания твоего уникального маршрута</p>
+  <div class="W_favFandoms">
+    <div class="W_textTitles">
+        <h1>фандомы для тебя</h1>
     </div>
-
-    <div class='fandomNames'>
-      <% @allFandoms.each do |fandom| %>
-        <% yellow_background_fandoms = ["Шерлок", "My Little Pony", "Ван Пис", "Игра Престолов", "Звёздный десант", "Властелин Колец", "Баскетол Куроко", "Наруто", "Клуб романтики", "Великолепный век"] %>
-        <% grey_background_fandoms = ["Атлантида", "1984", "Хроники Нарнии", "DC Comics", "Marvel", "Гарри Поттер", "Однажды в сказке"] %>
-        <div class="fandom-block
-          <%= 'yellow' if yellow_background_fandoms.include?(fandom) %>
-          <%= 'grey' if grey_background_fandoms.include?(fandom) %>
-          <%= 'white' unless yellow_background_fandoms.include?(fandom) || grey_background_fandoms.include?(fandom) %>">
-          <%= fandom %>
+    <div style="display: flex;">
+        <div class="W_fandomAbout">
+            <div class="fandom">
+                <p>(08)</p>
+                <h3>властелин колец</h3>
+            </div>
+            <div class="fandom">
+                <p>(12)</p>
+                <h3>гарри поттер</h3>
+            </div>
+            <div class="fandom">
+                <p>(04)</p>
+                <h3>игра престолов</h3>
+            </div>
+            <div class="fandom">
+                <p>(02)</p>
+                <h3>дюна</h3>
+            </div>
+            <div class="fandom">
+                <p>(14)</p>
+                <h3>звёздные войны</h3>
+            </div>
+            <div class="fandom">
+                <p>(06)</p>
+                <h3>гравити фолз</h3>
+            </div>
+            <div class="fandom">
+                <p>(04)</p>
+                <h3>магическая битва</h3>
+            </div>
         </div>
-      <% end %>
+        <%= image_tag '/assets/gameOgThrones.png', class: 'gameOgThrones' %>
     </div>
   </div>
 
-  <div class='fourthBlock'>
-    <div class='hiBlock'>
-        <h2>Приключения ждут!</h2>
-        <p>Создавай свои маршруты или проходи <br> уже готовые</p>
-    </div>
-    <div class='helloCard'>
-        <h3>King's Cross station</h3>
-        <p>Гарри Поттер</p>
-    </div>
-
-    <%= image_tag '/assets/card01.png', class: 'helloCard01' %> 
-
+  <div class="W_recsYoda">
+      <div class="W_textTitles">
+          <h1>йода-маршруты</h1>
+      </div>
+      <div>
+          <div class="backYoda"></div>
+          <div class="blures">
+              <div class="blur1">
+                  <%= image_tag '/assets/blur1.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>йода покажет</h1>
+                    <div class="W_tags">
+                        <h3>лобня</h3>
+                        <h3>звёздные войны</h3>
+                    </div>
+                  </div>
+              </div>
+              <div class="blur2">
+                  <%= image_tag '/assets/blur2.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>маршрут по запросу бейби-йоды </h1>
+                    <div class="W_tags">
+                        <h3>Санкт-Петербург</h3>
+                        <h3>звёздные войны</h3>
+                    </div>
+                  </div>
+              </div>
+              <div class="blur3">
+                  <%= image_tag '/assets/blur3.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>мудрейшая тропа</h1>
+                    <div class="W_tags">
+                        <h3>омск</h3>
+                        <h3>звёздные войны</h3>
+                    </div>
+                  </div>
+              </div>
+              <div class="blur4">
+                  <%= image_tag '/assets/blur4.jpg', class: 'blur' %>
+                  <div class="inf">
+                    <h1>мастер-йода наставил на этот путь</h1>
+                    <div class="W_tags">
+                        <h3>краснознаменск</h3>
+                        <h3>звёздные войны</h3>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      </div>
   </div>
 
-  <div class='fifthBlock'>
-    <div class='hiBlock'>
-      <h2>Будем на связи?</h2>
-      <p>Чтобы не заплутать без нас и узнать о запуске, оставляй свою почту! </p>
+  <div class="W_mailer">
+    <div class="W_textTitles">
+        <h1>погнали вместе ходить-бродить??</h1>
+        <p>Оставь здесь свой e-mail, и&nbsp;мы предупредим тебя о&nbsp;запуске rutas</p>
     </div>
 
     <div id="new_subscription">
-      <%= render 'subscriptions/form' %>
+        <%= render 'subscriptions/form' %>
     </div>
+
+    <div><%= image_tag '/assets/byeBlocks.png', class: 'byeBlocks', style: 'width: 100%;'%></div>
+  
   </div>
-
-
-<%= render 'application/footer' %>
 </body>

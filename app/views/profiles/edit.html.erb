@@ -1,12 +1,9 @@
-<% content_for :title, "Editing profile" %>
+<body class="profileEdit" style="width: 100%;">
+  <div class="M_hello">
+    <h2>редактировать профиль</h2>
+  </div>
 
-<h1>Editing profile</h1>
 
-<%= render "form", profile: @profile %>
+  <%= render "form", profile: @profile %>
 
-<br>
-
-<div>
-  <%= link_to "Show this profile", @profile %> |
-  <%= link_to "Back to profiles", profiles_path %>
-</div>
+</body>

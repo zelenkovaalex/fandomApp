@@ -112,18 +112,319 @@
     }
 }
 
-.W_profiles {
-    display: flex;
+/* profiles */
+
+.W_wrapprof {
+    display: flexbox;
     flex-wrap: wrap;
 
-    .chillGuy {
-        padding: 1vw 0;
+    .W_profiles {
+        display: flex;
+        align-items: flex-end;
+    
+        .chillGuy {
+            padding: 1vw 0;
+            
+            font-size: 1.375rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-decoration-line: underline;
+            text-transform: lowercase;
+        }
+    }
+}
+
+
+/* authorisation shit */
+
+.W_inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 2vw 30%;
+}
+
+/* basic pages --> about */
+
+.W_welcomeAbout {
+    background-image: url('aboutImage.jpg');
+    background-size: cover;
+    width: 100%;
+    height: 52.83vw;
+    display: flex;
+    margin-bottom: 6vw;
+
+    h1 {
+        color: #FFF;
+        background-color: var(--black);
+        width: fit-content;
+
+        font-size: 5.625rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 95.388%;
+    }
+
+    .W_welTitle {
+        margin: 1vw 5vw;
+    }
+}
+
+.W_adventure {
+    /* display: flex; */
+    margin-bottom: 15vw;
+    margin-top: 7vw;
+}
+
+.W_company {
+    /* display: flex; */
+    margin-bottom: 4vw;
+    margin-top: 7vw;
+
+    .M_person {
+        h2 {
+            font-size: 2rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-transform: lowercase;
+        }
+
+        h3 {
+            font-size: 1.375rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-decoration-line: underline;
+        }
+        .W_textPerson {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+}
+
+.W_textTitles {
+    margin-left: 51%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    h1 {
+        font-size: 3.5rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 95.388%;
+        text-transform: lowercase;
+    }
+
+    p {
+        font-size: 1.7rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-transform: lowercase;
+
+        width: 32.44vw;
+        margin-left: 24%;
+    }
+}
+
+.W_inspAbout {
+    margin-bottom: 7vw;
+    margin-top: -15vw;
+    display: flex;
+    flex-direction: column;
+
+    
+}
+
+.W_favFandoms {
+    margin-bottom: 4vw;
+    margin-top: 9vw;
+
+    .W_fandomAbout {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        margin: 15vw 16vw;
+
+        .fandom {
+            display: inline-flex;
+            gap: 10px;
+
+            font-size: 2rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-transform: lowercase;
+            cursor: pointer;
+        }
+
+        .fandom:hover {
+
+            h3,
+            p {
+                background-color: #d3d3d3;
+                color: black;
+                width: fit-content;
+            }
+        }
+
+        h3 {
+            margin-top: -1.5vw;
+        }
+    }
+}
+
+.W_mailer {
+    margin-top: -2vw;
+
+    .W_textTitles {
+        margin-left: 51%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        h1 {
+            width: 25.36vw;
+        }
+
+        p {
+            width: 32.44vw;
+            margin-left: 0;
+        }
+    }
+}
+
+.W_welcome {
+    background-image: url('mainWelcome.png');
+    background-size: cover;
+    width: 100%;
+    height: 50vw;
+    display: flex;
+    flex-direction: column;
+
+    h2 {
+        font-size: 2rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-transform: lowercase;
+
+        margin: 24vw 37vw 5vw;
+    }
+
+    h3 {
+        color: var(--grey);
         
+        font-family: Formular;
+        font-size: 1.375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-transform: lowercase;
+        margin: 9vw 42vw 0;
+    }
+}
+
+.W_recs {
+    margin-bottom: 7vw;
+    display: flex;
+    flex-direction: column;
+
+    .blures {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        margin: 5vw 4vw 0;
+
+        .blur {
+            width: 22vw;
+            height: 22vw;
+        }
+        .blurr {
+            width: 45vw;
+            height: 22vw;
+        }
+
+        h1 {
+            color: #FEFEFE;
+            background-color: var(--black);
+
+            font-size: 2rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-transform: lowercase;
+
+            margin-top: -0.5vw
+        }
+
+        .inf {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    h3 {
         font-size: 1.375rem;
         font-style: normal;
         font-weight: 400;
         line-height: 103.233%;
         text-decoration-line: underline;
-        text-transform: lowercase;
+    }
+}
+
+.W_recsYoda {
+    margin-bottom: 7vw;
+    display: flex;
+    flex-direction: column;
+
+    .blures {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        margin: 14vw 4vw 0;
+
+        .blur {
+            width: 22vw;
+            height: 22vw;
+        }
+        .blurr {
+            width: 45vw;
+            height: 22vw;
+        }
+
+        h1 {
+            color: #FEFEFE;
+            background-color: var(--black);
+
+            font-size: 2rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-transform: lowercase;
+
+            margin-top: -0.5vw
+        }
+
+        .inf {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+    }
+
+    h3 {
+        font-size: 1.375rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-decoration-line: underline;
     }
 }
