@@ -55,6 +55,7 @@
 .A_input {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 
     input {
         border: none;
@@ -98,6 +99,10 @@
         font-weight: 400;
         line-height: 95.388%;
         color: var(--grey);
+    }
+
+    #fandom_id, #duration_unit {
+        width: 20rem;
     }
 }
 

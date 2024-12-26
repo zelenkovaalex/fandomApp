@@ -1,11 +1,12 @@
-<% content_for :title, "New trail" %>
+<body class="newTrail" style="width: 100%;">
+  <% content_for :title, "новый маршрут" %>
 
-<h1>New trail</h1>
+  <%= link_to "вернуться", trails_path, style: "margin: 2vw 5vw;" %>
 
-<%= render partial: "admin/trails/form", locals: { trail: @trail } %> 
+    <div class="M_hello">
+    <h2>новый маршрут</h2>
+  </div>
 
-<br>
+  <%= render partial: "admin/trails/form", locals: { trail: @trail } %> 
 
-<div>
-  <%= link_to "Back to trails", trails_path %>
-</div>
+</body>
