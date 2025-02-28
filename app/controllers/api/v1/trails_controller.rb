@@ -24,6 +24,15 @@ class Api::V1::TrailsController < ApplicationController
     end
   end
 
+  def destroy
+      @trail.destroy!
+
+      respond_to do |format|
+        format.html { redirect_to admin_trails_path, status: :see_other, notice: "trail was successfully destroyed." }
+        format.json { head :no_content }
+      end
+    end
+
   private
 
     def trail_params

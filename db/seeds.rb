@@ -113,6 +113,7 @@ def create_users(quantity)
     user = User.create!(user_data)
     created_emails << email
     puts "User created with id #{user.id}"
+    puts "User created with JTI #{user.jti}"
 
     profile_data = {
       user_id: user.id,

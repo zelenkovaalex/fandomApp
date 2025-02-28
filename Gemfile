@@ -10,6 +10,8 @@ gem "sassc"
 gem "meta-tags"
 gem "acts-as-taggable-on"
 gem "rack-cors"
+gem 'devise-jwt'
+gem "jwt"
 
 gem "cancancan"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
