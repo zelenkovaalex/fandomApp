@@ -24,6 +24,18 @@ class Api::V1::SessionsController < Devise::SessionsController
 
   end
 
+  def update
+    respond_to do |format|
+      if @comment.update(comment_params)
+        format.html { redirect_to @comment, notice: "Comment was successfully updated." }
+        format.json { render :show, status: :ok, location: @comment }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     if @user && @user.update_column(:jti, SecureRandom.uuid)
       render json: {
