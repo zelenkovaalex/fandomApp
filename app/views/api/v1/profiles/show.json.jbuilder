@@ -1,1 +1,1 @@
-json.extract! @profile, :user_id, :nickname, :fandom_id, :bio, :city
+json.extract! @profile, :user_id, :nickname, :fandom_id, :bio, :city, :trail
