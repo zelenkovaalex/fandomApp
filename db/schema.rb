@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_04_142057) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_25_201138) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -117,7 +117,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_142057) do
     t.integer "user_id"
     t.boolean "public", default: false
     t.string "city"
-    t.string "status", default: "inactive"
   end
 
   create_table "users", force: :cascade do |t|
@@ -130,11 +129,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_142057) do
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
     t.string "jti", null: false
-    t.integer "trail_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["trail_id"], name: "index_users_on_trail_id"
   end
 
   add_foreign_key "comments", "trails"
@@ -144,5 +141,4 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_04_142057) do
   add_foreign_key "tag_selecteds", "tags"
   add_foreign_key "tag_selecteds", "trails"
   add_foreign_key "taggings", "tags"
-  add_foreign_key "users", "trails"
 end
