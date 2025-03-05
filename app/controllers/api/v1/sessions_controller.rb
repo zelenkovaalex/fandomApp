@@ -75,13 +75,13 @@ class Api::V1::SessionsController < Devise::SessionsController
     end
   end
 
-  def encrypt_payload
-    payload = @user.as_json(only: [:email, :jti])
-    token = JWT.encode(payload, Rails.application.credentials.devise_jwt_secret_key!, 'HS256')
+  def encrypt_payload(payload = {})
+    payload[:exp] = 1.year.from_now.to_i
+    JWT.encode(payload, Rails.application.credentials.devise_jwt_secret_key, 'HS256')
   end
 
   def decrypt_payload
     jwt = request.headers["Authorization"]
-    token = JWT.decode(jwt, Rails.application.credentials.devise_jwt_secret_key!, true, { algorithm: 'HS256' })
+    JWT.decode(jwt, Rails.application.credentials.devise_jwt_secret_key, true, { algorithm: 'HS256' })
   end
 end
