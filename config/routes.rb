@@ -29,21 +29,25 @@ Rails.application.routes.draw do
     resources :comments
     resources :subscriptions
     resources :profiles
+    resources :users
   end
   
   # api // v1
 
-  namespace :api, format: 'json' do
+  namespace :api do
     namespace :v1 do
       resources :trails, only: [:index, :show, :destroy]
       resources :fandoms, only: [:index, :show]
       resources :profiles, only: [:index, :show]
 
       devise_scope :user do
-        post "sign_up", to: "registrations#create"
-        post "sign_in", to: "sessions#create"
-        post "sign_out", to: "sessions#destroy"
+        scope 'sessions' do
+          post "sign_in", to: "sessions#create"
+          post "sign_out", to: "sessions#destroy"
+          get "info", to: "sessions#show"
+        end
       end
+
     end
   end
 
