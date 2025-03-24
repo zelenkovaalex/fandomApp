@@ -22,15 +22,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_23_124804) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "fandom_profiles", force: :cascade do |t|
-    t.integer "fandom_id", null: false
-    t.integer "profile_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["fandom_id"], name: "index_fandom_profiles_on_fandom_id"
-    t.index ["profile_id"], name: "index_fandom_profiles_on_profile_id"
-  end
-
   create_table "fandoms", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
@@ -156,8 +147,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_23_124804) do
 
   add_foreign_key "comments", "trails"
   add_foreign_key "comments", "users"
-  add_foreign_key "fandom_profiles", "fandoms"
-  add_foreign_key "fandom_profiles", "profiles"
   add_foreign_key "fandoms_profiles", "fandoms"
   add_foreign_key "fandoms_profiles", "profiles"
   add_foreign_key "favourites", "trails"

@@ -16,5 +16,7 @@ class Trail < ApplicationRecord
     has_many :tag_selecteds
     has_many :tags, through: :tag_selecteds 
 
+    mount_uploader :trail_image, TrailImageUploader
+
     default_scope { order(created_at: "DESC") }
 end
