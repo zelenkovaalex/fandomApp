@@ -63,7 +63,7 @@ end
 def seed
   reset_db
   create_fandom
-  create_users(6)
+  create_users(10)
   create_trail(2...5)
   create_comments(2..4)
 end
@@ -76,29 +76,41 @@ def create_fandom
   end
 end
 
-# def upload_random_avatar
-#   uploader = AvatarUploader.new(Profile.new, :avatar) # Используем загрузчик для аватаров
-#   uploader.cache!(File.open(Dir.glob(File.join(Rails.root, 'public/uploads/avatars', '*')).sample))
-#   uploader
-# end
+def upload_random_avatar(profile)
+  image_directory = Rails.root.join('app', 'assets', 'images', 'people')
+  image_files = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
+                   .select { |file| File.file?(file) }
+
+  raise "No images found in #{image_directory}" if image_files.empty?
+
+  random_image_path = image_files.sample
+  profile.avatar = File.open(random_image_path) # Присваиваем файл напрямую атрибуту avatar
+
+  puts "Avatar assigned from #{random_image_path}" if profile.avatar.present?
+    rescue => e
+  puts "Error assigning avatar: #{e.message}" # Логируем ошибки
+end
 
 def create_users(quantity)
-  i = 0
+
   created_emails = []
   created_nicknames = []
 
-  quantity.times do
-    email = "user#{i}@email.com"
+  quantity.times do |i|
+     email = "user#{i}@email.com"
 
     # Check for duplicate email
     while created_emails.include?(email)
-      i += 1
-      email = "user#{i}@email.com"
+      email = "user#{rand(1000)}@email.com"
     end
 
+    # Generate unique nickname
     nickname = @nicknames.sample
     while created_nicknames.include?(nickname)
       nickname = @nicknames.sample
+      if @nicknames.all? { |n| created_nicknames.include?(n) }
+        raise "All nicknames are already used!"
+      end
     end
 
     user_data = {
@@ -106,9 +118,7 @@ def create_users(quantity)
       password: "passpass"
     }
 
-    if i == 0
-      user_data[:admin] = true
-    end
+    user_data[:admin] = true if i == 0
 
     user = User.create!(user_data)
     created_emails << email
@@ -120,27 +130,37 @@ def create_users(quantity)
       nickname: nickname,
       bio: @bios.sample,
       city: @cities.sample,
-      # avatar: upload_random_avatar,
       fandom_id: Fandom.all.sample.id
     }
 
-    created_nicknames << nickname
+    profile = Profile.new(profile_data)
 
-    puts profile_data
+    upload_random_avatar(profile) # Загружаем аватар
 
-    Profile.create(profile_data)
-    puts "Profile created for user with id #{user.id}: #{profile_data[:nickname]}"
+    profile.save! # Сохраняем профиль с аватаром
+    puts "Profile created for user with id #{user.id}: #{profile.nickname}"
 
+    create_fandoms_for_user(user)
+
+    # Выбираем случайные фандомы для профиля
     random_fandoms = Fandom.all.sample(rand(2..5)) # Assign 2 to 5 random fandoms
+
+    # Присоединяем фандомы к профилю
+    profile.fandom << random_fandoms
+
+    # Можно распечатать, какие фандомы были присоединены
     random_fandoms.each do |fandom|
-      # user.fandoms << fandom # Assuming you have a has_and_belongs_to_many relationship between user and fandom
-      puts "Fandom #{fandom.name} assigned to user #{user.id}"
+      puts "Fandom #{fandom.name} assigned to profile with id #{profile.id}"
     end
-
-    i += 1
   end
-
 end
+
+def create_fandoms_for_user(user)
+  random_fandoms = Fandom.all.sample(rand(2..5))  
+    random_fandoms.each do |fandom|   
+      puts "Fandom #{fandom.name} assigned to user #{user.id}"   
+    end  
+end 
 
 def get_random_bool
   [true, false].sample

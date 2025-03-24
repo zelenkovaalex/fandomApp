@@ -32,6 +32,15 @@ class Api::UsersController < Api::V1::ApplicationController
     }
   end
 
+  def create
+    user = User.new(user_params)
+    if user.save
+      render json: { message: 'User created successfully', user: user }, status: :created
+    else
+      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def update_profile
     if @profile.update(profile_params)
       render json: {
@@ -86,5 +95,9 @@ class Api::UsersController < Api::V1::ApplicationController
 
   def profile_params
     params.require(:profile).permit(:name, :bio, :avatar)
+  end
+
+  def user_params
+    params.require(:user).permit(:email, :password, :avatar)
   end
 end

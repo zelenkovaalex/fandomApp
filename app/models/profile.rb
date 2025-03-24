@@ -1,10 +1,20 @@
 class Profile < ApplicationRecord
     belongs_to :user
-    has_and_belongs_to_many :fandom, optional: true
+
+    has_and_belongs_to_many :fandoms
+    has_many :trails, through: :user
     
     has_many :created_trails, class_name: 'Trail'
-
+    
+    default_scope { order(created_at: "DESC") }
+    
+    has_one_attached :avatar
     mount_uploader :avatar, AvatarUploader
 
-    default_scope { order(created_at: "DESC") }
+    before_save :log_profile
+
+    def log_profile
+        Rails.logger.debug "Profile before save: #{self.inspect}"
+    end
+
 end

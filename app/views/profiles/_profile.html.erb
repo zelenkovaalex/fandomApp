@@ -1,11 +1,21 @@
 <div id="<%= dom_id profile %>" class="M_profileInf">
-  <p><%= profile.avatar %></p>
+
+  <%= image_tag profile.avatar.url if profile.avatar.present? %>
 
   <h1><%= profile.nickname %></h1>
 
   <div class="M_profileTags">
     <p><%= profile.city %></p>
-    <p><%=  Fandom.all.where(id: profile.fandom_id).first.name %></p>
+    <% if !profile.fandoms.empty? %>
+      <ul>
+        <% profile.fandoms.each do |fandom| %>
+          <li><%= fandom.name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>Не состоит ни в одном фандоме.</p>
+    <% end %>
+    <p><%# fandom = Fandom.all.where(id: profile.fandom_id).first %></p>
   </div>
   
   <p><%= profile.bio %></p>
@@ -17,6 +27,6 @@
     <% end %>
   </div> 
 
-    <%#= link_to "вернуться", profiles_path %>
+    <%= link_to "вернуться", profiles_path %>
   </div>
 </div>

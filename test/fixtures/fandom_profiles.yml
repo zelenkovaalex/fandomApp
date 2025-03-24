@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fandom: one
+  profile: one
+
+two:
+  fandom: two
+  profile: two

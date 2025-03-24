@@ -3,16 +3,6 @@ source "https://rubygems.org"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.2.1", ">= 7.2.1.2"
 
-gem "carrierwave"
-gem "carrierwave-imageoptimizer"
-gem "devise"
-gem "sassc"
-gem "meta-tags"
-gem "acts-as-taggable-on"
-gem "rack-cors"
-gem 'devise-jwt'
-gem "jwt"
-
 gem "cancancan"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -44,7 +34,17 @@ gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
+gem "image_processing", "~> 1.2"
+
+gem "carrierwave", "~> 3.0"
+gem "mini_magick"
+gem "devise"
+gem "sassc"
+gem "meta-tags"
+gem "acts-as-taggable-on"
+gem "rack-cors"
+gem 'devise-jwt'
+gem "jwt"
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

@@ -5,6 +5,7 @@ class Ability
 
   def initialize(user)
     # Define abilities for the user here. For example:
+    user ||= User.new
     
     can :read, Trail, public: true
 
@@ -13,6 +14,20 @@ class Ability
 
     return unless user.admin?  # additional permissions for administrators
     can :manage, :all
+
+    if user.admin?
+      can :manage, :all  # Администратор может управлять всем
+    else
+      can :read, :all  # Все могут читать
+
+      can :create, Trail  # Авторизованные пользователи могут создавать Trail
+      can :update, Trail, user_id: user.id  # Пользователь может обновлять только свои Trail
+      can :destroy, Trail, user_id: user.id  # Пользователь может удалять только свои Trail
+
+      # Дополнительно:  Пользователь может управлять своим профилем
+      can :update, Profile, user_id: user.id
+      can :destroy, Profile, user_id: user.id
+    end
     
     # The first argument to `can` is the action you are giving the user
     # permission to do.

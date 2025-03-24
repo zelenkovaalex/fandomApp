@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_12_25_201138) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_23_124804) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -22,12 +22,29 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_25_201138) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "fandom_profiles", force: :cascade do |t|
+    t.integer "fandom_id", null: false
+    t.integer "profile_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["fandom_id"], name: "index_fandom_profiles_on_fandom_id"
+    t.index ["profile_id"], name: "index_fandom_profiles_on_profile_id"
+  end
+
   create_table "fandoms", force: :cascade do |t|
     t.string "name", null: false
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_fandoms_on_name", unique: true
+  end
+
+  create_table "fandoms_profiles", id: false, force: :cascade do |t|
+    t.integer "fandom_id"
+    t.integer "profile_id"
+    t.index ["fandom_id", "profile_id"], name: "index_fandoms_profiles_on_fandom_id_and_profile_id", unique: true
+    t.index ["fandom_id"], name: "index_fandoms_profiles_on_fandom_id"
+    t.index ["profile_id"], name: "index_fandoms_profiles_on_profile_id"
   end
 
   create_table "favourites", force: :cascade do |t|
@@ -57,6 +74,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_25_201138) do
     t.string "city"
     t.string "nickname"
     t.integer "fandom_id"
+    t.string "link"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -117,6 +135,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_25_201138) do
     t.integer "user_id"
     t.boolean "public", default: false
     t.string "city"
+    t.integer "profile_id"
+    t.index ["profile_id"], name: "index_trails_on_profile_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -136,9 +156,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_12_25_201138) do
 
   add_foreign_key "comments", "trails"
   add_foreign_key "comments", "users"
+  add_foreign_key "fandom_profiles", "fandoms"
+  add_foreign_key "fandom_profiles", "profiles"
+  add_foreign_key "fandoms_profiles", "fandoms"
+  add_foreign_key "fandoms_profiles", "profiles"
   add_foreign_key "favourites", "trails"
   add_foreign_key "favourites", "users"
   add_foreign_key "tag_selecteds", "tags"
   add_foreign_key "tag_selecteds", "trails"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "trails", "profiles"
 end

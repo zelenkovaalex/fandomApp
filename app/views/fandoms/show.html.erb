@@ -4,13 +4,19 @@
   <div class='W_fandomInf'>
     <h2><%= @fandom.name %></h2>
     <p><%= @fandom.description %></p>
-
     <br>
-      <% if user_signed_in? && current_user.admin? %>
+    <% if user_signed_in? && current_user.admin? %>
         <%= link_to "редактировать", edit_admin_fandom_path(@fandom) %> 
         <%= button_to "удалить", admin_fandom_path(@fandom.id), method: :delete %>    
       <% end %>
     <%= link_to "Back to fandoms", fandoms_path %>
+  <br>
+    <h2>Маршруты этого фандома:</h2>
+
+    <% @trails.each do |trail| %>
+      <%= link_to trail.title, trail_path(trail) %>
+    <% end %>
+    <%= link_to 'Добавить новый маршрут', new_trail_path %>
   </div>
 
 

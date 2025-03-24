@@ -1,0 +1,53 @@
+<%= form_with(model: profile, html: { class: "W_inputs" }) do |form| %>
+  <% if profile.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+        <% profile.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="A_input">
+    <p>имя</p>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="A_input">
+   <p>никнейм</p>
+    <%= form.text_field :nickname %>
+  </div>
+
+  <div class="A_input">
+    <p>город</p>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="A_input">
+    <p>ссылка на соцсеть</p>
+    <%= form.text_field :link %>
+  </div>
+
+  <div class="A_input">
+    <p>обо мне</p>
+    <%= form.text_area :bio %>
+  </div>
+
+  <div class="A_input">
+    <p>аватарочка</p> <br>
+    <h3>(мы работаем над ее реализацией)</h3>
+    <%= form.text_field :avatar %>
+  </div>
+
+  <div class="A_commit">
+    <%= form.submit "создать профиль"%>
+  </div>
+
+  <div class="A_sessions">
+    <%= link_to "посмотреть мой профиль", @profile %> <br>
+    <%= link_to "назад в сообщество", profiles_path %>
+  </div>
+<% end %>

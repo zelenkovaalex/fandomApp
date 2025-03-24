@@ -8,7 +8,7 @@
       <%= link_to "присоединиться", new_registration_path(resource_name) %><br />
     <% end %>
   </div>
-
+          
   <div class="A_sessions">
     <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
       <%= link_to "не помню пароль", new_password_path(resource_name) %><br />

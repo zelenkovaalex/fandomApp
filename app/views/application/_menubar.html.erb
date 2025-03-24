@@ -9,8 +9,12 @@
   </div>
   
   <div class='slave'>
-      <% if user_signed_in? %>
-      <%= link_to "профиль", profile_path(current_user.profile) %>
+    <% if user_signed_in? %>
+      <% if current_user.profile %>
+        <%= link_to "профиль", profile_path(current_user.profile) %>
+      <% else %>
+        <%= link_to "создать профиль", new_profile_path %>
+      <% end %>
       <%= link_to "выход", destroy_user_session_path, data: { "turbo-method": :delete } %>
     <% else %>
       <%= link_to "вход", new_user_session_path %>

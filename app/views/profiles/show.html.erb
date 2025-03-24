@@ -1,5 +1,6 @@
 <body class="profiles" style="width: auto;">
   <div class="directionBlocks">
+
     <div class="sizeBoxes">
       <%= render @profile %>
     </div>
@@ -12,9 +13,10 @@
 
       <div class='M_briks'>
         <% @trails.each do |trail| %>
-          <%= render partial: "trail", locals: { trail: trail } %>
+          <%= render partial: 'trail', locals: { trail: trail } %>
         <% end %>
       </div>
     </div>  
   </div>
 </body>
+

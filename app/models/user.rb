@@ -8,6 +8,10 @@ class User < ApplicationRecord
 
   has_many :trails, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_one :profile
+  has_one :profile, dependent: :destroy
   has_many :likes
+
+  after_create :create_profile
+
+  # has_secure_password
 end

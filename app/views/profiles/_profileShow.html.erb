@@ -1,11 +1,12 @@
 <div id="<%= dom_id profile %>" class="M_profileInf">
-  <p><%= profile.avatar %></p>
+  
+  <%= image_tag profile.avatar.url if profile.avatar.present? %>
 
   <h1><%= profile.nickname %></h1>
 
   <div class="M_profileTags">
     <p><%= profile.city %></p>
-    <p><%=  Fandom.all.where(id: profile.fandom_id).first.name %></p>
+    <p><%= Fandom.find_by(id: profile.fandom_id)&.name || "No Fandom" %></p>
   </div>
   
   <p><%= profile.bio %></p>

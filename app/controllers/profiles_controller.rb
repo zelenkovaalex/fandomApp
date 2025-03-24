@@ -5,26 +5,20 @@ class ProfilesController < ApplicationController
 
   # GET /profiles or /profiles.json
   def index
-    @profiles = Profile.all
+    @profiles = Profile
+      .joins(user: [ :trail ])
+      .where("trails.status = ?", "active")
+      .group("profiles.id")
+      .having("COUNT(trails.id) > 0")
+      .limit(10)
   end
-  
-  def community
-  end
-  
-  # GET /profiles/1 or /profiles/1.json
-  def show
-    @profile = Profile.find(params[:id]) #находим профиль по id
-    @user = @profile.user  #получаем пользователя, связанного с профилем
-    @trails = @user.trails
 
-    @trails = Trail.where(params[:id])
-    if current_user && current_user.admin?
-      @trails = Trail.all.order(created_at: :desc)
-    elsif current_user
-      @trails = current_user.trails  
-    else
-      @trail = Trail.where(public: true)  
-    end
+  def show
+    @profile = Profile.find(params[:id])
+    @trails = @profile.user.trails 
+
+    rescue ActiveRecord::RecordNotFound 
+         redirect_to new_profile_path, alert: "Profile not found. Please create one."
   end
 
   # GET /profiles/new
@@ -34,6 +28,8 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+    @profile = Profile.find(params[:id])
+    @fandoms = Fandom.all
   end
 
   # POST /profiles or /profiles.json
@@ -53,25 +49,44 @@ class ProfilesController < ApplicationController
 
   # PATCH/PUT /profiles/1 or /profiles/1.json
   def update
-    respond_to do |format|
-      if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: "Profile was successfully updated." }
-        format.json { render :show, status: :ok, location: @profile }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
+    @profile = Profile.find(params[:id])
+    if @profile.update(profile_params)
+      # Добавляем фандомы
+      if params[:profile][:fandom_ids]
+        params[:profile][:fandom_ids].each do |fandom_id|
+          fandom = Fandom.find(fandom_id)
+          @profile.fandoms << fandom
+          Rails.logger.debug "Added fandom #{fandom.name} to profile #{@profile.id}"
+        end
       end
+      if @profile.update(profile_params) # Оставляем только обновление основных атрибутов и аватара
+        redirect_to @profile, notice: 'Profile was successfully updated.'
+      else
+        render :edit
+      end
+      redirect_to @profile, notice: 'Profile was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /profiles/1 or /profiles/1.json
   def destroy
+    @profile = Profile.find(params[:id])
+    authorize! :destroy, @profile
+
     @profile.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to profiles_path, status: :see_other, notice: "Profile was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to profiles_path, notice: "Profile was successfully deleted."
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Profile not found."
+    redirect_to profiles_path
+  rescue CanCan::AccessDenied
+    flash[:alert] = "You are not authorized to delete this profile."
+    redirect_to profiles_path
+  rescue => e
+    flash[:alert] = "An error occurred: #{e.message}"
+    redirect_to profiles_path
   end
 
   private

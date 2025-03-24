@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get "/fandoms", to: "fandoms#index"
 
   resources :profiles
+  resources :trails
 
   devise_for :users 
   
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
       resources :trails, only: [:index, :show, :destroy]
       resources :fandoms, only: [:index, :show]
       resources :profiles, only: [:index, :show]
+      post 'sessions', to: 'sessions#create'
 
       devise_scope :user do
         scope 'sessions' do

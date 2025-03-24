@@ -2,18 +2,21 @@
   <p style="color: green"><%= notice %></p>
 
   <div class='O_info'>
-    <h2><%= @trail.title %></h2>
-    <h3><%= @trail.fandom.name %></h3>
-    <p><%= @trail.body %></p>
-
+    <% if @trail %>
+      <h2><%= @trail.title %></h2>
+      <h3><%= @trail.fandom.name %></h3>
+      <p><%= @trail.body %></p>
+    <% else %>
+      <p>Маршрут не найден.</p>
+    <% end %>
     <br>
 
     <div class="W_buttons">
-      <% if current_user && (current_user.admin? || current_user == @trail.user) %>
+      <% if @trail && current_user && (current_user.admin? || current_user == @trail.user) %>
         <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
-        <%= button_to 'удалить', admin_trail_path(@trail.id), method: :delete %>
+        <%= button_to 'удалить', admin_trail_path(@trail), method: :delete %>
       <% end %> <br>
-    <%= link_to "вернуться", fandoms_url, class: 'back' %>
+      <%= link_to "вернуться", fandoms_url, class: 'back' %>
     </div>
   </div>
 

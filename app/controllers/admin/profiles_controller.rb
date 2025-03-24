@@ -32,6 +32,8 @@ class Admin::ProfilesController < ApplicationController
 
   # GET /profiles/1/edit
   def edit
+    @profile = Profile.find(params[:id])
+    @fandoms = Fandom.all
   end
 
   # POST /profiles or /profiles.json
@@ -51,25 +53,39 @@ class Admin::ProfilesController < ApplicationController
 
   # PATCH/PUT /profiles/1 or /profiles/1.json
   def update
-    respond_to do |format|
-      if @profile.update(profile_params)
-        format.html { redirect_to @profile, notice: "Profile was successfully updated." }
-        format.json { render :show, status: :ok, location: @profile }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
+    @profile = Profile.find(params[:id])
+    if @profile.update(profile_params)
+      # Добавляем фандомы
+      if params[:profile][:fandom_ids]
+        params[:profile][:fandom_ids].each do |fandom_id|
+          fandom = Fandom.find(fandom_id)
+          @profile.fandoms << fandom
+          Rails.logger.debug "Added fandom #{fandom.name} to profile #{@profile.id}"
+        end
       end
+      redirect_to @profile, notice: 'Profile was successfully updated.'
+    else
+      render :edit
     end
   end
 
   # DELETE /profiles/1 or /profiles/1.json
   def destroy
+    @profile = Profile.find(params[:id])
+    authorize! :destroy, @profile
+
     @profile.destroy!
 
-    respond_to do |format|
-      format.html { redirect_to profiles_path, status: :see_other, notice: "Profile was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to profiles_path, notice: "Profile was successfully deleted."
+  rescue ActiveRecord::RecordNotFound
+    flash[:alert] = "Profile not found."
+    redirect_to profiles_path
+  rescue CanCan::AccessDenied
+    flash[:alert] = "You are not authorized to delete this profile."
+    redirect_to profiles_path
+  rescue => e
+    flash[:alert] = "An error occurred: #{e.message}"
+    redirect_to profiles_path
   end
 
   private

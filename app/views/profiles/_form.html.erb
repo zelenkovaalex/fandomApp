@@ -27,14 +27,23 @@
   </div>
 
   <div class="A_input">
+    <p>фандомы</p>
+    <% @fandoms.each do |fandom| %>
+      <div>
+        <%= check_box_tag "profile[fandom_ids][]", fandom.id, profile.fandoms.include?(fandom) %>
+        <%= label_tag "profile_fandom_ids_#{fandom.id}", fandom.name %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="A_input">
     <p>обо мне</p>
     <%= form.text_area :bio %>
   </div>
 
   <div class="A_input">
     <p>аватарочка</p> <br>
-    <h3>(мы работаем над ее реализацией)</h3>
-    <%= form.text_field :avatar %>
+    <%= form.file_field :avatar %>
   </div>
 
   <div class="A_commit">
