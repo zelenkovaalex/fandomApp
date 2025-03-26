@@ -1,80 +1,46 @@
 class Api::V1::ProfilesController < ApplicationController
-  mount_uploader :avatar, AvatarUploader
   before_action :authenticate_user!
+  before_action :set_profile, only: [:show, :update, :destroy]
 
   def index
-    @profiles = Profile
-      .joins(user: [ :trail ])
-      .where("trails.status = ?", "active")
-      .group("profiles.id")
-      .having("COUNT(trails.id) > 0")
-      .limit(10)
+    profiles = Profile.includes(:user).all
+    render json: profiles, include: :user, status: :ok
   end
 
   def show
-    @profile = Profile.find(params[:id])
-
-    rescue ActiveRecord::RecordNotFound 
-         redirect_to new_profile_path, alert: "Profile not found. Please create one."
-  end
-
-  def new
-    @profile = Profile.new
-  end
-
-  def create
-    @profile = Profile.new(profile_params)
-
-    respond_to do |format|
-      if @profile.save
-        format.html { redirect_to profile_url(@profile), notice: "Profile was successfully created." }
-        format.json { render :show, status: :created, location: @profile }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
-      end
+    profile = Profile.includes(:user).find_by(id: params[:id])
+    if profile
+      render json: profile, include: :user, status: :ok
+    else
+      render json: { error: "Profile not found" }, status: :not_found
     end
   end
 
   def update
-    @profile = Profile.find(params[:id])
-    if @profile.update(profile_params)
-      # Добавляем фандомы
-      if params[:profile][:fandom_ids]
-        params[:profile][:fandom_ids].each do |fandom_id|
-          fandom = Fandom.find(fandom_id)
-          @profile.fandoms << fandom
-          Rails.logger.debug "Added fandom #{fandom.name} to profile #{@profile.id}"
-        end
-      end
-      redirect_to @profile, notice: 'Profile was successfully updated.'
+    profile = Profile.find_by(id: params[:id])
+    if profile && profile.update(profile_params)
+      render json: profile, status: :ok
     else
-      render :edit
+      render json: { error: "Failed to update profile" }, status: :unprocessable_entity
     end
-  end
-
-  def edit
-    @profile = Profile.find(params[:id])
-    @fandoms = Fandom.all
   end
 
   def destroy
     @profile.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to profiles_url, notice: "Profile was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    head :no_content #  Возвращаем только HTTP-статус (204 No Content)
   end
 
   private
 
   def set_profile
-      @profile = Profile.find(params[:id])
+    @profile = Profile.find_by(id: params[:id])
+    unless @profile
+      render json: { error: "Profile not found" }, status: :not_found
     end
+  end
 
   def profile_params
-    params.require(:profile).permit(:name, :nickname, :city, :bio, :avatar, fandom_ids: [])
+    params.require(:profile).permit(:name, :bio, :city, :nickname, :avatar, :link, fandom_ids: [])
   end
 
 end

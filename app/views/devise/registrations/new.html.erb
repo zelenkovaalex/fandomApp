@@ -1,10 +1,13 @@
-<body class="signUp" style="width: 100%;">
-  <div class="M_hello">
+<body class="signUp" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
+  
+
+  <div class="W_form" style="height:44vw;">
+    <div class="M_hello">
     <h2>привет!</h2>
     <p>зарегестрируйстя, чтобы публиковать маршруты и участвовать в обсуждениях</p>
   </div>
 
-  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "W_inputs"}) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="A_input">
@@ -27,6 +30,8 @@
     <div class="A_commit">
       <%= f.submit "присоединиться" %>
     </div>
-  <%= render "devise/shared/links" %>
-  <% end %>
+    <%= render "devise/shared/links" %>
+    <% end %>
+  </div>
+
 </body>

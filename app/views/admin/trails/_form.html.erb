@@ -23,24 +23,30 @@
     <p>название</p>
     <%= form.text_field :title %>
   </div>
+
   <div class="A_input">
     <p>описание</p>
-    <%= form.text_area :description %> <br>
+    <%= form.text_area :body %> <br>
   </div>
+
   <div class="A_input">
     <p>картиночка</p>
     <h3>(мы работаем над ее реализацией)</h3>
-    <%= form.text_field :trail_image %> <br>
+    <%= form.file_field :trail_image %>
+    <br>
   </div>
+
   <div class="A_input">
     <p>время</p>
     <%= form.number_field :duration, min: 0, placeholder: '0', class: 'time_field'  %>
     <%= form.select :duration_unit,  options_for_select([['минут', 'minutes'], ['часов', 'hours'], ['дней', 'days']]),  class: 'unit_select' %>
   </div>
+
   <div class="A_input">
     <p>уровень сложности</p>
     <%= form.number_field :trail_level %> <br>
   </div>
+
   <div class="A_input">
     <p><%= form.label :fandom_id %></p>
     <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>

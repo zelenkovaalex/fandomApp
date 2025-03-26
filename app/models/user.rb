@@ -14,4 +14,18 @@ class User < ApplicationRecord
   after_create :create_profile
 
   # has_secure_password
+
+  def generate_authentication_token
+    loop do
+      token = Devise.friendly_token
+      break token unless User.where(authentication_token: token).first
+    end
+  end
+
+  def jwt_payload
+    {
+      email: self.email,
+      jti: self.jti
+    }
+  end
 end

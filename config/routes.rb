@@ -2,11 +2,11 @@ Rails.application.routes.draw do
   get "like/toggle"
   get "/fandoms", to: "fandoms#index"
 
+  devise_for :users 
+
   resources :profiles
   resources :trails
 
-  devise_for :users 
-  
   #trails
   
   resources :trails, only: [:index, :show, :new, :edit, :destroy] do
@@ -21,7 +21,7 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
     end
   end
-  
+
   # admin
   
   namespace :admin do
@@ -39,21 +39,22 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :trails, only: [:index, :show, :destroy]
       resources :fandoms, only: [:index, :show]
-      resources :profiles, only: [:index, :show]
-      post 'sessions', to: 'sessions#create'
+      resources :users, only: [:index, :show] do
+        resource :profile, only: [:show, :update]
+      end
+      resources :profiles, only: [:index, :show, :update, :destroy]
+
+      get "profile", to: "users#profile"
 
       devise_scope :user do
-        scope 'sessions' do
-          post "sign_in", to: "sessions#create"
-          post "sign_out", to: "sessions#destroy"
-          get "info", to: "sessions#show"
-        end
+        post "sign_in", to: "sessions#create"
+        delete "sign_out", to: "sessions#destroy"
+        post "sign_up", to: "registrations#create"
       end
-
     end
   end
 
-
+  get '/trails/by_tag/:tag', to: 'trails#by_tag', as: :trails_by_tag
   
   get "base_pages/index"
   get "about", to: 'base_pages#about'
@@ -62,6 +63,8 @@ Rails.application.routes.draw do
   # Render dynamic PWA files from app/views/pwa/*
   get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
   get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
+
+  get '/profiles', to: 'profiles#index'
   
   get "up" => "rails/health#show", as: :rails_health_check
 

@@ -11,7 +11,7 @@ class Trail < ApplicationRecord
     has_many :likes, as: :likeable
 
     acts_as_taggable_on :tags
-    acts_as_taggable_on :categories
+    acts_as_taggable_on :fandoms
 
     has_many :tag_selecteds
     has_many :tags, through: :tag_selecteds 

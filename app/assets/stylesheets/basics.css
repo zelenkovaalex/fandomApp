@@ -43,6 +43,10 @@ body {
         }
     }
 
+    .content {
+        flex: 1;
+    }
+
     footer {
         display: inline-flex;
         justify-content: space-between;

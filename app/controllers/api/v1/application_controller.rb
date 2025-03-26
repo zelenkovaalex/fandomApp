@@ -13,4 +13,15 @@ class Api::V1::ApplicationController < ActionController::API
       return nil
     end
   end
+
+  private
+
+  def record_not_found
+    render json: { error: "Record not found" }, status: :not_found
+  end
+
+  def record_invalid(exception)
+    render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity
+  end
+  
 end

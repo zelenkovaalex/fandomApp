@@ -1,12 +1,12 @@
 class FandomsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   # load_and_authorize_resource
   before_action :set_fandom, only: [:update, :new, :edit]
 
   # GET /fandoms or /fandoms.json
   def index
     @fandoms = Fandom.all
-    @allFandoms = Fandom.all
+    # @allFandoms = Fandom.all
     # @trails = Trail.find_by(id: params[:id])
     @trails = Trail.all.order(created_at: :desc)
 
@@ -20,12 +20,15 @@ class FandomsController < ApplicationController
       @user_trails = []
       @other_trails = @trails.where(public: true)  
     end
+    
+    @random_trails = Trail.order("RANDOM()").limit(4)
+
   end
 
   # GET /fandoms/1 or /fandoms/1.json
   def show
     @fandom = Fandom.find_by(id: params[:id])
-    @trails = @fandom.trails
+    # @trails = @fandom.trails
   end
 
   # GET /fandoms/new

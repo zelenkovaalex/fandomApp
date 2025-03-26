@@ -1,28 +1,31 @@
-<body class="logIN" style="width: 100%;">
-  <div class="M_hello">
-    <h2>привет!</h2>
-    <p>Авторизуйся, чтобы публиковать маршруты и участвовать в обсуждениях</p>
-  </div>
+<body class="logIN" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
 
-  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "W_inputs"}) do |f| %>
-    <div class="A_input">
-      <p>почта</p>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "введите почту" %>
+  <div class="W_form">
+    <div class="M_hello">
+      <h2>привет!</h2>
+      <p>Авторизуйся, чтобы публиковать маршруты и участвовать в обсуждениях</p>
     </div>
-    <div class="A_input">
-      <p>пароль</p>
-      <%= f.password_field :password, autocomplete: "current-password", placeholder: "введите пароль" %>
-    </div>
-    <% if devise_mapping.rememberable? %>
-      <div class="A_inputCheck">
-        <%= f.check_box :remember_me %>
-        <p>запомнить меня</p>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "W_inputs"}) do |f| %>
+      <div class="A_input">
+        <p>почта</p>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "введите почту" %>
       </div>
+      <div class="A_input">
+        <p>пароль</p>
+        <%= f.password_field :password, autocomplete: "current-password", placeholder: "введите пароль" %>
+      </div>
+      <% if devise_mapping.rememberable? %>
+        <div class="A_inputCheck">
+          <%= f.check_box :remember_me %>
+          <p>запомнить меня</p>
+        </div>
+      <% end %>
+      <div class="A_commit">
+        <%= f.submit "войти" %>
+      </div>
+      <%= render "devise/shared/links" %>
     <% end %>
-    <div class="A_commit">
-      <%= f.submit "войти" %>
-    </div>
-    <%= render "devise/shared/links" %>
-  <% end %>
+  </div>
 
 </body>

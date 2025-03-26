@@ -1,8 +1,9 @@
-<body class="newPassword" style="width: 100%;">
+<body class="newPassword" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
 
-  <div class="M_hello">
-    <h2>забыли пароль</h2>
-  </div>
+  <div class="W_form">
+    <div class="M_hello">
+      <h2>забыли пароль</h2>
+    </div>
 
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { class: "W_inputs" }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
@@ -17,6 +18,8 @@
     </div>
     
     <%= render "devise/shared/links" %>
-  <% end %>
+    <% end %>
+  </div>
+
 </body>
  

@@ -20,16 +20,22 @@ class Api::UsersController < Api::V1::ApplicationController
     end
   end
 
+  def index
+    users = User.includes(:profile).all
+    render json: users, include: :profile, status: :ok
+  end
+
+  def show
+    user = User.includes(:profile).find_by(id: params[:id])
+    if user
+      render json: user, include: :profile, status: :ok
+    else
+      render json: { error: "User not found" }, status: :not_found
+    end
+  end
+
   def profile
-    render json: {
-      user: {
-        id: current_user.id,
-        email: current_user.email,
-        name: @profile&.name,
-        bio: @profile&.bio
-      },
-      profile: @profile 
-    }
+    render json: current_user.profile, include: :user, status: :ok
   end
 
   def create
@@ -98,6 +104,6 @@ class Api::UsersController < Api::V1::ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :avatar)
+    params.require(:user).permit(:email, :password, :password_confirmation, :avatar)
   end
 end

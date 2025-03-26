@@ -170,6 +170,11 @@
     margin: 2vw 30%;
 }
 
+.W_form {
+    /* height: 36vw; */
+    flex: 1;
+}
+
 /* comments */
 
 .W_commentInputs {

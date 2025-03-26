@@ -1,5 +1,5 @@
 class TrailsController < ApplicationController
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_fandom
 
@@ -21,7 +21,7 @@ class TrailsController < ApplicationController
   end
 
   def by_tag
-    @trails = params[:tag] ? Trail.tagged_with(params[:tag]) : Trail.all
+    @trails = Trail.tagged_with(params[:tag], on: :fandoms)
     render :index
   end
 
@@ -44,7 +44,10 @@ class TrailsController < ApplicationController
 
   def create
     @trail = current_user.trails.new(trail_params)
-    @trail.user = current_user
+    # @trail.user = current_user
+
+    Rails.logger.debug "Trail params: #{trail_params.inspect}" # Логируем параметры
+    Rails.logger.debug "Trail image: #{@trail.trail_image.inspect}" # Логируем trail_image
 
     respond_to do |format|
       if @trail.save
@@ -85,6 +88,6 @@ class TrailsController < ApplicationController
   end
 
   def trail_params
-    params.require(:trail).permit(:title, :description, :trail_image, :trail_time, :trail_level, :fandom_id, :tag_list)
+    params.require(:trail).permit(:title, :city, :trail_time, :trail_level, :body, :public, :fandom_id, :trail_image, tag_list: [])
   end
 end

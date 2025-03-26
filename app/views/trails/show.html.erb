@@ -1,10 +1,19 @@
-<body class='show'>
+<body class='show' style="width: 100%;">
   <p style="color: green"><%= notice %></p>
 
   <div class='O_info'>
     <% if @trail %>
+      <div class="M_pic">
+        <% if @trail.trail_image.present? %>
+          <%= image_tag @trail.trail_image.url, style: "width: 30vw" %>
+        <% end %>
+      </div>
       <h2><%= @trail.title %></h2>
-      <h3><%= @trail.fandom.name %></h3>
+      <h3>
+        <% @trail.fandom_list.each do |fandom_tag| %>
+          <%= link_to fandom_tag, tagged_trails_path(fandom_tag) %>
+        <% end %>
+      </h3>
       <p><%= @trail.body %></p>
     <% else %>
       <p>Маршрут не найден.</p>

@@ -1,1 +1,1 @@
-json.extract! @profile, :user_id, :nickname, :fandom_id, :bio, :city, :trail
+json.partial! 'api/v1/profiles/profile', profile: @profile
