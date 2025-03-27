@@ -1,14 +1,16 @@
 <div id="<%= dom_id profile %>" class="M_profileInf">
-  
-  <%= image_tag profile.avatar.url if profile.avatar.present? %>
 
-  <h1><%= profile.nickname %></h1>
+  <%= link_to profile_path(profile) do %>
+    <%= image_tag profile.avatar.url, alt: profile.nickname, class: "A_avatar" if profile.avatar.present? %>
+  <% end %>
+
+  <h1><%= link_to profile.nickname, profile_path(profile), class: "profile-nickname" %></h1>
 
   <div class="M_profileTags">
     <p><%= profile.city %></p>
     <p><%= Fandom.find_by(id: profile.fandom_id)&.name || "No Fandom" %></p>
   </div>
-  
+
   <p><%= profile.bio %></p>
 
   <div class="W_buttons">
@@ -16,9 +18,7 @@
       <%= link_to "редактировать", edit_profile_path(profile) %>
       <%= button_to "удалить", profile, method: :delete %>
     <% end %>
-  </div> 
-
-    <%#= link_to "вернуться", profiles_path %>
-    <%= link_to "глянуть чупачупса", profile_path(profile), class: "chillGuy"%>
   </div>
+
+  <%= link_to "глянуть чупачупса", profile_path(profile), class: "chillGuy" %>
 </div>

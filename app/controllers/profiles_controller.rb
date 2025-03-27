@@ -5,9 +5,12 @@ class ProfilesController < ApplicationController
 
   # GET /profiles
   def index
+    fields_to_check = [:nickname, :bio, :avatar]
+    conditions = fields_to_check.map { |field| "#{field} IS NOT NULL AND #{field} != ''" }.join(' AND ')
+
     @profiles = Profile
-      .joins(user: [ :trail ])
-      .where("trails.status = ?", "active")
+      .joins(user: :trails)
+      .where(conditions)
       .group("profiles.id")
       .having("COUNT(trails.id) > 0")
       .limit(10)

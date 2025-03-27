@@ -144,3 +144,12 @@
         color: var(--dark-grey);
     }
 }
+
+/* profiles */
+
+.A_avatar {
+    width: 19.17vw;
+    height: 19.17vw;
+    object-fit: cover;
+    overflow: hidden;
+}

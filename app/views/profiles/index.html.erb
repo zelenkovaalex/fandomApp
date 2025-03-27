@@ -1,14 +1,16 @@
 <body class="community" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
+
   <div class="A_title">
     <h1>Сообщество</h1>
   </div>
+
+  <!-- Один большой контейнер для всех профилей -->
   <div class="W_wrapprof">
-    <% @profiles.each do |profileShow| %>
-      <div class="W_profiles">
-        <div class="M_profInf">
-          <%= render 'profiles/profileShow', profile: profileShow %>
-        </div>
+    <% @profiles.each do |profile| %>
+      <div class="M_profInf">
+        <%= render 'profiles/profileShow', profile: profile %>
       </div>
     <% end %>
   </div>
+
 </body>

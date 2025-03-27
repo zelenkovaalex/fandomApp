@@ -1,6 +1,6 @@
 <div id="<%= dom_id profile %>" class="M_profileInf">
 
-  <%= image_tag profile.avatar.url if profile.avatar.present? %>
+  <%= image_tag profile.avatar.url, alt: profile.nickname, class: "A_avatar" if profile.avatar.present? %>
 
   <h1><%= profile.nickname %></h1>
 
