@@ -1,7 +1,9 @@
 <div id="<%= dom_id profile %>" class="M_profileInf">
 
-  <%= link_to profile_path(profile) do %>
-    <%= image_tag profile.avatar.url, alt: profile.nickname, class: "A_avatar" if profile.avatar.present? %>
+  <% if profile.avatar.present? %>
+    <%= image_tag profile.avatar.url, alt: "A_avatar" %>
+  <% else %>
+    <p>No avatar available</p>
   <% end %>
 
   <h1><%= link_to profile.nickname, profile_path(profile), class: "profile-nickname" %></h1>

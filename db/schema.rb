@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_24_134420) do
+ActiveRecord::Schema[7.2].define(version: 2025_03_27_184833) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -127,7 +127,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_134420) do
     t.boolean "public", default: false
     t.string "city"
     t.integer "profile_id", null: false
-    t.string "trail_image"
+    t.string "image"
     t.index ["profile_id"], name: "index_trails_on_profile_id"
   end
 

@@ -51,11 +51,11 @@ class TrailsController < ApplicationController
 
     respond_to do |format|
       if @trail.save
-        format.html { redirect_to @trail, notice: "Trail was successfully created." }
-        format.json { render :show, status: :created, location: @trail }
+        Rails.logger.debug "Trail created successfully with image: #{@trail.trail_image.url}"
+        redirect_to @trail, notice: "Trail was successfully created."
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @trail.errors, status: :unprocessable_entity }
+        Rails.logger.debug "Trail creation failed with errors: #{@trail.errors.full_messages}"
+        render :new
       end
     end
   end

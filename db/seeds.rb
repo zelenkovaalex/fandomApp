@@ -392,43 +392,46 @@ def create_fandom
 end
 
 def upload_random_avatar(profile)
-  image_directory = Rails.root.join('app', 'assets', 'images', 'people')
-  image_files = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
-                   .select { |file| File.file?(file) }
-  raise "No images found in #{image_directory}" if image_files.empty?
+  avatar_directory = Rails.root.join('public', 'uploads', 'avatars')
+  avatar_paths = Dir.glob("#{avatar_directory}/*.{jpg,jpeg,png,gif}")
 
-  random_image_path = image_files.sample
-  begin
-    file = File.open(random_image_path)
-    profile.avatar = file # Присваиваем файл напрямую атрибуту avatar
-    puts "Avatar assigned from #{random_image_path}"
-    file.close
-  rescue => e
-    puts "Error assigning avatar: #{e.message}"
+  if avatar_paths.empty?
+    puts "No avatars found in directory: #{avatar_directory}"
+    return
+  end
+
+  random_avatar = avatar_paths.sample
+  puts "Selected avatar: #{random_avatar}"
+
+  # Загружаем файл
+  profile.avatar = File.open(random_avatar)
+  if profile.save!
+    puts "Avatar saved to: #{profile.avatar.url}"
+  else
+    puts "Error: #{profile.errors.full_messages}"
   end
 end
 
 def upload_random_trail_image(trail)
-  image_directory = Rails.root.join('app', 'assets', 'images', 'trails')
-  image_files = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
-                   .select { |file| File.file?(file) }
-  raise "No images found in #{image_directory}" if image_files.empty?
+  image_directory = Rails.root.join('public', 'uploads', 'trail')
+  image_paths = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
 
-  random_image_path = image_files.sample
-  begin
-    File.open(random_image_path) do |file|
-      puts "Opening file: #{random_image_path}"
-      trail.trail_image = file # Присваиваем файл атрибуту trail_image
-      puts "Trail image assigned from #{random_image_path}"
-    end
+  if image_paths.empty?
+    puts "No images found in directory: #{image_directory}"
+    return
+  end
 
+  random_image = image_paths.sample
+  puts "Selected image: #{random_image}"
+
+  # Открываем файл и сохраняем через CarrierWave
+  File.open(random_image) do |file|
+    trail.image = file
     if trail.save
-      puts "Trail with title #{trail.title} just created"
+      puts "Image saved to: #{trail.image.url}"
     else
-      puts "Error creating trail: #{trail.errors.full_messages.join(', ')}"
+      puts "Error: #{trail.errors.full_messages}"
     end
-  rescue => e
-    puts "Error assigning trail image: #{e.message}"
   end
 end
 
@@ -525,7 +528,7 @@ def create_trail(quantity)
   end
 
   # Каталог с изображениями для trails
-  image_directory = Rails.root.join('app', 'assets', 'images', 'trails')
+  image_directory = Rails.root.join('public', 'uploads', 'trail')
   image_paths = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
                    .select { |file| File.file?(file) }
 

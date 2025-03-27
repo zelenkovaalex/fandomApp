@@ -17,6 +17,8 @@ module FandomApp
     config.autoload_lib(ignore: %w[assets tasks])
 
     require 'devise/jwt'
+
+    require 'carrierwave'
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
