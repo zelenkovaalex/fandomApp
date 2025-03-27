@@ -5,6 +5,7 @@ services:
     build:
       dockerfile: Dockerfile
     volumes:
-      - ./app/assets:/rails/app/assets
+      - .:/rails:cached
+      - .:/rails:rw
     ports:
       - '3000:3000'

@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   before_action :authenicate_guest
+  before_action :log_current_user
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -62,5 +63,9 @@ class ApplicationController < ActionController::Base
     end
 
     I18n.available_locales.map(&:to_s).include?(parsed_locale) ? parsed_locale : nil
+  end
+
+  def log_current_user
+    Rails.logger.debug "Current user: #{`whoami`.strip}"
   end
 end
