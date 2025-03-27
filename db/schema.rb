@@ -126,11 +126,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_134420) do
     t.integer "user_id"
     t.boolean "public", default: false
     t.string "city"
-    t.integer "profile_id"
+    t.integer "profile_id", null: false
     t.string "trail_image"
     t.index ["profile_id"], name: "index_trails_on_profile_id"
   end
- 
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -140,7 +140,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_24_134420) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "admin", default: false
-    t.string "jti", null: false
+    t.string "jti"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

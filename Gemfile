@@ -37,7 +37,7 @@ gem "bootsnap", require: false
 gem "image_processing", "~> 1.2"
 
 gem "carrierwave", "~> 3.0"
-gem "mini_magick"
+gem 'mini_magick', '~> 4.11'
 gem "devise"
 gem "sassc"
 gem "meta-tags"

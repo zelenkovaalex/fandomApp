@@ -1,6 +1,10 @@
 <div class="O_trailProfile">
 
-  <%= image_tag trail.trail_image_url, alt: trail.title, class: "trail-image" %>
+  <% if trail.trail_image.present? %>
+    <%= image_tag "/uploads/trail_images/#{trail.id}/#{trail.trail_image.filename}", alt: trail.title, class: "trail-image" %>
+  <% else %>
+    <p>No image available</p>
+  <% end %>
 
   <div class="W_trailHead">
     <h2><%= trail.title %></h2>

@@ -4,5 +4,7 @@ services:
   fandom_app:
     build:
       dockerfile: Dockerfile
+    volumes:
+      - ./app/assets:/rails/app/assets
     ports:
       - '3000:3000'

@@ -2,7 +2,7 @@ class Profile < ApplicationRecord
     belongs_to :user
 
     has_and_belongs_to_many :fandoms
-    # has_many :trails, dependent: :destroy
+    has_many :trails, dependent: :destroy
     
     has_many :created_trails, class_name: 'Trail'
     

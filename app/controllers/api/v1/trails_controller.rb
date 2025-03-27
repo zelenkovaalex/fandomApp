@@ -48,7 +48,7 @@ class Api::V1::TrailsController < ApplicationController
   private
 
     def trail_params
-      params.require(:trail).permit(:title, :trail_image)
+      params.require(:trail).permit(:title, :city, :trail_time, :trail_level, :body, :public, :fandom_id, :trail_image, tag_list: [])
     end
 
     def encrypt_payload
