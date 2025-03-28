@@ -4,8 +4,8 @@ services:
   fandom_app:
     build:
       dockerfile: Dockerfile
-    volumes:
-      - .:/rails:cached
-      - .:/rails:rw
+    # volumes:
+    #   - .:/rails:cached
+    #   - .:/rails:rw
     ports:
       - '3000:3000'

@@ -1,23 +1,36 @@
 <div class="O_trailProfile">
-
+  <!-- Изображение маршрута -->
   <% if trail.image.present? %>
-    <%= image_tag trail.image.url, alt: trail.title %>
+    <%= image_tag trail.image.url, alt: trail.title, class: "A_trailImage" %>
   <% else %>
     <p>No image available</p>
   <% end %>
 
+  <!-- Заголовок маршрута -->
   <div class="W_trailHead">
     <h2><%= trail.title %></h2>
     <h3><%= trail.fandom.name %></h3>
   </div>
 
-  <% if current_user != nil && (current_user.id == trail.user_id || current_user.admin?) %>
-    <div class='W_buttons'>
-      <%= render partial: "like/button", locals: { likeable: trail } %>
-      <%= link_to 'редактировать', edit_admin_trail_path(trail) %>
-      <%= link_to 'посмотреть', trail_path(trail) %>
-    </div>
-  <% else %>
-    <%= link_to 'посмотреть', trail_path(trail) %>
-  <% end %>
+  <!-- Кнопки действий для маршрута -->
+  <div class='W_buttons'>
+    <!-- Лайки -->
+    <%= link_to toggle_like_path(trail.id), method: :get, class: "like-button", remote: true, data: { type: :json } do %>
+      <% if trail.liked_by?(current_user) %>
+        <%= image_tag 'atoms/Default.svg', alt: 'Лайк' %>
+      <% else %>
+        <%= image_tag 'atoms/Selected.svg', alt: 'Лайк' %>
+      <% end %>
+    <% end %>
+
+    <!-- Редактирование -->
+    <% if current_user != nil && (current_user.id == trail.user_id || current_user.admin?) %>
+      <%= link_to 'редактировать', edit_admin_trail_path(trail), class: "custom-button" %>
+    <% end %>
+
+    <!-- Посмотреть маршрут -->
+    <%= link_to trail_path(trail), class: 'A_diagonal_arrow' do %>
+      <%= image_tag 'atoms/A_go_button.png', alt: 'Посмотреть маршрут' %>
+    <% end %>
+  </div>
 </div>

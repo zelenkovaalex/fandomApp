@@ -1,11 +1,9 @@
-<% content_for :title, "New fandom" %>
+<body class='editFandom' style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
 
-<h1>New fandom</h1>
+  <div class="M_hello">
+    <h2>новый фандом</h2>
+  </div>
 
-<%= render "form", fandom: @fandom %>
+  <%= render "form", fandom: @fandom %>
 
-<br>
-
-<div>
-  <%= link_to "Back to fandoms", fandoms_path %>
-</div>
+</body>

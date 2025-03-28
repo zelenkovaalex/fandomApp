@@ -14,6 +14,8 @@ Rails.application.routes.draw do
     get "/by_tag/:tag", to: "trails#by_tag", on: :collection, as: "tagged"
   end
 
+  get 'likes/toggle/:trail_id', to: 'like#toggle', as: :toggle_like, defaults: { format: :json }
+
   #fandoms
   
   resources :fandoms, only: [:index, :show] do

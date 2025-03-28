@@ -21,6 +21,7 @@ class Admin::FandomsController < ApplicationController
 
   # GET /fandoms/1/edit
   def edit
+    @fandom = Fandom.find(params[:id])
   end
 
   # POST /fandoms or /fandoms.json

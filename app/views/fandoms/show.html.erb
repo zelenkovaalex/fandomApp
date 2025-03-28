@@ -1,23 +1,28 @@
-<body class="fandomShow" style="width: 100%; height: 38vw;">
+<body class="fandomShow" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
   <p style="color: green"><%= notice %></p>
 
   <div class='W_fandomInf'>
-    <h2><%= @fandom.name %></h2>
-    <p><%= @fandom.description %></p>
-    <br>
-    <% if user_signed_in? && current_user.admin? %>
-        <%= link_to "редактировать", edit_admin_fandom_path(@fandom) %> 
-        <%= button_to "удалить", admin_fandom_path(@fandom.id), method: :delete %>    
-      <% end %>
-    <%= link_to "Back to fandoms", fandoms_path %>
-  <br>
+   
+    <div class="W_fandSInf">
+      <h2><%= @fandom.name %></h2>
+      <p><%= @fandom.description %></p>
+      <br>
+      
+      <div class='W_buttons'>
+        <% if user_signed_in? && current_user.admin? %>
+        <%= link_to "Back to fandoms", fandoms_path %> 
+          <%= link_to "редактировать", edit_admin_fandom_path(@fandom) %> 
+          <button class="custom-delete-button" data-url="<%= admin_fandom_path(@fandom.id) %>">Удалить</button>
+        <% end %>
+      </div> 
+    </div>
+
+    <div class='M_briks'>
     <h2>Маршруты этого фандома:</h2>
-
-    <% @trails.each do |trail| %>
-      <%= link_to trail.title, trail_path(trail) %>
-    <% end %>
-    <%= link_to 'Добавить новый маршрут', new_admin_trail_path %>
+      <% @trails.each do |trail| %>
+        <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
+      <% end %>
+    </div>
   </div>
-
 
 </body>

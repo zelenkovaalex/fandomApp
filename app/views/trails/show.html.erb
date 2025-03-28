@@ -4,9 +4,7 @@
   <div class='O_info'>
     <% if @trail %>
       <div class="M_pic">
-        <% if @trail.trail_image.present? %>
-          <%= image_tag @trail.trail_image_url, style: "width: 30vw" %>
-        <% end %>
+        <%= image_tag @trail.image.url, alt: @trail.title %>
       </div>
       <h2><%= @trail.title %></h2>
       <h3>
@@ -23,7 +21,7 @@
     <div class="W_buttons">
       <% if @trail && current_user && (current_user.admin? || current_user == @trail.user) %>
         <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
-        <%= button_to 'удалить', admin_trail_path(@trail), method: :delete %>
+        <button class="custom-delete-button" data-url="<%= admin_fandom_path(@trail) %>">Удалить</button>
       <% end %> <br>
       <%= link_to "вернуться", fandoms_url, class: 'back' %>
     </div>

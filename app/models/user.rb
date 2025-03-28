@@ -28,4 +28,17 @@ class User < ApplicationRecord
       jti: self.jti
     }
   end
+
+  def like(likeable)
+    likes.where(likeable: likeable).first_or_create
+  end
+
+  def unlike(likeable)
+    likes.where(likeable: likeable).destroy_all
+  end
+
+  def liked?(likeable)
+    likes.exists?(likeable: likeable)
+  end
+  
 end

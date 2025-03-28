@@ -28,7 +28,7 @@ class FandomsController < ApplicationController
   # GET /fandoms/1 or /fandoms/1.json
   def show
     @fandom = Fandom.find_by(id: params[:id])
-    # @trails = @fandom.trails
+    @trails = @fandom.trails
   end
 
   # GET /fandoms/new

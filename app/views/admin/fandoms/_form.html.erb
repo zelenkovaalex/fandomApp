@@ -1,9 +1,18 @@
-<%= form_with model: @fandom, url: admin_fandoms_path, local: true do |form| %>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
+<%= form_with(model: fandom, html: { class: "W_inputs" }) do |form|%>
+  
+  <div class="A_input">
+    <p>название</p>
+    <%= form.text_field :name %>
+  </div>
 
-  <%= form.label :description %>
-  <%= form.text_area :description %>
+  <div class="A_input">
+    <p>описание</p>
+    <%= form.text_area :description, style: "height:22vw;" %>
+  </div>
 
-  <%= form.submit 'Create Fandom' %>
+  <div class="A_commit">
+    <%= form.submit "добавить"%>
+  </div>
+  
 <% end %>
+

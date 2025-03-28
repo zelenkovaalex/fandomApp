@@ -1,36 +1,45 @@
 <div id="<%= dom_id profile %>" class="M_profileInf">
-
-  <% if profile.avatar.present? %>
-    <%= image_tag profile.avatar.url, alt: "A_avatar" %>
-  <% else %>
-    <p>No avatar available</p>
-  <% end %>
-
-  <h1><%= profile.nickname %></h1>
-
-  <div class="M_profileTags">
-    <p><%= profile.city %></p>
-    <% if !profile.fandoms.empty? %>
-      <ul>
-        <% profile.fandoms.each do |fandom| %>
-          <li><%= fandom.name %></li>
-        <% end %>
-      </ul>
+  <div class="W_profileHeader">
+    <% if profile.avatar.present? %>
+      <%= image_tag profile.avatar.url, alt: "Аватар", class: "A_avatar" %>
     <% else %>
-      <p>Не состоит ни в одном фандоме.</p>
+      <p>No avatar available</p>
     <% end %>
-    <p><%# fandom = Fandom.all.where(id: profile.fandom_id).first %></p>
+
+    <div class="M_profileInfo">
+      <h1><%= profile.nickname %></h1>
+      <div class="M_profileTags">
+        <p><%= profile.city %></p>
+        <% if !profile.fandoms.empty? %>
+          <ul>
+            <% profile.fandoms.each do |fandom| %>
+              <li><%= fandom.name %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p>Не состоит ни в одном фандоме.</p>
+        <% end %>
+      </div>
+    </div>
   </div>
-  
-  <p><%= profile.bio %></p>
+
+  <div class="M_profileBio">
+    <p><%= profile.bio %></p>
+  </div>
 
   <div class="W_buttons">
     <% if profile && current_user && (current_user.admin? || current_user.id == profile.user_id) %>
-      <%= link_to "редактировать", edit_profile_path(profile) %>
-      <%= button_to "удалить", profile, method: :delete %>
+      <%= link_to "редактировать", edit_profile_path(profile), class: "custom-button" %>
+      <button class="custom-delete-button" data-url="<%= profile_path(profile) %>">Удалить</button>
     <% end %>
-  </div> 
-
-    <%= link_to "вернуться", profiles_path %>
   </div>
+
+  <div class="W_connectButton">
+    <%#= link_to "связаться", "#", class: "custom-connect-button" do %>
+      связаться
+      <%#= image_tag 'atoms/A_go_button.png', alt: 'Стрелка', class: "A_connectArrow" %>
+    <%# end %>
+  </div>
+
+  <%= link_to "вернуться", profiles_path, class: "custom-back-button" %>
 </div>

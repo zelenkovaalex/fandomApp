@@ -1,30 +1,31 @@
 /* trail blocks */
 .O_trail {
-    width: 16vw;
-    height: fit-content;
-    padding: 1vw;
-
-    background-color: var(--light-grey);
-    border-radius: 20px;
-
-    flex: 1;
+    /* flex: 1; */
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    position: relative;
+    max-width: min-content;
 
     a {
         font-size: 20px;
         font-weight: 550;
     }
+
+    img {
+        width: 35vw;
+        height: auto;
+        display: block;
+    }
 }
 
 .O_trailProfile {
-    flex: 1;
+    /* flex: 1; */
     display: flex;
     flex-direction: column;
+    width: max-content;
 
     img {
-        width: 100%;
+        width: 35vw;
         height: auto;
         display: block;
     }
@@ -32,6 +33,10 @@
     a {
         font-size: 20px;
         font-weight: 550;
+    }
+
+    h2 {
+        margin-top: 0;
     }
 }
 

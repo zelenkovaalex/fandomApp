@@ -9,7 +9,9 @@ class Trail < ApplicationRecord
   validates :user, presence: true
 
   has_many :comments, dependent: :destroy
+  
   has_many :likes, as: :likeable
+  has_many :likers, through: :likes, source: :user
 
   acts_as_taggable_on :tags
   acts_as_taggable_on :fandoms
@@ -20,4 +22,9 @@ class Trail < ApplicationRecord
   mount_uploader :image, TrailUploader # Оставьте эту строку
   
   default_scope { order(created_at: "DESC") }
+
+  def liked_by?(user)
+    likes.exists?(user_id: user.id)
+  end
+
 end

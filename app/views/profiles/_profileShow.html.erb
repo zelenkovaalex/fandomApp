@@ -18,9 +18,13 @@
   <div class="W_buttons">
     <% if profile && current_user && (current_user.admin? || current_user.id == profile.user_id) %>
       <%= link_to "редактировать", edit_profile_path(profile) %>
-      <%= button_to "удалить", profile, method: :delete %>
+      <button class="custom-delete-button" data-url="<%= profile_path(profile) %>">Удалить</button>
     <% end %>
   </div>
 
-  <%= link_to "глянуть чупачупса", profile_path(profile), class: "chillGuy" %>
+<%= link_to profile_path(profile), class: 'A_diagonal_arrow' do %>
+  <%= image_tag 'atoms/A_go_button.png', alt: 'Посмотреть маршрут' %>
+<% end %>
+
 </div>
+

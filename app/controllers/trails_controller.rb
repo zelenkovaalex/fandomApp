@@ -25,6 +25,19 @@ class TrailsController < ApplicationController
     render :index
   end
 
+  def like
+    trail = Trail.find(params[:id])
+    if current_user.liked?(trail)
+      current_user.unlike(trail)
+    else
+      current_user.like(trail)
+    end
+
+    respond_to do |format|
+      format.json { render json: { success: true, liked: current_user.liked?(trail) } }
+    end
+  end
+
   def show
     Rails.logger.debug "Params: #{params.inspect}"
     Rails.logger.debug "Trail: #{@trail.inspect}"

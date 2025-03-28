@@ -1,7 +1,7 @@
 <div class="sessions" style="width: 100%;">
   <div class="A_sessions">
     <%- if controller_name != 'sessions' %>
-      <%= link_to "я уже смешарик", new_session_path(resource_name) %><br />
+      <%= link_to "уже есть аккауент?", new_session_path(resource_name) %><br />
     <% end %>
 
     <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
