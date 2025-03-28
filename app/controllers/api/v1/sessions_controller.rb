@@ -1,14 +1,15 @@
 class Api::V1::SessionsController < Devise::SessionsController
-  skip_before_action :require_no_authentication, only: [:create]
+  # skip_before_action :require_no_authentication, only: [:create]
   skip_before_action :verify_authenticity_token
 
   def create
-    user = User.find_for_database_authentication(email: params[:email])
+    user = User.find_for_database(email: params[:email])
+    # user = User.find_for_database_authentication(email: params[:email])
     if user&.valid_password?(params[:password])
       token = generate_token(user)
       render json: {
         message: 'Login successful',
-        token: token,
+        # token: token,
         user: {
           id: user.id,
           email: user.email
