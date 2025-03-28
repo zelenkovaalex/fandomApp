@@ -3,7 +3,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token
 
   def create
-    user = User.find_for_database(email: params[:email])
+    user = User.find_by(email: params[:email])
     # user = User.find_for_database_authentication(email: params[:email])
     if user&.valid_password?(params[:password])
       token = generate_token(user)
@@ -21,19 +21,23 @@ class Api::V1::SessionsController < Devise::SessionsController
   end
 
   def destroy
-    @user = User.find_by_jti(decrypt_payload[0]['jti'])
-
-    if @user && @user.update_column(:jti, SecureRandom.uuid)
-      render json: {
+    render json: {
         messages: "Signed Out Successfully",
         is_success: true
       }, status: :ok
-    else
-      render json: {
-        messages: "Sign Out Failed - Unauthorized",
-        is_success: false
-      }, status: :unauthorized
-    end
+    # @user = User.find_by_jti(decrypt_payload[0]['jti'])
+
+    # if @user && @user.update_column(:jti, SecureRandom.uuid)
+    #   render json: {
+    #     messages: "Signed Out Successfully",
+    #     is_success: true
+    #   }, status: :ok
+    # else
+    #   render json: {
+    #     messages: "Sign Out Failed - Unauthorized",
+    #     is_success: false
+    #   }, status: :unauthorized
+    # end
   end
 
   private
