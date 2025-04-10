@@ -1,13 +1,12 @@
 <div id="<%= dom_id profile %>" class="M_profileInf">
   <div class="W_profileHeader">
+    <div class="M_profileInfo">
+      <h1><%= profile.nickname %></h1>
     <% if profile.avatar.present? %>
       <%= image_tag profile.avatar.url, alt: "Аватар", class: "A_avatar" %>
     <% else %>
       <p>No avatar available</p>
     <% end %>
-
-    <div class="M_profileInfo">
-      <h1><%= profile.nickname %></h1>
       <div class="M_profileTags">
         <p><%= profile.city %></p>
         <% if !profile.fandoms.empty? %>
@@ -36,7 +35,7 @@
 
   <div class="W_connectButton">
     <%#= link_to "связаться", "#", class: "custom-connect-button" do %>
-      связаться
+      
       <%#= image_tag 'atoms/A_go_button.png', alt: 'Стрелка', class: "A_connectArrow" %>
     <%# end %>
   </div>

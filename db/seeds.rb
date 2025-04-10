@@ -412,30 +412,6 @@ def upload_random_avatar(profile)
   end
 end
 
-# def upload_random_avatar(profile)
-#   image_directory = Rails.root.join('public', 'uploads', 'avatars')
-#   image_files = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
-#                   .select { |file| File.file?(file) }
-
-#   Rails.logger.debug "Found avatar files: #{image_files.inspect}"
-
-#   raise "No images found in #{image_directory}" if image_files.empty?
-
-#   unless image_files.empty?
-#     random_avatar = image_files.sample
-#     begin
-#       profile.avatar = File.open(random_avatar)
-#       profile.save!  # Сохраняем профиль с новым аватаром
-#       Rails.logger.debug "Avatar saved to: #{profile.avatar.url}" if profile.avatar.present?
-#     rescue => e
-#       Rails.logger.error "Error assigning avatar: #{e.message}"
-#       profile.errors.full_messages.each { |msg| Rails.logger.error msg }
-#     end
-#   else
-#     Rails.logger.warn "No avatars found in directory: #{image_directory}"
-#   end
-# end
-
 def upload_random_trail_image(trail)
   image_directory = Rails.root.join('public', 'uploads', 'trail')
   image_paths = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")

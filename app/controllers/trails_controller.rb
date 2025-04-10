@@ -49,34 +49,34 @@ class TrailsController < ApplicationController
   end
 
   def new
-    @trail = Trail.new # Не нужно, load_and_authorize_resource уже создает новый маршрут
+    @trail = Trail.new
   end
 
   def edit
   end
 
+  # app/controllers/trails_controller.rb
   def create
     @trail = current_user.trails.new(trail_params)
-    # @trail.user = current_user
-
-    Rails.logger.debug "Trail params: #{trail_params.inspect}" # Логируем параметры
-    Rails.logger.debug "Trail image: #{@trail.trail_image.inspect}" # Логируем trail_image
 
     respond_to do |format|
       if @trail.save
-        Rails.logger.debug "Trail created successfully with image: #{@trail.trail_image.url}"
-        redirect_to @trail, notice: "Trail was successfully created."
+        format.html { redirect_to @trail, notice: "Маршрут успешно создан." }
+        format.json { render :show, status: :created, location: @trail }
       else
-        Rails.logger.debug "Trail creation failed with errors: #{@trail.errors.full_messages}"
-        render :new
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @trail.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def edit
   end
 
   def update
     respond_to do |format|
       if @trail.update(trail_params)
-        format.html { redirect_to trail_path(@trail), notice: "trail was successfully updated." }
+        format.html { redirect_to @trail, notice: "Маршрут успешно обновлен." }
         format.json { render :show, status: :ok, location: @trail }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -96,11 +96,15 @@ class TrailsController < ApplicationController
 
   private
 
+  def set_trail
+    @trail = Trail.find(params[:id])
+  end
+
   def set_fandom
     @fandom = Fandom.find(params[:fandom_id]) if params[:fandom_id]
   end
 
   def trail_params
-    params.require(:trail).permit(:title, :city, :trail_time, :trail_level, :body, :public, :fandom_id, :trail_image, tag_list: [])
+    params.require(:trail).permit(:title, :fandom_id, :image, :body)
   end
 end

@@ -1,23 +1,15 @@
-<%
-  if current_user && current_user.admin?
-    trail_model = [:admin, trail]
-  elsif can? :edit, trail
-    trail_model = trail
-  end
-%>
-
-<%= form_with(model: trail_model, url: trails_path, local: true, html: {class: "W_inputs"}) do |form| %> 
-  <%# if trail.errors.any? %>
+<%= form_with(model: trail, local: true, html: {class: "W_inputs"})do |form| %>
+  <% if trail.errors.any? %>
     <div style="color: red">
-      <h2><%#= pluralize(trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
-
+      <h3><%= pluralize(trail.errors.count, "error") %> prohibited this trail from being saved:</h3>
       <ul>
-        <%# trail.errors.each do |error| %>
-          <li><%#= error.full_message %></li>
-        <%# end %>
+        <% trail.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
-  <%# end %>
+  <% end %>
+
 
   <div class="A_input">
     <p>название</p>
@@ -31,7 +23,7 @@
 
   <div class="A_input">
     <p>картиночка</p>
-    <%= form.file_field :trail_image %>
+    <%= form.file_field :image %>
     <br>
   </div>
 
@@ -50,9 +42,9 @@
     <p><%= form.label :fandom_id %></p>
     <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
   </div>
-  
+
   <div class="A_commit">
-    <%= form.submit 'создать трейл' %>
+    <%= form.submit "добавить"%>
   </div>
 
 <% end %>

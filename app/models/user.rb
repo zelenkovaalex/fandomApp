@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   after_create :create_profile
 
-  # has_secure_password
+  # validates :email, presence: true, uniqueness: true
 
   def generate_authentication_token
     loop do

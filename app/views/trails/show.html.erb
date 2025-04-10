@@ -1,3 +1,4 @@
+<%# app/views/trails/show.html.erb %>
 <body class='show' style="width: 100%;">
   <p style="color: green"><%= notice %></p>
 
@@ -8,8 +9,8 @@
       </div>
       <h2><%= @trail.title %></h2>
       <h3>
-        <% @trail.fandom_list.each do |fandom_tag| %>
-          <%= link_to fandom_tag, tagged_trails_path(fandom_tag) %>
+        <% if @trail.fandom %>
+          <%= link_to @trail.fandom.name, fandom_path(@trail.fandom) %>
         <% end %>
       </h3>
       <p><%= @trail.body %></p>
@@ -20,15 +21,14 @@
 
     <div class="W_buttons">
       <% if @trail && current_user && (current_user.admin? || current_user == @trail.user) %>
-        <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
+        <%= link_to "редактировать", edit_trail_path(@trail) %>
         <button class="custom-delete-button" data-url="<%= admin_fandom_path(@trail) %>">Удалить</button>
       <% end %> <br>
-      <%= link_to "вернуться", fandoms_url, class: 'back' %>
+      <%= link_to "вернуться к фандому", fandom_path(@trail.fandom), class: 'back' %>
     </div>
   </div>
 
   <div class="W_comments">
-    
     <div class="O_newComent">
       <%= render partial: "comments/form", locals: { url: trail_comments_path(@trail), comment: Comment.new } %>
       <%= turbo_stream_from "comments" %>
@@ -37,11 +37,7 @@
     <div id="O_replyComment">
       <% @trail.comments.no_replies.each do |comment| %>
         <%= render "comments/comment", comment: comment %>
-        <%# if current_user && current_user.admin?%>
-          <%#= button_to 'удалить', @trail, method: :delete %>
-        <%# end%>
       <% end %>
     </div>
   </div>
-
 </body>

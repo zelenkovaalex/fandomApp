@@ -19,9 +19,14 @@
 
     <div class='M_briks'>
     <h2>Маршруты этого фандома:</h2>
-      <% @trails.each do |trail| %>
+
+    <% if @fandom.trails.any? %>
+      <% @fandom.trails.each do |trail| %>
         <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
       <% end %>
+    <% else %>
+      <p>В этом фандоме пока нет маршрутов.</p>
+    <% end %>
     </div>
   </div>
 

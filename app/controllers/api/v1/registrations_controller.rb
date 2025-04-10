@@ -3,12 +3,21 @@ class Api::V1::RegistrationsController < Devise::RegistrationsController
   skip_before_action :verify_authenticity_token
   
   def create
-    user = User.new(user_params)
-    if user.save
-      render json: { message: 'User created successfully', user: user }, status: :created
+    @user = User.new(user_params)
+    if @user.save
+      render json: {
+        message: 'Sign Up Successful',
+        user: {
+          id: @user.id,
+          email: @user.email,
+          jwt: encrypt_payload
+        }
+      }, status: :created
     else
-      Rails.logger.error "User creation failed: #{user.errors.full_messages}"
-      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+      render json: {
+        message: 'Sign Up Failed',
+        errors: @user.errors.full_messages # Выводим ошибки валидации
+      }, status: :unprocessable_entity
     end
   end
 
