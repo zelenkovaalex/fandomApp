@@ -7,5 +7,7 @@ services:
     # volumes:
     #   - .:/rails:cached
     #   - .:/rails:rw
+    environment:
+      - RAILS_MASTER_KEY=4ed2c966852a224490b3140f224f957b
     ports:
       - '3000:3000'
