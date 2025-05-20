@@ -50,27 +50,35 @@ class TrailsController < ApplicationController
 
   def new
     @trail = Trail.new
-  end
-
-  def edit
+    @trail.trail_points.build
   end
 
   # app/controllers/trails_controller.rb
   def create
     @trail = current_user.trails.new(trail_params)
+    @trail.profile = current_user.profile
 
-    respond_to do |format|
-      if @trail.save
-        format.html { redirect_to @trail, notice: "Маршрут успешно создан." }
-        format.json { render :show, status: :created, location: @trail }
+    if params[:step] == "points"
+      respond_to do |format|
+        if @trail.save
+          format.html { redirect_to @trail, notice: "Маршрут успешно создан." }
+          format.json { render :show, status: :created, location: @trail }
+        else
+          format.html { render :new, status: :unprocessable_entity }
+          format.json { render json: @trail.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      # заполнены ли основные поля
+      if @trail.valid?
+        respond_to do |format|
+          format.turbo_stream
+          format.html { render partial: 'form_points' }
+        end
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @trail.errors, status: :unprocessable_entity }
+        render :new, status: :unprocessable_entity
       end
     end
-  end
-
-  def edit
   end
 
   def update
@@ -96,15 +104,20 @@ class TrailsController < ApplicationController
 
   private
 
-  def set_trail
-    @trail = Trail.find(params[:id])
-  end
-
   def set_fandom
     @fandom = Fandom.find(params[:fandom_id]) if params[:fandom_id]
   end
 
   def trail_params
-    params.require(:trail).permit(:title, :fandom_id, :image, :body)
+    params.require(:trail).permit(
+      :title,
+      :body,
+      :image,
+      :duration,
+      :duration_unit,
+      :trail_level,
+      :fandom_id,
+      trail_points_attributes: [:id, :name, :description, :image_url, :latitude, :longitude, :_destroy]
+    )
   end
 end

@@ -1,16 +1,18 @@
 class Api::V1::ProfilesController < ApplicationController
-  before_action :authenticate_user!
+  # before_action :authenticate_user!
   before_action :set_profile, only: [:show, :update, :destroy]
 
   def index
-    profiles = Profile.includes(:user).all
-    render json: profiles, include: :user, status: :ok
+    @profiles = Profile.all.includes(:user, :trails)
+    Rails.logger.info "Loaded profiles: #{@profiles.inspect}"
+    render json: @profiles, include: [:user, :trails], status: :ok
   end
 
   def show
-    profile = Profile.includes(:user).find_by(id: params[:id])
-    if profile
-      render json: profile, include: :user, status: :ok
+    @profile = Profile.includes(:user, :trails).find_by(id: params[:id])
+    if @profile
+      Rails.logger.info "Loaded profile: #{@profile.inspect}"
+      render json: @profile, include: [:user, :trails], status: :ok
     else
       render json: { error: "Profile not found" }, status: :not_found
     end
@@ -18,6 +20,7 @@ class Api::V1::ProfilesController < ApplicationController
 
   def update
     profile = Profile.find_by(id: params[:id])
+    params[:profile][:fandom_names] = params[:profile][:fandom_names].split(",").map(&:strip)
     if profile && profile.update(profile_params)
       render json: profile, status: :ok
     else
@@ -27,7 +30,7 @@ class Api::V1::ProfilesController < ApplicationController
 
   def destroy
     @profile.destroy!
-    head :no_content #  Возвращаем только HTTP-статус (204 No Content)
+    head :no_content
   end
 
   private

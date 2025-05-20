@@ -80,7 +80,43 @@ body {
         }
     }
 
+    /* тест звезд */
 
+    .rating-stars {
+        display: inline-flex;
+        align-items: center;
+        margin-bottom: 8px;
+    }
+
+    /* Скрыть радиокнопки */
+    .rating-stars input[type="radio"] {
+        display: none;
+        /* Скрываем радиокнопки */
+    }
+
+    /* Стилизация звёздочек */
+    .rating-stars label {
+        font-size: 20px;
+        color: gray;
+        cursor: pointer;
+        transition: color 0.2s;
+    }
+
+    /* Заполнение звёздочек при выборе */
+    .rating-stars input[type="radio"]:checked+label,
+    .rating-stars input[type="radio"]:checked~label {
+        color: black;
+        /* Заполненные звёздочки */
+    }
+
+    /* Эффект при наведении */
+    .rating-stars label:hover,
+    .rating-stars label:hover~label {
+        color: black;
+        /* Подсвечиваем звёздочки при наведении */
+    }
+
+    /*  */
 
     footer {
         display: inline-flex;

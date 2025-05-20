@@ -1,0 +1,37 @@
+<%= form_with(model: trail, local: true, html: { class: "W_inputs" }) do |form| %>
+  <%= form.hidden_field :step, value: "points" %>
+
+  <!-- Точки маршрута -->
+  <%= form.fields_for :trail_points do |point_form| %>
+    <div class="trail-point">
+      <span class="step-number">(#{point_form.object.index + 1})</span>
+      <div class="A_input">
+        <p>Фото</p>
+        <%= point_form.file_field :image_url %>
+      </div>
+
+      <div class="A_input">
+        <p>Название</p>
+        <%= point_form.text_field :name %>
+      </div>
+
+      <div class="A_input">
+        <p>Описание</p>
+        <%= point_form.text_area :description, style: "height:10vw;" %>
+      </div>
+
+      <div class="A_input">
+        <p>Ссылка на карту</p>
+        <%= point_form.url_field :map_link %>
+      </div>
+    </div>
+  <% end %>
+
+  <!-- Кнопка "Добавить следующую точку" -->
+  <button type="button" id="add-trail-point">Следующая точка</button>
+
+  <!-- Кнопка "Опубликовать" -->
+  <div class="A_commit">
+    <%= form.submit "Опубликовать" %>
+  </div>
+<% end %>

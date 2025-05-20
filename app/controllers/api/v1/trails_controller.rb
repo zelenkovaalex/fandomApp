@@ -1,4 +1,5 @@
 class Api::V1::TrailsController < ApplicationController
+  before_action :set_trail, only: [:show]
 
   def index
     @trails = Trail.all
@@ -7,7 +8,15 @@ class Api::V1::TrailsController < ApplicationController
   end
 
   def show
-    @trail = Trail.find(params[:id])
+    render json: {
+      id: @trail.id,
+      title: @trail.title,
+      body: @trail.body,
+      average_rating: @trail.average_rating,
+      comments_count: @trail.comments.count,
+      positive_ratings_percentage: @trail.positive_ratings_percentage,
+      ratings: @trail.ratings_with_users
+    }
   end
 
   def create
@@ -47,8 +56,21 @@ class Api::V1::TrailsController < ApplicationController
 
   private
 
+    def set_trail
+      @trail = Trail.find(params[:id])
+    end
+
     def trail_params
-      params.require(:trail).permit(:title, :city, :trail_time, :trail_level, :body, :public, :fandom_id, :trail_image, tag_list: [])
+      params.require(:trail).permit(
+        :title,
+        :body,
+        :image,
+        :duration,
+        :duration_unit,
+        :trail_level,
+        :fandom_id,
+        trail_points_attributes: [:id, :name, :description, :image_url, :latitude, :longitude, :_destroy]
+      )
     end
 
     def encrypt_payload

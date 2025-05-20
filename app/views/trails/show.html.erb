@@ -21,7 +21,7 @@
 
     <div class="W_buttons">
       <% if @trail && current_user && (current_user.admin? || current_user == @trail.user) %>
-        <%= link_to "редактировать", edit_trail_path(@trail) %>
+        <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
         <button class="custom-delete-button" data-url="<%= admin_fandom_path(@trail) %>">Удалить</button>
       <% end %> <br>
       <%= link_to "вернуться к фандому", fandom_path(@trail.fandom), class: 'back' %>

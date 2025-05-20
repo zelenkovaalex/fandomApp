@@ -39,7 +39,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :trails, only: [:index, :show, :destroy]
+      resources :trails, only: [:index, :show, :destroy] do
+         patch :update_step, on: :member
+      end
+      resources :likes, only: [:create]
+      post 'toggle_like/:trail_id', to: 'like#toggle', as: 'toggle_like'
       resources :fandoms, only: [:index, :show]
       resources :users, only: [:index, :show] do
         resource :profile, only: [:show, :update]

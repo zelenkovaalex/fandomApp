@@ -6,7 +6,7 @@ class User < ApplicationRecord
           :recoverable, :rememberable, :validatable, 
           :jwt_authenticatable, jwt_revocation_strategy: self
 
-  has_many :trails
+  has_many :trails, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one :profile, dependent: :destroy
   has_many :likes
@@ -29,16 +29,22 @@ class User < ApplicationRecord
     }
   end
 
+  def liked?(likeable)
+    likes.exists?(likeable: likeable)
+  end
+
   def like(likeable)
-    likes.where(likeable: likeable).first_or_create
+    likes.find_or_create_by!(likeable: likeable)
   end
 
   def unlike(likeable)
-    likes.where(likeable: likeable).destroy_all
+    likes.find_by(likeable: likeable)&.destroy
   end
 
-  def liked?(likeable)
-    likes.exists?(likeable: likeable)
+  private
+
+  def create_profile
+    Profile.create(user: self) unless profile.present?
   end
   
 end

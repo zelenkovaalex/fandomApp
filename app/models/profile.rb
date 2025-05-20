@@ -17,4 +17,8 @@ class Profile < ApplicationRecord
         Rails.logger.debug "Profile before save: #{self.inspect}"
     end
 
+    def fandoms
+        Fandom.where(name: fandom_names)
+    end
+
 end

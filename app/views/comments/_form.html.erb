@@ -5,7 +5,7 @@
 
       <ul>
         <% comment.errors.each do |error| %>
-        <li><%= error.full_message %></li>
+          <li><%= error.full_message %></li>
         <% end %>
       </ul>
     </div>
@@ -14,6 +14,16 @@
   <div class="A_commentInput">
     <p>комментарий</p>
     <%= form.text_area :body %>
+  </div>
+
+  <div class="A_ratingInput">
+    <p>оценка</p>
+    <div class="rating-stars">
+      <% (1..5).each do |star| %>
+        <%= form.radio_button :rating_value, star, id: "comment_rating_#{star}", class: "star" %>
+        <label for="comment_rating_<%= star %>">★</label>
+      <% end %>
+    </div>
   </div>
 
   <% if defined? parent_comment_id %>

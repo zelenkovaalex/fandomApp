@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_03_27_184833) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_20_175354) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -18,6 +18,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_184833) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "comment_id"
+    t.integer "rating_value"
     t.index ["trail_id"], name: "index_comments_on_trail_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -64,8 +65,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_184833) do
     t.datetime "updated_at", null: false
     t.string "city"
     t.string "nickname"
-    t.integer "fandom_id"
     t.string "link"
+    t.text "fandom_names"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -114,6 +115,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_184833) do
     t.index ["name"], name: "index_tags_on_name", unique: true
   end
 
+  create_table "trail_points", force: :cascade do |t|
+    t.integer "trail_id", null: false
+    t.string "name"
+    t.text "description"
+    t.string "image_url"
+    t.decimal "latitude"
+    t.decimal "longitude"
+    t.string "map_link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trail_id"], name: "index_trail_points_on_trail_id"
+  end
+
   create_table "trails", force: :cascade do |t|
     t.string "title"
     t.json "fandom"
@@ -121,14 +135,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_184833) do
     t.string "trail_level"
     t.text "body"
     t.string "fandom_id"
+    t.integer "duration"
+    t.string "duration_unit"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "user_id"
     t.boolean "public", default: false
     t.string "city"
     t.integer "profile_id", null: false
     t.string "image"
     t.index ["profile_id"], name: "index_trails_on_profile_id"
+    t.index ["user_id"], name: "index_trails_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -155,5 +172,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_03_27_184833) do
   add_foreign_key "tag_selecteds", "tags"
   add_foreign_key "tag_selecteds", "trails"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "trail_points", "trails"
   add_foreign_key "trails", "profiles"
+  add_foreign_key "trails", "users"
 end

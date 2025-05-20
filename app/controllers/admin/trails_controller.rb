@@ -27,6 +27,7 @@ class Admin::TrailsController < ApplicationController
 
   # GET /trails/1/edit
   def edit
+    @trail = Trail.find(params[:id])
   end
 
   # trail /trails or /trails.json

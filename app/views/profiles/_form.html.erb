@@ -17,7 +17,7 @@
   </div>
 
   <div class="A_input">
-   <p>кликуха</p>
+    <p>кликуха</p>
     <%= form.text_field :nickname %>
   </div>
 
@@ -27,13 +27,8 @@
   </div>
 
   <div class="A_input">
-    <p>фандомы</p>
-    <% @fandoms.each do |fandom| %>
-      <div>
-        <%= check_box_tag "profile[fandom_ids][]", fandom.id, profile.fandoms.include?(fandom) %>
-        <%= label_tag "profile_fandom_ids_#{fandom.id}", fandom.name %>
-      </div>
-    <% end %>
+    <p>фандомы (через запятую)</p>
+    <%= form.text_field :fandom_names, value: profile.fandom_names.join(", ") %>
   </div>
 
   <div class="A_input">
@@ -47,7 +42,7 @@
   </div>
 
   <div class="A_commit">
-    <%= form.submit "обновиться"%>
+    <%= form.submit "обновиться" %>
   </div>
 
   <div class="A_sessions">

@@ -1,13 +1,11 @@
 <body class="newTrail" style="width: 100%;">
   <% content_for :title, "новый маршрут" %>
 
-  <%= link_to "вернуться", fandoms_path, style: "margin: 2vw 5vw;" %>
+  
 
-    <div class="M_hello">
-    <h2>новый маршрут</h2>
+  <div class="M_hello">
+      <h2>новый маршрут</h2>
   </div>
 
-  <%#= render partial: "admin/trails/form", locals: { trail: @trail } %> 
   <%= render "form", trail: @trail %>
-
 </body>

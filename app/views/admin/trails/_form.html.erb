@@ -1,50 +1,59 @@
-<%= form_with(model: trail, local: true, html: {class: "W_inputs"})do |form| %>
-  <% if trail.errors.any? %>
-    <div style="color: red">
-      <h3><%= pluralize(trail.errors.count, "error") %> prohibited this trail from being saved:</h3>
-      <ul>
-        <% trail.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: @trail, local: true, html: { class: "W_inputs" }) do |form| %>
+    <% if @trail.errors.any? %>
+      <div style="color: red">
+        <h3><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h3>
+        <ul>
+          <% @trail.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="A_input">
+      <p>Фото</p>
+      <%= form.file_field :image %>
+    </div>
+
+    <div class="A_input">
+      <p>Название</p>
+      <%= form.text_field :title %>
+    </div>
+
+    <div class="A_input">
+      <p>Описание</p>
+      <%= form.text_area :body, style: "height:10vw;" %>
+    </div>
+
+    <div class="A_input">
+      <p><%= form.label :fandom_id %></p>
+      <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
+    </div>
+
+    <div class="A_input">
+      <p>Город</p>
+      <%= form.text_field :city %>
+    </div>
+
+    <div class="A_input">
+      <p>Длительность</p>
+      <%= form.number_field :duration, min: 0, placeholder: '0', class: 'time_field' %>
+      <%= form.select :duration_unit, options_for_select([['минут', 'minutes'], ['часов', 'hours'], ['дней', 'days']]), class: 'unit_select' %>
+    </div>
+
+    <div class="A_input">
+      <p>Расстояние</p>
+      <%= form.number_field :distance, min: 0, placeholder: '0', class: 'distance_field' %>
+    </div>
+
+    <div class="A_input">
+      <p>Сложность</p>
+      <%= form.radio_button :difficulty, 'легкий' %> Легкий
+      <%= form.radio_button :difficulty, 'средний' %> Средний
+      <%= form.radio_button :difficulty, 'продвинутый' %> Продвинутый
+    </div>
+
+    <div class="A_commit">
+      <%= form.submit "Далее", data: { turbo_method: :post } %>
     </div>
   <% end %>
-
-
-  <div class="A_input">
-    <p>название</p>
-    <%= form.text_field :title %>
-  </div>
-
-  <div class="A_input">
-    <p>описание</p>
-    <%= form.text_area :body, style: "height:10vw;" %>
-  </div>
-
-  <div class="A_input">
-    <p>картиночка</p>
-    <%= form.file_field :image %>
-    <br>
-  </div>
-
-  <div class="A_input">
-    <p>время</p>
-    <%= form.number_field :duration, min: 0, placeholder: '0', class: 'time_field'  %>
-    <%= form.select :duration_unit,  options_for_select([['минут', 'minutes'], ['часов', 'hours'], ['дней', 'days']]),  class: 'unit_select' %>
-  </div>
-
-  <div class="A_input">
-    <p>уровень сложности</p>
-    <%= form.number_field :trail_level %> <br>
-  </div>
-
-  <div class="A_input">
-    <p><%= form.label :fandom_id %></p>
-    <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
-  </div>
-
-  <div class="A_commit">
-    <%= form.submit "добавить"%>
-  </div>
-
-<% end %>

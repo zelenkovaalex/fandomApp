@@ -436,17 +436,28 @@ def upload_random_trail_image(trail)
 end
 
 def create_users(quantity)
+  # Проверка, что массивы не пустые
+  raise "Nicknames array is empty!" if @nicknames.empty?
+  raise "Bios array is empty!" if @bios.empty?
+  raise "Cities array is empty!" if @cities.empty?
+
+  # Проверка, что фандомы существуют
+  if Fandom.count.zero?
+    raise "No fandoms in the database! Please seed fandoms first."
+  end
+
   created_emails = []
   created_nicknames = []
 
   quantity.times do |i|
-    email = "user#{i}@email.com"
+    # Генерация уникального email
+    email = "user#{i + 1}@email.com"
 
     while created_emails.include?(email)
       email = "user#{rand(1000)}@email.com"
     end
 
-    # Generate unique nickname
+    # Генерация уникального nickname
     nickname = @nicknames.sample
     while created_nicknames.include?(nickname)
       nickname = @nicknames.sample
@@ -455,6 +466,7 @@ def create_users(quantity)
       end
     end
 
+    # Создание пользователя
     user_data = {
       email: email,
       password: "passpass"
@@ -466,16 +478,18 @@ def create_users(quantity)
     created_emails << email
     puts "User created with id #{user.id}"
 
+    # Создание профиля
     profile_data = {
       user_id: user.id,
       nickname: nickname,
       bio: @bios.sample,
       city: @cities.sample,
-      fandom_id: Fandom.all.sample.id
+      fandom_names: Fandom.all.sample(rand(2..5)).map(&:name)
     }
 
     profile = Profile.new(profile_data)
 
+    # Загрузка аватара
     upload_random_avatar(profile)
 
     if profile.save!
@@ -486,10 +500,12 @@ def create_users(quantity)
 
     # Присоединение фандомов
     random_fandoms = Fandom.all.sample(rand(2..5))
-    profile.fandoms << random_fandoms
+    profile.update!(fandom_names: random_fandoms.map(&:name))
     random_fandoms.each do |fandom|
       puts "Fandom #{fandom.name} assigned to profile with id #{profile.id}"
     end
+
+    created_nicknames << nickname
   end
 end
 
@@ -527,21 +543,20 @@ def create_trail(quantity)
     return
   end
 
-  # Каталог с изображениями для trails
-  image_directory = Rails.root.join('public', 'uploads', 'trail')
-  image_paths = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
-                   .select { |file| File.file?(file) }
+  # Каталог с изображениями для точек маршрута
+  point_image_directory = Rails.root.join('public', 'uploads', 'trail')
+  point_image_paths = Dir.glob("#{point_image_directory}/*.{jpg,jpeg,png,gif}")
+                         .select { |file| File.file?(file) }
 
-  # Проверяем, есть ли изображения в каталоге
-  if image_paths.empty?
-    puts "No images found in directory: #{image_directory}"
+  if point_image_paths.empty?
+    puts "No images found in directory: #{point_image_directory}"
     return
   end
 
   Fandom.all.each do |fandom|
     rand(3..10).times do
       user = User.all.sample
-      profile = user.profile # Находим профиль пользователя
+      profile = user.profile
       if profile.nil?
         puts "No profile found for user with id #{user.id}. Skipping this attempt."
         next
@@ -554,7 +569,7 @@ def create_trail(quantity)
       end
 
       trail_data = nil
-      max_attempts = 10 # Ограничиваем количество попыток, чтобы не было бесконечного цикла
+      max_attempts = 10
       attempts = 0
 
       while trail_data.nil? && attempts < max_attempts
@@ -562,18 +577,17 @@ def create_trail(quantity)
         temp_trail_data = fandom_trails.sample
         if temp_trail_data.nil?
           puts "No trail data found for fandom: #{fandom.name}. Skipping this attempt."
-          next # Пропускаем текущую итерацию while
+          next
         end
 
         existing_trail = Trail.find_by(title: temp_trail_data[:title], fandom: fandom)
         if existing_trail.nil?
-          trail_data = temp_trail_data # Нашли уникальный маршрут
+          trail_data = temp_trail_data
         else
           puts "Trail with title #{temp_trail_data[:title]} for fandom #{fandom.name} already exists. Trying again."
         end
       end
 
-      # Если не удалось найти уникальный маршрут за max_attempts попыток, пропускаем создание
       if trail_data.nil?
         puts "Could not find a unique trail for fandom #{fandom.name} after #{max_attempts} attempts. Skipping."
         next
@@ -585,17 +599,32 @@ def create_trail(quantity)
         fandom: fandom,
         city: @cities.sample,
         user: user,
-        profile: profile, # Передаем профиль
+        profile: profile,
         trail_time: get_random_time,
         trail_level: get_random_level,
         public: get_random_bool
       )
 
-      # Загружаем случайное изображение
+      # Загружаем случайное изображение для маршрута
       upload_random_trail_image(trail)
 
       if trail.save
         puts "Trail with title #{trail.title} just created"
+
+        # Создаём случайные точки маршрута
+        rand(2..5).times do |i|
+          point_data = {
+            name: "Точка #{i + 1}",
+            description: "Описание точки #{i + 1}",
+            image_url: point_image_paths.sample,
+            latitude: rand(-90.0..90.0),
+            longitude: rand(-180.0..180.0)
+          }
+
+          trail.trail_points.create!(point_data)
+        end
+
+        puts "Added random points to trail #{trail.title}"
       else
         puts "Error creating trail: #{trail.errors.full_messages.join(', ')}"
       end
@@ -604,6 +633,38 @@ def create_trail(quantity)
   puts Trail.count
 end
 
+def get_random_time
+  # Генерация случайного времени
+  hours = rand(1..12)
+  minutes = rand(0..59)
+  "#{hours}ч #{minutes}мин"
+end
+
+def get_random_level
+  # Случайный уровень сложности
+  ["легкий", "средний", "сложный"].sample
+end
+
+# def create_random_ratings_for_trail(trail)
+#   random_rating_count = rand(1..5)
+
+#   random_rating_count.times do
+#     random_user = User.all.sample
+
+#     unless trail.ratings.exists?(user_id: random_user.id)
+#       rating_value = rand(1..5)
+
+#       rating = Rating.create!(
+#         trail: trail,
+#         user: random_user,
+#         value: rating_value
+#       )
+
+#       puts "Created rating #{rating.value} for trail #{trail.title} by user #{random_user.email}"
+#     end
+#   end
+# end
+
 def create_comments(quantity)
   Trail.all.each do |trail|
     rand(quantity).times do
@@ -611,7 +672,8 @@ def create_comments(quantity)
       comment = Comment.create(
         trail_id: trail.id,
         user_id: user.id,
-        body: create_sentence
+        body: create_sentence,
+        rating_value: rand(1..5)
       )
       # puts "Comment with id #{comment.id} for trail with id #{comment.trail.id} created by user #{user.email}"
     end

@@ -44,9 +44,12 @@ class ProfilesController < ApplicationController
 
   # PATCH/PUT /profiles/:id
   def update
-  Rails.logger.debug "PARAMS: #{params.inspect}"
+    @profile = current_user.profile
+    Rails.logger.debug "PARAMS: #{params.inspect}"
+    params[:profile][:fandom_names] = params[:profile][:fandom_names].split(",").map(&:strip)
+
     if @profile.update(profile_params)
-      update_fandoms if params[:profile][:fandom_ids] # Добавляем фандомы
+      update_fandoms if params[:profile][:fandom_ids]
 
       redirect_to @profile, notice: 'Profile was successfully updated.'
     else
@@ -71,7 +74,15 @@ class ProfilesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def profile_params
-    params.require(:profile).permit(:name, :bio, :city, :nickname, :avatar, :link, fandom_ids: [])
+    params.require(:profile).permit(
+      :name,
+      :bio,
+      :avatar,
+      :city,
+      :nickname,
+      :fandom_names,
+      :link
+    )
   end
 
   def update_fandoms
