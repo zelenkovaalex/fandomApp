@@ -5,15 +5,16 @@ class Admin::FandomsController < ApplicationController
 
   # GET /fandoms or /fandoms.json
   def index
-    @fandoms = Fandom.all
-    @trails = Trail.all
+    @fandoms = Fandom.includes(:trails).all
+    render :index
   end
 
   # GET /fandoms/1 or /fandoms/1.json
   def show
-    @trail = Trail.where(params[:id])
+    @fandom = Fandom.includes(:trails).find(params[:id])
+    render :show
   end
-
+  
   # GET /fandoms/new
   def new
     @fandom = Fandom.new

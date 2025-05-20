@@ -1,3 +1,3 @@
-json.array! @fandoms do |fandom|
-  json.extract! fandom, :id, :name, :description
+json.fandoms @fandoms do |fandom|
+  json.partial! 'api/v1/fandoms/fandom', fandom: fandom
 end

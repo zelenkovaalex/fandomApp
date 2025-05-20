@@ -602,7 +602,10 @@ def create_trail(quantity)
         profile: profile,
         trail_time: get_random_time,
         trail_level: get_random_level,
-        public: get_random_bool
+        public: get_random_bool,
+        duration: rand(30..300),
+        distance: rand(1..10),
+        difficulty: ["легкий", "средний", "сложный"].sample
       )
 
       # Загружаем случайное изображение для маршрута

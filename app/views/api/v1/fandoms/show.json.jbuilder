@@ -1,1 +1,1 @@
-json.extract! @fandom, :id, :name, :description
+json.partial! 'api/v1/fandoms/fandom', fandom: @fandom
