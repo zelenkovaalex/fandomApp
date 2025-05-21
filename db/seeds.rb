@@ -641,11 +641,10 @@ def create_trail(quantity)
         # случайные точки маршрута
         rand(2..5).times do |i|
           point_data = {
-            name: "Точка #{i + 1}",
-            description: "Описание точки #{i + 1}",
+            name: @point_names.sample,
+            description: point_data,
             image_url: point_image_paths.sample,
-            latitude: rand(-90.0..90.0),
-            longitude: rand(-180.0..180.0)
+            map_link: @point_map_links.sample
           }
 
           trail.trail_points.create!(point_data)
