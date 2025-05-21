@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   resources :trails, only: [:index, :show, :new, :edit, :destroy] do
     resource :comments
     get "/by_tag/:tag", to: "trails#by_tag", on: :collection, as: "tagged"
+    resources :trail_points, only: [:index, :show]
   end
 
   get 'likes/toggle/:trail_id', to: 'like#toggle', as: :toggle_like, defaults: { format: :json }

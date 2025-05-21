@@ -10,7 +10,7 @@
 
   <div class="M_profileTags">
     <p><%= profile.city %></p>
-    <p><%= Fandom.find_by(id: profile.fandom_id)&.name || "No Fandom" %></p>
+    <p><%= Fandom.find_by(id: profile.fandom_names)&.name || "No Fandom" %></p>
   </div>
 
   <p><%= profile.bio %></p>

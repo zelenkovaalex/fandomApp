@@ -369,6 +369,30 @@
 
 @words = @raw_text.downcase.gsub(/[—.—,«»:;()]/, '').gsub(/  /, ' ').split(' ')
 
+@point_names = [
+  "Пир у короля",
+  "Водные сады Мартеллов",
+  "Север (старки)",
+  "Железные острова",
+  "Планетарий",
+  "Центр мастер-классов"
+]
+
+@point_descriptions = [
+  "Прикольное и красивое местечко",
+  "Ну, вообще вау, прямо, как в сериале",
+  "Восторг от такой красоты, погружает в атмосферу",
+  "Такое завершение маршрута не может быть лучше",
+  "Очень крутое место, можно выбрать разные сюжеты",
+  "После планетария решили стать еще умнее"
+]
+
+@point_map_links = [
+  "https://maps.app.goo.gl/txumeh... ",
+  "https://maps.app.goo.gl/yvzopq... ",
+  "https://maps.app.goo.gl/zwrstx... "
+]
+
 def reset_db
   Rake::Task['db:drop'].invoke
   Rake::Task['db:create'].invoke
@@ -608,13 +632,13 @@ def create_trail(quantity)
         difficulty: ["легкий", "средний", "сложный"].sample
       )
 
-      # Загружаем случайное изображение для маршрута
+      # случайное изображение
       upload_random_trail_image(trail)
 
       if trail.save
         puts "Trail with title #{trail.title} just created"
 
-        # Создаём случайные точки маршрута
+        # случайные точки маршрута
         rand(2..5).times do |i|
           point_data = {
             name: "Точка #{i + 1}",
@@ -647,26 +671,6 @@ def get_random_level
   # Случайный уровень сложности
   ["легкий", "средний", "сложный"].sample
 end
-
-# def create_random_ratings_for_trail(trail)
-#   random_rating_count = rand(1..5)
-
-#   random_rating_count.times do
-#     random_user = User.all.sample
-
-#     unless trail.ratings.exists?(user_id: random_user.id)
-#       rating_value = rand(1..5)
-
-#       rating = Rating.create!(
-#         trail: trail,
-#         user: random_user,
-#         value: rating_value
-#       )
-
-#       puts "Created rating #{rating.value} for trail #{trail.title} by user #{random_user.email}"
-#     end
-#   end
-# end
 
 def create_comments(quantity)
   Trail.all.each do |trail|

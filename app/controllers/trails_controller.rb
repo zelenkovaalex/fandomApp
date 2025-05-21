@@ -39,6 +39,8 @@ class TrailsController < ApplicationController
   end
 
   def show
+    @trail_points = @trail.trail_points.order(created_at: :asc)
+    
     Rails.logger.debug "Params: #{params.inspect}"
     Rails.logger.debug "Trail: #{@trail.inspect}"
     if @trail.nil?
@@ -103,6 +105,10 @@ class TrailsController < ApplicationController
   end
 
   private
+
+  def set_trail
+    @trail = Trail.find(params[:id])
+  end
 
   def set_fandom
     @fandom = Fandom.find(params[:fandom_id]) if params[:fandom_id]
