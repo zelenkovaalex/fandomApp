@@ -119,7 +119,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_20_193740) do
     t.integer "trail_id", null: false
     t.string "name"
     t.text "description"
-    t.string "image_url"
+    t.string "image"
     t.decimal "latitude"
     t.decimal "longitude"
     t.string "map_link"

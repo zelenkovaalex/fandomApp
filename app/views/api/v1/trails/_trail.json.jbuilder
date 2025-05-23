@@ -1,4 +1,4 @@
-json.extract! trail, :id, :title, :body, :duration, :distance, :difficulty, :average_rating, :comments_count
+json.extract! trail, :id, :title, :city& :body, :duration, :distance, :difficulty, :average_rating, :comments_count
 
 json.fandom do
   json.id trail.fandom.id

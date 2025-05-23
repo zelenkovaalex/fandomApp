@@ -436,9 +436,10 @@ def upload_random_avatar(profile)
   end
 end
 
-def upload_random_trail_image(trail)
+def upload_random_trail_image(model, attribute = :image)
   image_directory = Rails.root.join('public', 'uploads', 'trail')
   image_paths = Dir.glob("#{image_directory}/*.{jpg,jpeg,png,gif}")
+                   .select { |file| File.file?(file) }
 
   if image_paths.empty?
     puts "No images found in directory: #{image_directory}"
@@ -448,24 +449,32 @@ def upload_random_trail_image(trail)
   random_image = image_paths.sample
   puts "Selected image: #{random_image}"
 
-  # Открываем файл и сохраняем через CarrierWave
+  unless File.exist?(random_image)
+    puts "File does not exist: #{random_image}"
+    return
+  end
+
   File.open(random_image) do |file|
-    trail.image = file
-    if trail.save
-      puts "Image saved to: #{trail.image.url}"
+    model.send("#{attribute}=", file)
+
+    if model.save
+      uploaded_image = model.send(attribute)
+      if uploaded_image.present?
+        puts "Image saved to: #{uploaded_image.url}"
+      else
+        puts "Error: Image was not assigned to the model."
+      end
     else
-      puts "Error: #{trail.errors.full_messages}"
+      puts "Error saving model: #{model.errors.full_messages.join(', ')}"
     end
   end
 end
 
 def create_users(quantity)
-  # Проверка, что массивы не пустые
   raise "Nicknames array is empty!" if @nicknames.empty?
   raise "Bios array is empty!" if @bios.empty?
   raise "Cities array is empty!" if @cities.empty?
 
-  # Проверка, что фандомы существуют
   if Fandom.count.zero?
     raise "No fandoms in the database! Please seed fandoms first."
   end
@@ -567,7 +576,7 @@ def create_trail(quantity)
     return
   end
 
-  # Каталог с изображениями для точек маршрута
+  # изображения для точек маршрута
   point_image_directory = Rails.root.join('public', 'uploads', 'trail')
   point_image_paths = Dir.glob("#{point_image_directory}/*.{jpg,jpeg,png,gif}")
                          .select { |file| File.file?(file) }
@@ -632,7 +641,7 @@ def create_trail(quantity)
         difficulty: ["легкий", "средний", "сложный"].sample
       )
 
-      # случайное изображение
+      # случайное изображение для трейла
       upload_random_trail_image(trail)
 
       if trail.save
@@ -640,14 +649,16 @@ def create_trail(quantity)
 
         # случайные точки маршрута
         rand(2..5).times do |i|
-          point_data = {
+          point = trail.trail_points.build(
             name: @point_names.sample,
-            description: point_data,
-            image_url: point_image_paths.sample,
+            description: @point_descriptions.sample,
             map_link: @point_map_links.sample
-          }
+          )
 
-          trail.trail_points.create!(point_data)
+          # случайное изображение для точки маршрута
+          upload_random_trail_image(point, :image)
+
+          point.save!
         end
 
         puts "Added random points to trail #{trail.title}"
@@ -660,14 +671,12 @@ def create_trail(quantity)
 end
 
 def get_random_time
-  # Генерация случайного времени
   hours = rand(1..12)
   minutes = rand(0..59)
   "#{hours}ч #{minutes}мин"
 end
 
 def get_random_level
-  # Случайный уровень сложности
   ["легкий", "средний", "сложный"].sample
 end
 

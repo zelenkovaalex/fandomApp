@@ -80,7 +80,7 @@ body {
         }
     }
 
-    /* тест звезд */
+    /* тест звезд —>работает */
 
     .rating-stars {
         display: inline-flex;
@@ -114,6 +114,37 @@ body {
     .rating-stars label:hover~label {
         color: black;
         /* Подсвечиваем звёздочки при наведении */
+    }
+
+    /* тест кнопок —> работает */
+    .M_trailButtons {
+        display: flex;
+        gap: 10px;
+        margin: 2vw 0 1vw 5vw;
+    }
+
+    .A_buttonTrails {
+        padding: 10px 20px;
+        background-color: #f9f9f9;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .A_buttonTrails.active {
+        background-color: #e0e0e0;
+    }
+
+    .W_trailData {
+        margin: 1.5vw 0 1vw 5vw;
+    }
+
+    .O_trailPoints {
+        display: none;
+    }
+
+    .O_trailPoints.active {
+        display: block;
     }
 
     /*  */
