@@ -53,6 +53,16 @@ class Trail < ApplicationRecord
     end
   end
 
+  #метод для увеличения лайков
+  def increment_likes
+    update(likes_count: self.likes_count + 1)
+  end
+
+  #метод дизайлов
+  def decrement_likes
+    update(likes_count: [self.likes_count - 1, 0].max)
+  end
+
   mount_uploader :image, TrailUploader 
   
   default_scope { order(created_at: "DESC") }

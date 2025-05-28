@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_20_193740) do
+ActiveRecord::Schema[7.2].define(version: 2025_05_28_111547) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -146,6 +146,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_20_193740) do
     t.string "image"
     t.integer "distance"
     t.string "difficulty"
+    t.integer "likes_count"
+    t.integer "comments_count", default: 0
     t.index ["profile_id"], name: "index_trails_on_profile_id"
     t.index ["user_id"], name: "index_trails_on_user_id"
   end

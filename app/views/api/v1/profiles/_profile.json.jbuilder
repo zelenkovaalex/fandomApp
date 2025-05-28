@@ -1,4 +1,4 @@
-json.extract! profile, :id, :name, :nickname, :city, :bio, :fandom_names, :link
+json.extract! profile, :id, :nickname, :city, :bio, :fandom_names, :link
 json.avatar url_for(profile.avatar) if profile.avatar.attached?
 json.user do
   json.id profile.user.id
