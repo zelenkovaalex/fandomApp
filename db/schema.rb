@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_05_28_111547) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_04_160444) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -67,6 +67,18 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_28_111547) do
     t.string "nickname"
     t.string "link"
     t.text "fandom_names"
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "trail_id", null: false
+    t.decimal "price", precision: 10, scale: 2
+    t.string "status", default: "pending"
+    t.datetime "purchased_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trail_id"], name: "index_purchases_on_trail_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -146,8 +158,9 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_28_111547) do
     t.string "image"
     t.integer "distance"
     t.string "difficulty"
-    t.integer "likes_count"
+    t.integer "likes_count", default: 0
     t.integer "comments_count", default: 0
+    t.decimal "price", precision: 10, scale: 2
     t.index ["profile_id"], name: "index_trails_on_profile_id"
     t.index ["user_id"], name: "index_trails_on_user_id"
   end
@@ -173,6 +186,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_05_28_111547) do
   add_foreign_key "fandoms_profiles", "profiles"
   add_foreign_key "favourites", "trails"
   add_foreign_key "favourites", "users"
+  add_foreign_key "purchases", "trails"
+  add_foreign_key "purchases", "users"
   add_foreign_key "tag_selecteds", "tags"
   add_foreign_key "tag_selecteds", "trails"
   add_foreign_key "taggings", "tags"

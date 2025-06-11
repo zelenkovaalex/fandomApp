@@ -1,0 +1,19 @@
+<div class="O_trailPoints active" id="points">
+  <h2>Точки маршрута:</h2>
+  <% if trail_points.any? %>
+    <ul>
+      <% trail_points.each do |point| %>
+        <li>
+          <h3><%= point.name %></h3>
+          <p><%= point.description %></p>
+          <% if point.image_url.present? %>
+            <img src="<%= point.image.url %>" alt="<%= point.name %>" style="max-width: 300px;">
+          <% end %>
+          <p><%= link_to 'Открыть на карте', point.map_link, target: '_blank' if point.map_link.present? %></p>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>Для этого маршрута пока нет точек.</p>
+  <% end %>
+</div>

@@ -1,109 +1,102 @@
 <body class='show' style="width: 100%;">
   <p style="color: green"><%= notice %></p>
 
+  <div class="image-grid" data-turbo-frame="image-grid">
+    <% if @trail.trail_points.any? %>
+      <div class="image-slider" id="image-slider">
+        <% @trail.trail_points.each do |point| %>
+          <div class="image-item">
+            <%= image_tag point.image_url, alt: point.name %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p>Нет фотографий</p>
+    <% end %>
+  </div>
+
   <div class='O_info'>
     <% if @trail %>
-      <h1><%= @trail.title %></h1>
+      <div class="left-column">
+        <%= link_to "← назад", :back, class: "back-link" %>
+
+        <h1 class="trail-title"><%= @trail.title %></h1>
+
+        <div class="author-info">
+          <%= image_tag @trail.profile.avatar.url, alt: "Аватар", class: "A_avatar" %>
+          <div class="author-details">
+            <span class="nickname"><%= @trail.profile.nickname %></span>
+            <span class="date"><%= @trail.created_at.strftime("%d.%m.%Y") %></span>
+          </div>
+        </div>
+
+        <div class="trail-description">
+          <%= @trail.body %>
+        </div>
+
+        <div class="meta-data">
+          <div class="meta-item">
+            <span>локация</span>
+            <span class="value"><%= @trail.city %></span>
+          </div>
+          <div class="meta-item">
+            <span>фандом</span>
+            <span class="value"><%= @trail.fandom.name %></span>
+          </div>
+          <div class="meta-item">
+            <span>длительность</span>
+            <span class="value"><%= @trail.duration %></span>
+          </div>
+          <div class="meta-item">
+            <span>расстояние</span>
+            <span class="value"><%= @trail.distance %> км</span>
+          </div>
+          <div class="meta-item">
+            <span>сложность</span>
+            <span class="value"><%= @trail.difficulty %></span>
+          </div>
+        </div>
+
+        <% if current_user != @trail.user && !current_user.admin? %>
+          <% if current_user.purchased_trails.exists?(@trail.id) %>
+            <button class="buy-button" disabled>Куплено</button>
+          <% else %>
+            <%= button_to "купить (150 ₽)", purchase_trail_path(@trail), method: :post, class: "buy-button" %>
+            <div class="buy-note">
+              <span>* чтобы перейти на локации этого маршрута, тебе нужно его купить</span>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
 
       <div class="M_pic">
-        <%= image_tag @trail.image.url, alt: @trail.title %>
+        <%#= image_tag @trail.image.url, alt: @trail.title %>
       </div>
 
-      <div class="author-info">
-        <div class="author-avatar">
-          <%= image_tag @trail.profile.avatar.url, alt: "Аватар", class: "A_avatar" %>
-        </div>
-        <div class="author-details">
-          <h3><%= link_to @trail.profile.nickname, profile_path(@trail.user) %></h3>
-          <p>ещё от автора</p>
-        </div>
+      <!-- Кнопки управления -->
+      <div class="W_buttons">
+        <% if @trail && current_user && (current_user.admin? || current_user == @trail.user) %>
+          <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
+          <button class="custom-delete-button" data-url="<%= admin_fandom_path(@trail) %>">Удалить</button>
+        <% end %> <br>
+        <%= link_to "вернуться к фандому", fandom_path(@trail.fandom), class: 'back' %>
       </div>
-
-      <p><%= @trail.body %></p>
-
-      <!-- Метаданные -->
-      <div class="meta-data">
-        <div class="meta-item">
-          <span>Длительность</span>
-          <span class="value"><%= @trail.duration %></span>
-        </div>
-        <div class="meta-item">
-          <span>Расстояние</span>
-          <span class="value"><%= @trail.distance %></span>
-        </div>
-        <div class="meta-item">
-          <span>Сложность</span>
-          <span class="value"><%= @trail.difficulty %></span>
-        </div>
-        <div class="meta-item">
-          <span>Локация</span>
-          <span class="value"><%= @trail.city %></span>
-        </div>
-        <div class="meta-item">
-          <span class="value"><%= link_to @trail.fandom.name, fandom_path(@trail.fandom) %></span>
-        </div>
-      </div>
-
     <% else %>
       <p>Маршрут не найден.</p>
     <% end %>
-
-    <!-- Кнопки управления -->
-    <div class="W_buttons">
-      <% if @trail && current_user && (current_user.admin? || current_user == @trail.user) %>
-        <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
-        <button class="custom-delete-button" data-url="<%= admin_fandom_path(@trail) %>">Удалить</button>
-      <% end %> <br>
-      <%= link_to "вернуться к фандому", fandom_path(@trail.fandom), class: 'back' %>
-    </div>
   </div>
 
   <!-- Кнопочки -->
   <div class="M_trailButtons">
-    <button class="A_buttonTrails active" data-tab="points">Точки</button>
-    <button class="A_buttonTrails" data-tab="reviews">Отзывы</button>
+    <%= link_to "Точки", trail_path(@trail, tab: "points"), data: { turbo_frame: "trail-tabs" }, class: "A_buttonTrails #{params[:tab] != 'reviews' ? 'active' : ''}" %>
+    <%= link_to "Отзывы", trail_path(@trail, tab: "reviews"), data: { turbo_frame: "trail-tabs" }, class: "A_buttonTrails #{params[:tab] == 'reviews' ? 'active' : ''}" %>
   </div>
 
-  <!-- Точки и отзывы -->
-  <div class="W_trailData">
-    <!-- Точки -->
-    <div class="O_trailPoints active" id="points">
-      <h2>Точки маршрута:</h2>
-      <% if @trail_points.any? %>
-        <ul>
-          <% @trail_points.each do |point| %>
-            <li>
-              <h3><%= point.name %></h3>
-              <p><%= point.description %></p>
-              <% if point.image_url.present? %>
-                <img src="<%= point.image.url %>" alt="<%= point.name %>" style="max-width: 300px;">
-              <% end %>
-              <p><%= link_to 'Открыть на карте', point.map_link, target: '_blank' if point.map_link.present? %></p>
-            </li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p>Для этого маршрута пока нет точек.</p>
-      <% end %>
-    </div>
-
-    <!-- Отзывы -->
-    <div class="O_trailPoints" id="reviews">
-      <h2>Отзывы:</h2>
-      <% if @trail.comments.no_replies.any? %>
-        <div id="O_replyComment">
-          <% @trail.comments.no_replies.each do |comment| %>
-            <%= render "comments/comment", comment: comment %>
-          <% end %>
-        </div>
-      <% else %>
-        <p>Пока нет отзывов.</p>
-      <% end %>
-
-      <div class="O_newComent">
-        <%= render partial: "comments/form", locals: { url: trail_comments_path(@trail), comment: Comment.new } %>
-        <%= turbo_stream_from "comments" %>
-      </div>
-    </div>
-  </div>
+  <%= turbo_frame_tag "trail-tabs" do %>
+    <% if params[:tab] == "reviews" %>
+      <%= render partial: "trails/reviews", locals: { trail: @trail } %>
+    <% else %>
+      <%= render partial: "trails/points", locals: { trail: @trail, trail_points: @trail_points } %>
+    <% end %>
+  <% end %>
 </body>

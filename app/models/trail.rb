@@ -22,6 +22,15 @@ class Trail < ApplicationRecord
   has_many :trail_points, dependent: :destroy
   accepts_nested_attributes_for :trail_points, allow_destroy: true
 
+  has_many :trail_purchases
+  has_many :buyers, through: :trail_purchases, source: :user
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+
+  # метод для обложки трейла
+  def cover_image
+    trail_points.first&.image_url
+  end
+
   # метод для расчёта рейтинга (чтобы не забыть)
   def average_rating
     rated_comments = comments.where.not(rating_value: nil) # только комменты с оценками

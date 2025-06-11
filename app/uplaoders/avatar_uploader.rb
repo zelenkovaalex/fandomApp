@@ -1,7 +1,7 @@
 class AvatarUploader < CarrierWave::Uploader::Base
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -11,6 +11,23 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
     "uploads/avatars"
+  end
+
+  def extension_whitelist
+    %w(jpg jpeg png gif)
+  end
+
+  version :cropped do
+    process resize_to_fill: [200, 200]
+  end
+
+  process :optimize
+
+  def optimize
+    manipulate! do |img|
+      img.quality("85")
+      img
+    end
   end
 
   def filename

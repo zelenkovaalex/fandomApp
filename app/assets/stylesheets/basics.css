@@ -3,7 +3,7 @@
 }
 
 body {
-    font-family: 'Formular', sans-serif;
+    font-family: 'IBMPlexSans', sans-serif;
     background-color: var(--white);
 
     width: fit-content;
@@ -122,6 +122,80 @@ body {
         gap: 10px;
         margin: 2vw 0 1vw 5vw;
     }
+
+    /* тест стилей для фото и обрезки */
+
+    .image-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 10px;
+    }
+
+    .image-grid img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    /* Стили для сетки изображений -> работает хуйво */
+    .trail-images {
+        margin-top: 20px;
+    }
+
+    .image-slider {
+        display: flex;
+        overflow-x: auto;
+        /* Добавляет горизонтальный скролл */
+        gap: 10px;
+        /* Расстояние между изображениями */
+        white-space: nowrap;
+        /* Изображения не переносятся на новую строку */
+    }
+
+    .image-item {
+        flex-shrink: 0;
+        /* Предотвращает уменьшение размера элементов при листании */
+        width: 200px;
+        /* Ширина каждого изображения */
+        height: 200px;
+        /* Высота каждого изображения */
+        overflow: hidden;
+        /* Обрезает изображения, которые выходят за пределы контейнера */
+    }
+
+    .image-item img {
+        width: 100%;
+        /* Изображение заполняет всю ширину родительского элемента */
+        height: 100%;
+        /* Изображение заполняет всю высоту родительского элемента */
+        object-fit: cover;
+        /* Кадрирование изображения */
+    }
+
+    /* тест фильторв */
+
+    .filters {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .filter-group {
+        margin-bottom: 20px;
+    }
+
+    .filter-group a {
+        margin-right: 10px;
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .filter-group a.active {
+        color: #007bff;
+        /* Активный фильтр */
+    }
+
+    /*  */
 
     .A_buttonTrails {
         padding: 10px 20px;

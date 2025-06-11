@@ -4,7 +4,12 @@ Rails.application.routes.draw do
 
   devise_for :users 
 
-  resources :profiles
+  resources :profiles do
+    collection do
+      get 'filter'
+    end
+  end
+
   resources :trails
 
   #trails
@@ -13,6 +18,9 @@ Rails.application.routes.draw do
     resource :comments
     get "/by_tag/:tag", to: "trails#by_tag", on: :collection, as: "tagged"
     resources :trail_points, only: [:index, :show]
+    member do
+      post :purchase
+    end
   end
 
   get 'likes/toggle/:trail_id', to: 'like#toggle', as: :toggle_like, defaults: { format: :json }
@@ -24,6 +32,9 @@ Rails.application.routes.draw do
       resources :comments, only: [:create]
     end
   end
+
+  #purchases
+  resources :purchases, only: [:index, :create]
 
   # admin
   
@@ -42,12 +53,14 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :trails, only: [:index, :show, :destroy] do
          patch :update_step, on: :member
+         post 'purchase', on: :member
       end
       resources :likes, only: [:create]
       post 'toggle_like/:trail_id', to: 'like#toggle', as: 'toggle_like'
       resources :fandoms, only: [:index, :show]
-      resources :users, only: [:index, :show] do
+      resources :users, only: [:index, :show, :destroy] do
         resource :profile, only: [:show, :update]
+        get 'purchased_trails', on: :member
       end
       resources :profiles, only: [:index, :show, :update, :destroy]
 

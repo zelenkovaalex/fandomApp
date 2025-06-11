@@ -10,7 +10,13 @@
 
   <div class="M_profileTags">
     <p><%= profile.city %></p>
-    <p><%= Fandom.find_by(id: profile.fandom_names)&.name || "No Fandom" %></p>
+    <p>
+      <% if profile.fandoms.any? %>
+        <%= profile.fandoms.map { |fandom| link_to(fandom.name, fandom_path(fandom)) }.join(', ').html_safe %>
+      <% else %>
+        Нет фандомов
+      <% end %>
+    </p>
   </div>
 
   <p><%= profile.bio %></p>

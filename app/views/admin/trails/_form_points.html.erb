@@ -1,37 +1,42 @@
-<%= form_with(model: trail, local: true, html: { class: "W_inputs" }) do |form| %>
-  <%= form.hidden_field :step, value: "points" %>
+<%= form_with(model: @trail, url: trails_path, method: :post, data: { turbo_frame: "trail-form" }, html: { class: "trail-points-form" }) do |form| %>
+  <div class="points-header">
+    <span class="step-indicator">(02)</span>
+    <span class="points-title">ТОЧКИ</span>
+  </div>
 
-  <!-- Точки маршрута -->
-  <%= form.fields_for :trail_points do |point_form| %>
-    <div class="trail-point">
-      <span class="step-number">(#{point_form.object.index + 1})</span>
-      <div class="A_input">
-        <p>Фото</p>
-        <%= point_form.file_field :image_url %>
-      </div>
+  <div class="points-list">
+    <%= form.fields_for :trail_points do |point_form| %>
+      <div class="point-card">
+        <div class="point-photo-upload">
+          <span class="upload-icon">↓</span>
+          <%= point_form.file_field :image_url, class: "point-photo-input" %>
+          <span class="photo-label">★ фото точки</span>
+        </div>
+        <div class="point-fields">
+          <label>★ название точки</label>
+          <%= point_form.text_field :name, maxlength: 56, placeholder: "название точки" %>
+          <span class="char-count"><%= point_form.object.name&.length || 0 %> / 56</span>
 
-      <div class="A_input">
-        <p>Название</p>
-        <%= point_form.text_field :name %>
-      </div>
+          <label>★ описание точки</label>
+          <%= point_form.text_area :description, maxlength: 100, placeholder: "описание точки" %>
+          <span class="char-count"><%= point_form.object.description&.length || 0 %> / 100</span>
 
-      <div class="A_input">
-        <p>Описание</p>
-        <%= point_form.text_area :description, style: "height:10vw;" %>
+          <label>★ ссылка на локацию точки</label>
+          <%= point_form.url_field :map_link, placeholder: "ссылка на локацию точки" %>
+        </div>
       </div>
-
-      <div class="A_input">
-        <p>Ссылка на карту</p>
-        <%= point_form.url_field :map_link %>
-      </div>
+    <% end %>
+    <div class="add-point-btn">
+      <button type="button" id="add-trail-point">+ новая точка</button>
     </div>
-  <% end %>
+  </div>
 
-  <!-- Кнопка "Добавить следующую точку" -->
-  <button type="button" id="add-trail-point">Следующая точка</button>
+  <div class="form-note">
+    <span>★ после публикации редактирование маршрута будет недоступно</span>
+  </div>
 
-  <!-- Кнопка "Опубликовать" -->
-  <div class="A_commit">
-    <%= form.submit "Опубликовать" %>
+  <%= form.hidden_field :step, value: "points" %>
+  <div class="form-actions">
+    <%= form.submit "опубликовать", class: "publish-btn" %>
   </div>
 <% end %>

@@ -2,6 +2,7 @@ class Api::V1::SessionsController < Devise::SessionsController
   # skip_before_action :verify_authenticity_token, only: [ :create, :destroy ]
   # skip_before_action :verify_signed_out_user, only: [ :destroy ]
   skip_before_action :verify_authenticity_token
+  before_action :load_user_by_jti, only: :destroy
 
   # before_action :sign_in_params, only: :create
   # before_action :load_user_by_email, only: :create
@@ -18,7 +19,7 @@ class Api::V1::SessionsController < Devise::SessionsController
       token = generate_token(user)
       render json: {
         message: 'Login successful',
-        # token: token,
+        token: token,
         user: {
           id: user.id,
           email: user.email

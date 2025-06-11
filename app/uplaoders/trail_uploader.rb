@@ -1,8 +1,10 @@
 class TrailUploader < CarrierWave::Uploader::Base
   # Include RMagick, MiniMagick, or Vips support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
   # include CarrierWave::Vips
+  include CarrierWave::MiniMagick
+
+  process resize_to_fill: [300, 300] # Кадрирование до 300x300 пикселей
 
   # Choose what kind of storage to use for this uploader:
   storage :file

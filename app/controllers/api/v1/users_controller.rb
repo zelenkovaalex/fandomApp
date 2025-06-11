@@ -1,6 +1,6 @@
 class Api::UsersController < Api::V1::ApplicationController
   skip_before_action :verify_authenticity_token
-  before_action :authenticate_user!, except: [:login]
+  before_action :authenticate_user!, except: [:login, :create]
   before_action :set_profile, only: [:profile, :update_profile]
 
   def login
@@ -12,7 +12,8 @@ class Api::UsersController < Api::V1::ApplicationController
         token: generate_token(user),
         user: {
           id: user.id,
-          email: user.email
+          email: user.email,
+          token: user.token
         }
       }
     else
@@ -41,7 +42,14 @@ class Api::UsersController < Api::V1::ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      render json: { message: 'User created successfully', user: user }, status: :created
+      render json: {
+        message: 'User created successfully',
+        user: {
+          id: user.id,
+          email: user.email,
+          token: generate_token(user)
+        }
+      }, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -64,13 +72,21 @@ class Api::UsersController < Api::V1::ApplicationController
     end
   end
 
+  def destroy
+    if current_user.id == params[:id].to_i
+      current_user.destroy!
+      render json: { message: 'User deleted successfully' }, status: :ok
+    else
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
+  end
+
   private
 
   def generate_token(user)
     payload = {
       user_id: user.id,
       email: user.email,
-      jti: user.jti,
       exp: 24.hours.from_now.to_i
     }
     JWT.encode(payload, Rails.application.credentials.devise_jwt_secret_key!, 'HS256')
@@ -82,7 +98,7 @@ class Api::UsersController < Api::V1::ApplicationController
       token = auth_header.split(' ').last
       begin
         payload = JWT.decode(token, Rails.application.credentials.devise_jwt_secret_key!, true, { algorithm: 'HS256' })[0]
-        @current_user = User.find_by(jti: payload['jti']) 
+        @current_user = User.find_by(id: payload['user_id'])
 
         unless @current_user
           render json: { message: 'Invalid token' }, status: :unauthorized

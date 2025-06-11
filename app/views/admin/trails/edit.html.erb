@@ -8,5 +8,20 @@
     </div>
 
   <%= render "form", trail: @trail %>
+  <%= render "form_points", trail: @trail %>
 
+</body>
+
+<body class="editTrail" style="width: 100%;">
+  <% content_for :title, "Editing trail" %>
+
+  <%= link_to "вернуться", fandoms_path, style: "margin: 2vw 5vw;" %>
+
+  <div class="M_hello">
+    <h2>редактировать маршрут</h2>
+  </div>
+  <%= turbo_frame_tag "trail-form" do %>
+    <%= render "form", trail: @trail %>
+    <%= render "form_points", trail: @trail %>
+  <% end %>
 </body>

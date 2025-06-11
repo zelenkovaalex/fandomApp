@@ -1,59 +1,56 @@
-<%= form_with(model: @trail, local: true, html: { class: "W_inputs" }) do |form| %>
-    <% if @trail.errors.any? %>
-      <div style="color: red">
-        <h3><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h3>
-        <ul>
-          <% @trail.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+<%= form_with(model: @trail, url: trails_path, method: :post, data: { turbo_frame: "trail-form" }, html: { class: "trail-main-form" }) do |form| %>
+  <div class="form-row">
+    <div class="form-group">
+      <label>★ название</label>
+      <%= form.text_field :title, placeholder: "название маршрута", maxlength: 56 %>
+      <span class="char-count"><%= @trail.title&.length || 0 %> / 56</span>
+    </div>
+    <div class="form-group">
+      <label>★ локация</label>
+      <%= form.text_field :city, placeholder: "город маршрута" %>
+    </div>
+    <div class="form-group">
+      <label>★ длительность</label>
+      <div class="duration-fields">
+        <%= form.number_field :duration_hours, min: 0, max: 99, placeholder: "00", class: "duration-input" %> ч
+        <%= form.number_field :duration_minutes, min: 0, max: 59, placeholder: "00", class: "duration-input" %> мин
       </div>
-    <% end %>
-
-    <div class="A_input">
-      <p>Фото</p>
-      <%= form.file_field :image %>
     </div>
-
-    <div class="A_input">
-      <p>Название</p>
-      <%= form.text_field :title %>
+    <div class="form-group">
+      <label>★ сложность</label>
+      <%= form.select :difficulty, [['лёгкий', 'легкий'], ['средний', 'средний'], ['продвинутый', 'продвинутый']], {}, class: "difficulty-select" %>
     </div>
+  </div>
 
-    <div class="A_input">
-      <p>Описание</p>
-      <%= form.text_area :body, style: "height:10vw;" %>
+  <div class="form-row">
+    <div class="form-group">
+      <label>★ описание</label>
+      <%= form.text_area :body, placeholder: "описание маршрута", maxlength: 170 %>
+      <span class="char-count"><%= @trail.body&.length || 0 %> / 170</span>
     </div>
-
-    <div class="A_input">
-      <p><%= form.label :fandom_id %></p>
+    <div class="form-group">
+      <label>★ фандом</label>
       <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
     </div>
-
-    <div class="A_input">
-      <p>Город</p>
-      <%= form.text_field :city %>
+    <div class="form-group">
+      <label>★ расстояние</label>
+      <div class="distance-fields">
+        <%= form.number_field :distance_km, min: 0, max: 99, placeholder: "00", class: "distance-input" %> км
+        <%= form.number_field :distance_m, min: 0, max: 999, placeholder: "00", class: "distance-input" %> м
+      </div>
     </div>
-
-    <div class="A_input">
-      <p>Длительность</p>
-      <%= form.number_field :duration, min: 0, placeholder: '0', class: 'time_field' %>
-      <%= form.select :duration_unit, options_for_select([['минут', 'minutes'], ['часов', 'hours'], ['дней', 'days']]), class: 'unit_select' %>
+    <div class="form-group">
+      <label>★ стоимость</label>
+      <%= form.number_field :price, min: 0, placeholder: "0", class: "price-input" %> ₽
     </div>
+  </div>
 
-    <div class="A_input">
-      <p>Расстояние</p>
-      <%= form.number_field :distance, min: 0, placeholder: '0', class: 'distance_field' %>
-    </div>
+  <div class="form-note">
+    <span>★ маршрут требует минимум две точки</span>
+  </div>
 
-    <div class="A_input">
-      <p>Сложность</p>
-      <%= form.radio_button :difficulty, 'легкий' %> Легкий
-      <%= form.radio_button :difficulty, 'средний' %> Средний
-      <%= form.radio_button :difficulty, 'продвинутый' %> Продвинутый
-    </div>
-
-    <div class="A_commit">
-      <%= form.submit "Далее", data: { turbo_method: :post } %>
-    </div>
-  <% end %>
+  <%= form.hidden_field :step, value: "main" %>
+  <div class="form-actions">
+    <%= form.submit "Далее", class: "next-step-btn" %>
+  </div>
+<% end %>

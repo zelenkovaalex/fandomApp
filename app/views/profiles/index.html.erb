@@ -4,6 +4,22 @@
     <h1>Сообщество</h1>
   </div>
 
+  <div class="filters">
+    <div class="filter-group">
+      <h3>Города</h3>
+      <% @cities.each do |city| %>
+        <a href="#" data-filter="city-<%= city %>"><%= city %></a>
+      <% end %>
+    </div>
+
+    <div class="filter-group">
+      <h3>Фандомы</h3>
+      <% @fandoms.each do |fandom| %>
+        <a href="#" data-filter="fandom-<%= fandom %>"><%= fandom %></a>
+      <% end %>
+    </div>
+  </div>
+
   <!-- Один большой контейнер для всех профилей -->
   <div class="W_wrapprof">
     <% @profiles.each do |profile| %>

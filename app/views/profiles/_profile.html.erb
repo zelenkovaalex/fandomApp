@@ -9,15 +9,13 @@
     <% end %>
       <div class="M_profileTags">
         <p><%= profile.city %></p>
-        <% if !profile.fandoms.empty? %>
-          <ul>
-            <% profile.fandoms.each do |fandom| %>
-              <li><%= fandom.name %></li>
-            <% end %>
-          </ul>
+       <p>
+        <% if profile.fandoms.any? %>
+          <%= profile.fandoms.map { |fandom| link_to(fandom.name, fandom_path(fandom)) }.join(', ').html_safe %>
         <% else %>
-          <p>Не состоит ни в одном фандоме.</p>
+          Нет фандомов
         <% end %>
+      </p>
       </div>
     </div>
   </div>

@@ -11,6 +11,9 @@ class User < ApplicationRecord
   has_one :profile, dependent: :destroy
   has_many :likes
 
+  has_many :trail_purchases
+  has_many :purchased_trails, through: :trail_purchases, source: :trail
+
   after_create :create_profile
 
   # validates :email, presence: true, uniqueness: true

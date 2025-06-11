@@ -2,6 +2,7 @@ class TrailsController < ApplicationController
   before_action :authenticate_user!
   load_and_authorize_resource
   before_action :set_fandom
+  before_action :set_trail, only: [:show, :update, :destroy]
 
   def index
     @trails = Trail.all.order(created_at: :desc)
@@ -12,11 +13,11 @@ class TrailsController < ApplicationController
     elsif current_user
       @user_trails = current_user.trails
       @other_trails = @trails.where(public: true).where.not(id: @user_trails.pluck(:id))
-      @trails = (@user_trails + @other_trails).uniq # Соберите все маршруты в @trails и удалите дубликаты
+      @trails = (@user_trails + @other_trails).uniq
     else
       @user_trails = []
       @other_trails = @trails.where(public: true)
-      @trails = @other_trails # Соберите все маршруты в @trails
+      @trails = @other_trails
     end
   end
 
@@ -39,46 +40,71 @@ class TrailsController < ApplicationController
   end
 
   def show
-    @trail_points = @trail.trail_points.order(created_at: :asc)
-    
-    Rails.logger.debug "Params: #{params.inspect}"
-    Rails.logger.debug "Trail: #{@trail.inspect}"
-    if @trail.nil?
-      Rails.logger.error "Trail with id #{params[:id]} not found!"
-      redirect_to trails_path, alert: "Маршрут не найден."
+    @trail_points = @trail.trail_points
+    unless can_view_trail?(@trail)
+      redirect_to purchase_trail_path(@trail), alert: "You need to purchase this trail to view it."
       return
+    end
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "image-grid",
+          partial: "trails/image_grid",
+          locals: { trail_points: @trail_points }
+        )
+      end
+    end
+  end
+
+  def purchase
+    if current_user.purchased_trails.exists?(@trail.id)
+      redirect_to @trail, notice: "You already own this trail."
+    else
+      current_user.trail_purchases.create!(trail: @trail)
+      redirect_to @trail, notice: "Trail purchased successfully!"
     end
   end
 
   def new
     @trail = Trail.new
     @trail.trail_points.build
+    @step = params[:step] || "main"
   end
 
-  # app/controllers/trails_controller.rb
   def create
+    @step = params[:step] || "main"
     @trail = current_user.trails.new(trail_params)
     @trail.profile = current_user.profile
 
-    if params[:step] == "points"
-      respond_to do |format|
-        if @trail.save
-          format.html { redirect_to @trail, notice: "Маршрут успешно создан." }
-          format.json { render :show, status: :created, location: @trail }
-        else
-          format.html { render :new, status: :unprocessable_entity }
-          format.json { render json: @trail.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      # заполнены ли основные поля
+    if @step == "main"
       if @trail.valid?
-        respond_to do |format|
-          format.turbo_stream
-          format.html { render partial: 'form_points' }
-        end
+        render turbo_stream: turbo_stream.replace(
+          "trail-form",
+          partial: "admin/trails/form_points",
+          locals: { trail: @trail }
+        )
       else
-        render :new, status: :unprocessable_entity
+        render turbo_stream: turbo_stream.replace(
+          "trail-form",
+          partial: "admin/trails/form",
+          locals: { trail: @trail }
+        )
+      end
+    else # step == "points"
+      if @trail.save
+        redirect_to @trail, notice: "Маршрут успешно создан."
+      else
+        render turbo_stream: turbo_stream.replace(
+          "trail-form",
+          partial: "admin/trails/form_points",
+          locals: { trail: @trail }
+        )
       end
     end
   end
@@ -97,14 +123,17 @@ class TrailsController < ApplicationController
 
   def destroy
     @trail.destroy!
-
     respond_to do |format|
-      format.html { redirect_to trails_path, status: :see_other, notice: "trail was successfully destroyed." } # или fandom_trails_path(@fandom)
+      format.html { redirect_to trails_path, status: :see_other, notice: "trail was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
+
+  def can_view_trail?(trail)
+    current_user.admin? || trail.user == current_user || current_user.purchased_trails.exists?(trail.id)
+  end
 
   def set_trail
     @trail = Trail.find(params[:id])

@@ -1,0 +1,17 @@
+<div class="O_trailPoints active" id="reviews">
+  <h2>Отзывы:</h2>
+  <% if trail.comments.no_replies.any? %>
+    <div id="O_replyComment">
+      <% trail.comments.no_replies.each do |comment| %>
+        <%= render "comments/comment", comment: comment %>
+      <% end %>
+    </div>
+  <% else %>
+    <p>Пока нет отзывов.</p>
+  <% end %>
+
+  <div class="O_newComent">
+    <%= render partial: "comments/form", locals: { url: trail_comments_path(trail), comment: Comment.new } %>
+    <%= turbo_stream_from "comments" %>
+  </div>
+</div>

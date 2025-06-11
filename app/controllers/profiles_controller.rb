@@ -7,12 +7,27 @@ class ProfilesController < ApplicationController
     fields_to_check = [:nickname, :bio, :avatar]
     conditions = fields_to_check.map { |field| "#{field} IS NOT NULL AND #{field} != ''" }.join(' AND ')
 
-    @profiles = Profile
+    @cities = Profile.distinct.pluck(:city).compact
+    @fandoms = Fandom.all.pluck(:name)
+    
+    @profiles = Profile.includes(:user).all
       .joins(user: :trails)
       .where(conditions)
       .group("profiles.id")
       .having("COUNT(trails.id) > 0")
       .limit(10)
+  end
+
+  def filter
+    filter_value = params[:filter]
+    profiles = Profile.all
+
+    if filter_value.start_with?('fandom-')
+      fandom_id = filter_value.split('-')[1]
+      profiles = profiles.joins(:fandoms).where(fandoms: { id: fandom_id })
+    end
+
+    render partial: 'profile', locals: { profiles: profiles }
   end
 
   # GET /profiles/:id

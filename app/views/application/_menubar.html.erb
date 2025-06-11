@@ -1,38 +1,14 @@
 <nav class="menuBar">
   <div class='O_header'>
-    <div class="A_logo">
-      <%= link_to root_url do %>
-        <%= image_tag 'atoms/A_logo_black.png', alt: 'Логотип' %>
-      <% end %>
-    </div>
-    <div class="M_upper_menu_items">
+
+    <ul class="M_upper_menu_items">
       <%= link_to "фандомы", fandoms_url %>
       <%= link_to "сообщество", profiles_url %>
       <%= link_to "о нас", about_path %>
-    </div>
-  </div>
-
-  <div class='A_profile_icon'>
-    <% if user_signed_in? %>
-      <% if current_user.profile %>
-        <%= link_to profile_path(current_user.profile) do %>
-          <%= image_tag 'atoms/A_profile_icon.png', alt: 'Профиль' %>
-          <%= link_to new_admin_trail_path do %>
-            <%= image_tag 'atoms/A_add_icon.png', alt: 'Добавить новый маршрут' %>
-          <% end %>
-        <% end %>
-      <% else %>
-        <%= link_to new_traile_path do %>
-          <%= image_tag 'atoms/A_add_icon.png', alt: 'Создать профиль' %>
-        <% end %>
-      <% end %>
-      <%= link_to destroy_user_session_path, data: { turbo_method: :delete } do %>
-        <%= image_tag 'atoms/A_exit_icon.png', alt: 'Выход' %>
-      <% end %>
-    <% else %>
-      <%= link_to new_user_session_path do %>
-        <%= image_tag 'atoms/A_in_icon.png', alt: 'Вход' %>
-      <% end %>
-    <% end %>
+      <%= link_to "rutas", root_url %>
+      <%#= link_to "уведомления", notifications_path %> <!-- заменить на нужный путь -->
+      <%#= link_to "поиск", search_path %> <!-- заменить на нужный путь -->
+      <%= link_to "профиль", profile_path(current_user.profile) if user_signed_in? && current_user.profile %>
+    </ul>
   </div>
 </nav>

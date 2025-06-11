@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  trail: one
+  price: 9.99
+  status: MyString
+  purchased_at: 2025-06-04 19:02:43
+
+two:
+  user: two
+  trail: two
+  price: 9.99
+  status: MyString
+  purchased_at: 2025-06-04 19:02:43

@@ -46,13 +46,28 @@ class Api::V1::TrailsController < ApplicationController
   end
 
   def destroy
-      @trail.destroy!
+    @trail.destroy!
 
-      respond_to do |format|
-        format.html { redirect_to admin_trails_path, status: :see_other, notice: "trail was successfully destroyed." }
-        format.json { head :no_content }
-      end
+    respond_to do |format|
+      format.html { redirect_to admin_trails_path, status: :see_other, notice: "trail was successfully destroyed." }
+      format.json { head :no_content }
     end
+  end
+
+  def purchase
+    trail = Trail.find(params[:id])
+    if trail.price > 0
+      purchase = current_user.purchases.build(trail: trail, price: trail.price, status: "pending")
+      if purchase.save
+        purchase.complete!
+        render json: { message: "Trail purchased successfully", purchase: purchase }, status: :ok
+      else
+        render json: { error: "Failed to purchase trail", details: purchase.errors.full_messages }, status: :unprocessable_entity
+      end
+    else
+      render json: { error: "Trail is not available for purchase" }, status: :unprocessable_entity
+    end
+  end
 
   private
 

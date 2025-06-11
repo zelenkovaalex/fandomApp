@@ -37,8 +37,14 @@
   </div>
 
   <div class="A_input">
-    <p>аватарочка</p> <br>
-    <%= form.file_field :avatar %>
+    <form id="upload-form">
+      <input type="file" id="avatar-input" />
+      <button type="submit">Upload</button>
+    </form>  
+  </div>
+
+  <div>
+    <img id="preview" src="#" alt="Preview" style="display: none; max-width: 200px;" />
   </div>
 
   <div class="A_commit">
