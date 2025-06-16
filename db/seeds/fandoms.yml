@@ -1,0 +1,190 @@
+- name: 'Мастер и Маргарита'
+  category: "книги"
+- name: '1984'
+  category: "книги"
+- name: 'Голодные игры'
+  category: "книги"
+- name: 'Властелин Колец'
+  category: "книги"
+- name: 'Однажды в сказке'
+  category: "книги"
+- name: 'Гарри Поттер'
+  category: "книги"
+- name: 'Сумерки'
+  category: "книги"
+- name: 'Мы'
+  category: "книги"
+- name: 'Хроники Нарнии'
+  category: "книги"
+- name: 'Звёздный десант'
+  category: "книги"
+- name: 'Космическая Одиссея'
+  category: "книги"
+- name: 'Игра Престолов'
+  category: "книги"
+- name: 'Над пропастью во ржи'
+  category: "книги"
+- name: 'Джейн Эйр'
+  category: "книги"
+- name: 'Убить пересмешника'
+  category: "книги"
+- name: 'Великий Гэтсби'
+  category: "книги"
+- name: 'Преступление и наказание'
+  category: "книги"
+- name: 'Отцы и дети'
+  category: "книги"
+- name: 'Три мушкетера'
+  category: "книги"
+- name: 'Алиса в Стране чудес'
+  category: "книги"
+- name: 'Маленький принц'
+  category: "книги"
+- name: 'Star Wars'
+  category: "фильмы"
+- name: 'Шерлок'
+  category: "фильмы"
+- name: 'Marvel'
+  category: "фильмы"
+- name: 'DC Comics'
+  category: "фильмы"
+- name: 'Матрица'
+  category: "фильмы"
+- name: 'Терминатор'
+  category: "фильмы"
+- name: 'Интерстеллар'
+  category: "фильмы"
+- name: 'Назад в будущее'
+  category: "фильмы"
+- name: 'Аватар'
+  category: "фильмы"
+- name: 'Чужой'
+  category: "фильмы"
+- name: 'Хищник'
+  category: "фильмы"
+- name: 'Бегущий по лезвию'
+  category: "фильмы"
+- name: 'Трон'
+  category: "фильмы"
+- name: 'Лабиринт Фавна'
+  category: "фильмы"
+- name: 'Звездный путь'
+  category: "фильмы"
+- name: 'Мгла'
+  category: "фильмы"
+- name: 'Дюна'
+  category: "фильмы"
+- name: 'Время ведьм'
+  category: "фильмы"
+- name: 'Пятый элемент'
+  category: "фильмы"
+- name: 'Отчаянные домохозяйки'
+  category: "сериалы"
+- name: 'Великолепный век'
+  category: "сериалы"
+- name: 'Дом драконов'
+  category: "сериалы"
+- name: 'Разделение'
+  category: "сериалы"
+- name: 'Доктор Кто'
+  category: "сериалы"
+- name: 'Зачарованные'
+  category: "сериалы"
+- name: 'Сверхъестественное'
+  category: "сериалы"
+- name: 'Мир Дикого Запада'
+  category: "сериалы"
+- name: 'Черное зеркало'
+  category: "сериалы"
+- name: 'Рик и Морти'
+  category: "сериалы"
+- name: 'Ведьмак'
+  category: "сериалы"
+- name: 'Мандалорец'
+  category: "сериалы"
+- name: 'Очень странные дела'
+  category: "сериалы"
+- name: 'Друзья'
+  category: "сериалы"
+- name: 'Люцифер'
+  category: "сериалы"
+- name: 'Фарго'
+  category: "сериалы"
+- name: 'Академия Амбрелла'
+  category: "сериалы"
+- name: 'Стрела'
+  category: "сериалы"
+- name: 'My Little Pony'
+  category: 'мультфильмы'
+- name: 'Атлантида'
+  category: 'мультфильмы'
+- name: 'Симпсоны'
+  category: 'мультфильмы'
+- name: 'Гравити Фолз'
+  category: 'мультфильмы'
+- name: 'Футурама'
+  category: 'мультфильмы'
+- name: 'Финес и Ферб'
+  category: 'мультфильмы'
+- name: 'Скуби-Ду'
+  category: 'мультфильмы'
+- name: 'Черепашки-ниндзя'
+  category: 'мультфильмы'
+- name: 'Луни Тюнз'
+  category: 'мультфильмы'
+- name: 'Ким Пять-с-Плюсом'
+  category: 'мультфильмы'
+- name: 'Аватар: Легенда об Аанге'
+  category: 'мультфильмы'
+- name: 'Суперсемейка'
+  category: 'мультфильмы'
+- name: 'Фостер: Дом для друзей'
+  category: 'мультфильмы'
+- name: 'Наруто'
+  category: 'аниме'
+- name: 'Атака Титанов'
+  category: 'аниме'
+- name: 'Баскетбол Куроко'
+  category: 'аниме'
+- name: 'Ван Пис'
+  category: 'аниме'
+- name: 'Моя геройская академия'
+  category: 'аниме'
+- name: 'Токийский гуль'
+  category: 'аниме'
+- name: 'Синий экзорцист'
+  category: 'аниме'
+- name: 'Черный клевер'
+  category: 'аниме'
+- name: 'Доктор Стоун'
+  category: 'аниме'
+- name: 'Убийца гигантов'
+  category: 'аниме'
+- name: 'Клинок, рассекающий демонов'
+  category: 'аниме'
+- name: 'Мастера меча онлайн'
+  category: 'аниме'
+- name: 'Ре:Ноль'
+  category: 'аниме'
+- name: 'Очень приятно, Бог!'
+  category: 'аниме'
+- name: 'Клуб романтики'
+  category: 'игры'
+- name: 'The Witcher 3: Wild Hunt'
+  category: 'игры'
+- name: 'The last of us'
+  category: 'игры'
+- name: 'League of Legends'
+  category: 'игры'
+- name: 'Red Dead Redemption 2'
+  category: 'игры'
+- name: 'Assassin’s Creed Valhalla'
+  category: 'игры'
+- name: 'Among Us'
+  category: 'игры'
+- name: 'Cyberpunk 2077'
+  category: 'игры'
+- name: 'Fortnite'
+  category: 'игры'
+- name: 'Stardew Valley'
+  category: 'игры'

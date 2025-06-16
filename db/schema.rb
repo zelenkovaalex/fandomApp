@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_04_160444) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_16_120758) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -28,6 +28,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_04_160444) do
     t.string "description"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "category"
     t.index ["name"], name: "index_fandoms_on_name", unique: true
   end
 
@@ -54,6 +55,19 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_04_160444) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.string "notification_type"
+    t.string "notifiable_type", null: false
+    t.integer "notifiable_id", null: false
+    t.boolean "read", default: false
+    t.json "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "profiles", force: :cascade do |t|
@@ -140,6 +154,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_04_160444) do
     t.index ["trail_id"], name: "index_trail_points_on_trail_id"
   end
 
+  create_table "trail_purchases", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "trail_id", null: false
+    t.datetime "purchased_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trail_id"], name: "index_trail_purchases_on_trail_id"
+    t.index ["user_id", "trail_id"], name: "index_trail_purchases_on_user_id_and_trail_id", unique: true
+    t.index ["user_id"], name: "index_trail_purchases_on_user_id"
+  end
+
   create_table "trails", force: :cascade do |t|
     t.string "title"
     t.json "fandom"
@@ -186,6 +211,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_04_160444) do
   add_foreign_key "fandoms_profiles", "profiles"
   add_foreign_key "favourites", "trails"
   add_foreign_key "favourites", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "purchases", "trails"
   add_foreign_key "purchases", "users"
   add_foreign_key "tag_selecteds", "tags"

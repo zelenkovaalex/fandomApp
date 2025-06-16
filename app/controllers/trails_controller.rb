@@ -63,12 +63,39 @@ class TrailsController < ApplicationController
   end
 
   def purchase
-    if current_user.purchased_trails.exists?(@trail.id)
-      redirect_to @trail, notice: "You already own this trail."
-    else
-      current_user.trail_purchases.create!(trail: @trail)
-      redirect_to @trail, notice: "Trail purchased successfully!"
+    @trail = Trail.find(params[:id])
+    # Render payment form
+  end
+
+  def pay
+    @trail = Trail.find(params[:id])
+    # Here you would process payment info (params[:card_number], etc.)
+    # For now, just simulate success:
+    purchase = current_user.trail_purchases.create!(trail: @trail)
+
+    # Notify the trail's author
+    if @trail.user != current_user
+      Notification.create!(
+        user: @trail.user,
+        notifiable: purchase,
+        notification_type: "purchase",
+        data: { trail_title: @trail.title, buyer: current_user.nickname }
+      )
     end
+
+    # Notify the buyer
+    Notification.create!(
+      user: current_user,
+      notifiable: purchase,
+      notification_type: "bought",
+      data: { trail_title: @trail.title }
+    )
+
+    redirect_to thank_you_trail_path(@trail)
+  end
+
+  def thank_you
+    @trail = Trail.find(params[:id])
   end
 
   def new
@@ -132,7 +159,7 @@ class TrailsController < ApplicationController
   private
 
   def can_view_trail?(trail)
-    current_user.admin? || trail.user == current_user || current_user.purchased_trails.exists?(trail.id)
+    current_user&.admin? || trail.user == current_user || current_user&.purchased_trails&.exists?(trail.id)
   end
 
   def set_trail

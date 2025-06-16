@@ -1,11 +1,12 @@
 <div class="O_trail">
-  <% if trail.image.present? %>
-    <div class="W_imageContainer">
-      <%= image_tag trail.image.url, alt: trail.title %>
-    </div>
-  <% else %>
-    <p>No image available</p>
-  <% end %>
+  
+  <div class="trail-image">
+    <% if trail.image.attached? %>
+      <%= image_tag trail.image.variant(resize: "800x450").processed, alt: trail.title %>
+    <% else %>
+      <p>No image available</p>
+    <% end %>
+  </div>
 
   <div class="W_trailHead">
     <h2><%= trail.title %></h2>
@@ -56,3 +57,6 @@
     <%= link_to 'посмотреть', trail_path(trail) %> 
   <% end %>
 </div>
+
+<% cover_point = trail.trail_points.find { |p| p.image.present? } %>
+<% cover_url = cover_point&.image&.url %>

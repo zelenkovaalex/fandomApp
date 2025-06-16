@@ -1,0 +1,12 @@
+<div class="favourites-list">
+  <% if @profile.user.favourite_trails.any? %>
+    <% @profile.user.favourite_trails.each do |trail| %>
+      <div class="favourite-trail">
+        <%= link_to trail.title, trail_path(trail) %>
+        <!-- Добавьте дополнительную информацию о маршруте -->
+      </div>
+    <% end %>
+  <% else %>
+    <p>Нет избранных маршрутов.</p>
+  <% end %>
+</div>

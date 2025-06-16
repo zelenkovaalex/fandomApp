@@ -1,0 +1,4 @@
+<%= button_to like_trail_path(trail), method: :post, remote: true, class: "like-button", data: { turbo_stream: true } do %>
+  <% liked = current_user.favourite_trails.include?(trail) %>
+  <img src="<%= asset_path(liked ? 'atoms/Default.svg' : 'atoms/Selected.svg') %>" alt="Like" />
+<% end %>

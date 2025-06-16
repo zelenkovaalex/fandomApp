@@ -9,12 +9,18 @@ class User < ApplicationRecord
   has_many :trails, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one :profile, dependent: :destroy
-  has_many :likes
+  has_many :likes, dependent: :destroy
 
   has_many :trail_purchases
   has_many :purchased_trails, through: :trail_purchases, source: :trail
+  
+  has_many :favourite_trails, through: :likes, source: :likeable, source_type: 'Trail'
+
+  has_many :finished_trails, -> { where('trail_purchases.finished = ?', true) }, through: :trail_purchases, source: :trail
 
   after_create :create_profile
+
+  has_many :notifications, dependent: :destroy
 
   # validates :email, presence: true, uniqueness: true
 

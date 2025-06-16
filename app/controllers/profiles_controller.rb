@@ -9,32 +9,71 @@ class ProfilesController < ApplicationController
 
     @cities = Profile.distinct.pluck(:city).compact
     @fandoms = Fandom.all.pluck(:name)
-    
+
+    @cities = YAML.load_file(Rails.root.join('db', 'seeds', 'cities.yml'))
+    @profiles = if params[:filter]&.start_with?('city-')
+                  city_name = params[:filter].sub('city-', '')
+                  Profile.where(city: city_name)
+                else
+                  Profile.all
+                end
+
     @profiles = Profile.includes(:user).all
       .joins(user: :trails)
       .where(conditions)
       .group("profiles.id")
       .having("COUNT(trails.id) > 0")
-      .limit(10)
+
+    if params[:filter].present?
+      if params[:filter].start_with?('city-')
+        city = params[:filter].sub('city-', '')
+        @profiles = @profiles.where(city: city)
+      elsif params[:filter].start_with?('fandom-')
+        fandom = params[:filter].sub('fandom-', '')
+        @profiles = @profiles.joins(:fandoms).where(fandoms: { name: fandom }).distinct
+      end
+    end
+
+    @profiles = @profiles.limit(10)
   end
 
   def filter
-    filter_value = params[:filter]
-    profiles = Profile.all
-
-    if filter_value.start_with?('fandom-')
-      fandom_id = filter_value.split('-')[1]
-      profiles = profiles.joins(:fandoms).where(fandoms: { id: fandom_id })
+    filter = params[:filter]
+    if filter.present?
+      if filter.start_with?('city-')
+        city = filter.sub('city-', '')
+        @profiles = Profile.where(city: city)
+      elsif filter.start_with?('fandom-')
+        fandom = filter.sub('fandom-', '')
+        @profiles = Profile.joins(:fandoms).where(fandoms: { name: fandom }).distinct
+      else
+        @profiles = Profile.all
+      end
+    else
+      @profiles = Profile.all
     end
 
-    render partial: 'profile', locals: { profiles: profiles }
+    respond_to do |format|
+      format.turbo_stream
+      format.html { render partial: 'profiles/profiles_list', locals: { profiles: @profiles } }
+    end
   end
 
   # GET /profiles/:id
   def show
-    @trails = @profile.user.trails
-    rescue ActiveRecord::RecordNotFound
-    redirect_to new_profile_path, alert: "Profile not found. Please create one."
+    @tab = params[:tab] || 'my_trails'
+    @trails = case @tab
+      when 'my_trails'
+        @profile.user.trails
+      when 'finished'
+        @profile.user.finished_trails # You need to implement this association or method
+      when 'favourites'
+        @profile.user.favourite_trails
+      when 'bought'
+        @profile.user.purchased_trails
+      else
+        @profile.user.trails
+      end
   end
 
   # GET /profiles/new

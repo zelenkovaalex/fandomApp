@@ -11,6 +11,10 @@ FROM docker.io/library/ruby:$RUBY_VERSION-slim AS base
 # Rails app lives here
 WORKDIR /rails
 
+# MiniMagick & GraphicsMagick
+RUN apt-get update && apt-get install -y graphicsmagick
+RUN apt-get update && apt-get install -y imagemagick
+
 # Install base packages
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y curl libjemalloc2 libvips sqlite3 && \

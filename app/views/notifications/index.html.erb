@@ -1,0 +1,16 @@
+<h1>Уведомления</h1>
+<ul class="notifications-list">
+  <% @notifications.each do |notification| %>
+    <li class="<%= 'unread' unless notification.read %>">
+      <% case notification.notification_type
+         when "like" %>
+        <%= notification.data["liker"] %> лайкнул ваш маршрут "<%= notification.data["trail_title"] %>"
+      <% when "purchase" %>
+        <%= notification.data["buyer"] %> купил ваш маршрут "<%= notification.data["trail_title"] %>"
+      <% when "bought" %>
+        Вы купили маршрут "<%= notification.data["trail_title"] %>"
+      <% end %>
+      <span class="notification-time"><%= time_ago_in_words(notification.created_at) %> назад</span>
+    </li>
+  <% end %>
+</ul>

@@ -3,6 +3,7 @@
   *= require reset
   *= require fonts
   *= require basics
+  *= require tests
   *= require_tree ./bodies
   *= require_tree ./components   
 */

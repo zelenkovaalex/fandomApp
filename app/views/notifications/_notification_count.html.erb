@@ -1,0 +1,4 @@
+<% unread_count = user.notifications.unread.count %>
+<% if unread_count > 0 %>
+  <span class="notification-badge"><%= unread_count %></span>
+<% end %>

@@ -18,17 +18,24 @@
     }
 }
 
+.O_trailLowerInf {
+    width: 10vw;
+    display: inline-flex;
+    justify-content: space-between;
+}
+
+.O_trailProfileInf {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vw;
+    width: fit-content;
+}
+
 .O_trailProfile {
     /* flex: 1; */
     display: flex;
     flex-direction: column;
     width: max-content;
-
-    img {
-        width: 35vw;
-        height: auto;
-        display: block;
-    }
 
     a {
         font-size: 20px;
@@ -40,28 +47,34 @@
     }
 }
 
-.O_info {
+.O_infoTrail {
     margin: 3vw 0 1vw 5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2.24vw;
+}
 
-    h2 {
-        font-size: 36px;
-        font-weight: 600;
+.O_trailPoint {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
 
-        margin-bottom: 0.7vw;
+.O_pointImgNumber {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5vw;
+    width: fit-content;
+}
+
+.O_pointImgNumber:hover {
+    .A_trailName {
+        background-color: var(--black);
     }
 
-    h3 {
-        font-size: 20px;
-        font-weight: 400;
-        text-decoration-line: underline;
-
-        color: var(--dark-grey);
-    }
-
-    p {
-        font-size: 28px;
-        font-weight: 400;
-        margin: 2vw 0 1vw 0;
+    .A_pointNumber {
+        color: var(--black);
     }
 }
 
@@ -133,5 +146,37 @@ a.back {
     a:hover {
         background-color: var(--black);
         color: var(--white);
+    }
+}
+
+/* profile blocks */
+
+.O_secondPartProfile {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    height: 6.25vw;
+}
+
+
+.O_profileShow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+    p.A_nickname {
+        font-family: "Steinbeck";
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+    }
+}
+
+.O_profileShow:hover {
+    .A_nickname {
+        background-color: var(--green);
     }
 }

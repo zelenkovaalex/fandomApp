@@ -1,24 +1,27 @@
 $(document).ready(function() {
-  // Инициализация активного фильтра
+  // Initialize active filter
   $('.filter-group a').on('click', function(e) {
     e.preventDefault();
 
-    // Удалить класс active у всех фильтров
+    // Remove 'active' class from all filters
     $('.filter-group a').removeClass('active');
 
-    // Добавить класс active к выбранному фильтру
+    // Add 'active' class to the clicked filter
     $(this).addClass('active');
 
-    // Получить значение фильтра
-    const filterValue = $(this).attr('data-filter');
+    // Get the filter value
+    const filterValue = $(this).data('filter'); // Use .data() instead of .attr() for better handling
 
-    // Отправить AJAX-запрос для получения отфильтрованных профилей
+    // Send AJAX request to get filtered profiles
     $.ajax({
       url: '/profiles/filter',
       method: 'GET',
       data: { filter: filterValue },
       success: function(data) {
         $('#profiles-container').html(data);
+      },
+      error: function(xhr, status, error) {
+        console.error("Error fetching filtered profiles:", error);
       }
     });
   });

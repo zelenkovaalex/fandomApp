@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "search/index"
   get "like/toggle"
   get "/fandoms", to: "fandoms#index"
 
@@ -6,11 +7,15 @@ Rails.application.routes.draw do
 
   resources :profiles do
     collection do
-      get 'filter'
+      get :filter
     end
   end
 
   resources :trails
+
+  # notifications
+
+  resources :notifications, only: [:index, :update]
 
   #trails
   
@@ -19,8 +24,11 @@ Rails.application.routes.draw do
     get "/by_tag/:tag", to: "trails#by_tag", on: :collection, as: "tagged"
     resources :trail_points, only: [:index, :show]
     member do
-      post :purchase
+      get :purchase
+      post :pay
+      get :thank_you
     end
+    post 'like', to: 'likes#toggle'
   end
 
   get 'likes/toggle/:trail_id', to: 'like#toggle', as: :toggle_like, defaults: { format: :json }
@@ -51,6 +59,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      resources :images, only: [:create]
       resources :trails, only: [:index, :show, :destroy] do
          patch :update_step, on: :member
          post 'purchase', on: :member
@@ -87,6 +96,10 @@ Rails.application.routes.draw do
   get '/profiles', to: 'profiles#index'
   
   get "up" => "rails/health#show", as: :rails_health_check
+
+  get 'search', to: 'search#index'
+
+  resources :notifications, only: [:index]
 
   # Defines the root path route ("/")
   root "base_pages#index"

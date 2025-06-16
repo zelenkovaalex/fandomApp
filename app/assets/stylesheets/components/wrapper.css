@@ -24,19 +24,83 @@
     }
 }
 
-.W_fandomInf {
+.W_hitTrails {
+    padding: 0vw 3vw;
+}
+
+.W_carouselControls {
     display: flex;
     flex-direction: row;
+    align-items: center;
+}
+
+.W_carouselItems {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.W_fandomCategories {
+    display: flex;
+    gap: 3vw;
+    justify-content: flex-end;
+}
+
+/* тест */
+
+.carousel-prev,
+.carousel-next {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/*  */
+
+.W_fandomsSections {
+    padding: 8vw 3vw 3vw 3vw;
+}
+
+#W_fandomCatShow {
+    column-count: 1;
+    display: block;
+    margin-top: 3vw;
+}
+
+#W_fandomCatShow[data-count="more-than-9"] {
+    column-count: 2;
+    display: block;
+    margin-top: 3vw;
+}
+
+.W_fandomShow {
+    width: fit-content;
+}
+
+.W_fandomTrailsShow[data-count="more-than-9"] {
+    column-count: 2;
+    /* display: block; */
+    gap: 33vw;
+}
+
+.W_fandomTrailsShow {
+    display: none;
+    width: 18vw;
+    position: absolute;
+    top: 39vw;
+    left: 27%;
+    padding: 10px;
+    z-index: 10;
+}
+
+/*  */
+
+.W_fandomInf {
+    display: flex;
+    flex-direction: column;
     margin: 2vw 5vw;
     height: 89%;
-
-    h2 {
-        font-size: 3.5rem;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 95.388%;
-        text-transform: lowercase;
-    }
 
     p {
         font-size: 1.7rem;
@@ -47,23 +111,28 @@
 
         width: 32.44vw;
     }
-
-    .W_fandSInf {
+}
+.W_fandSInf {
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+    margin: 1.5vw 3vw;
+    justify-content: space-between;
+    
+    .W_buttonsFandom {
         display: flex;
         flex-direction: column;
-        gap: 1vw;
-    }
+        align-items: flex-end;
+        gap: 0.5vw;
 
-    .M_briks {
-        display: flex;
-        flex-wrap: wrap;
-        padding: 1.5vw 5vw 4vw;
-        gap: 1.5vw;
-        justify-content: space-between;
-    }
-    .W_buttons {
-        display: flex;
-        flex-direction: column;
+        a{
+            font-size: 1.125rem;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: var(--grey);
+        }
     }
 }
 
@@ -183,30 +252,16 @@
 
 
 
+
 /* profiles */
 
 .W_wrapprof {
-    /* display: flex;
-    flex-wrap: wrap; */
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(15vw, 1fr));
+    gap: 20px;
     width: 100%;
-
-    .W_profiles {
-        display: flex;
-        align-items: flex-end;
-    
-        .chillGuy {
-            padding: 1vw 0;
-            
-            font-size: 1.375rem;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 103.233%;
-            text-decoration-line: underline;
-            text-transform: lowercase;
-        }
-    }
+    padding: 1vw 3vw 3vw;
+    justify-items: center;
 }
 
 .W_directionBlocks {
@@ -218,6 +273,63 @@
         display: flex;
         flex-direction: row;
     }
+}
+
+.W_buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.W_photoWithTags {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    .A_avatar {
+        width: 7.25vw;
+        height: 7.25vw;
+        object-fit: cover;
+        overflow: hidden;
+    }
+
+    a {
+        height: fit-content;
+    }
+}
+
+.W_profileWithNick {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+
+    a.A_nickname {
+        font-family: "Steinbeck";
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        height: 2.60vw;
+        width: 7.25vw;
+        padding: 1vw 0.1vw 0.1vw 0.1vw;
+    }
+}
+
+.W_authorInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vw;
+
+    .A_avatar {
+        width: 2.2vw;
+        height: 2.2vw;
+    }
+}
+
+.W_trailPoints {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(21vw, 1fr));
+    justify-items: center;
+    margin: 2vw 3vw;
 }
 
 

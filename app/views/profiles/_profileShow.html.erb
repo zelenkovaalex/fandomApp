@@ -1,36 +1,70 @@
-<div id="<%= dom_id profile %>" class="M_profileInf">
-
-  <% if profile.avatar.present? %>
-    <%= image_tag profile.avatar.url, alt: "A_avatar" %>
-  <% else %>
-    <p>No avatar available</p>
-  <% end %>
-
-  <h1><%= link_to profile.nickname, profile_path(profile), class: "profile-nickname" %></h1>
-
-  <div class="M_profileTags">
-    <p><%= profile.city %></p>
-    <p>
-      <% if profile.fandoms.any? %>
-        <%= profile.fandoms.map { |fandom| link_to(fandom.name, fandom_path(fandom)) }.join(', ').html_safe %>
-      <% else %>
-        Нет фандомов
+<div class='O_profileShow'>
+  <div class='W_profileWithNick'>
+    <div class='W_photoWithTags'>
+      <!-- Аватар с ссылкой на профиль -->
+      <%= link_to profile_path(profile) do %>
+        <% if profile.avatar.present? %>
+          <%= image_tag profile.avatar.url, class: "A_avatar" %>
+        <% else %>
+          <p>No avatar available</p>
+        <% end %>
       <% end %>
-    </p>
+
+      <div class="O_secondPartProfile">
+        <!-- Стрелка для перехода в профиль -->
+        <%= link_to profile_path(profile), class: 'A_diagonal_arrow' do %>
+          <%= image_tag 'atoms/A_go_arrow.svg', alt: 'Посмотреть профиль', class: 'A_diagonal_arrow' %>
+        <% end %>
+
+        <!-- Город и фандомы -->
+        <div class="M_profileTags">
+          <!-- City -->
+          <p>
+            <% if profile.city.is_a?(Hash) %>
+              <%= profile.city["name"] %>
+            <% else %>
+              <%= profile.city %>
+            <% end %>
+          </p>
+
+          <!-- Fandoms -->
+          <p>
+            <% fandom_names = profile.fandom_names %>
+            <% if fandom_names.present? %>
+              <% if fandom_names.is_a?(String) %>
+                <% fandom_names = fandom_names.split(',').map(&:strip).reject(&:blank?) %>
+              <% elsif fandom_names.is_a?(Array) %>
+                <% fandom_names = fandom_names.map { |fandom| fandom.is_a?(Hash) ? fandom["name"] : fandom }.compact %>
+              <% elsif fandom_names.is_a?(Hash) %>
+                <% fandom_names = [fandom_names["name"]] %>
+              <% end %>
+
+              <% if fandom_names.any? %>
+                <%= fandom_names.map { |name|
+                      fandom = Fandom.find_by(name: name)
+                      fandom ? link_to(fandom.name, fandom_path(fandom)) : name
+                    }.join(', ').html_safe %>
+              <% else %>
+                Нет фандомов
+              <% end %>
+            <% else %>
+              Нет фандомов
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- Никнейм -->
+    <%= link_to profile.nickname, profile_path(profile), class: "A_nickname"%>
   </div>
+  <!-- Количество созданных маршрутов -->
+  <p class="A_nickname">(<%= profile.trails.count %>)</p>
 
-  <p><%= profile.bio %></p>
-
+  <!-- Кнопки управления (редактирование и удаление) -->
   <div class="W_buttons">
     <% if profile && current_user && (current_user.admin? || current_user.id == profile.user_id) %>
       <%= link_to "редактировать", edit_profile_path(profile) %>
       <button class="custom-delete-button" data-url="<%= profile_path(profile) %>">Удалить</button>
     <% end %>
   </div>
-
-<%= link_to profile_path(profile), class: 'A_diagonal_arrow' do %>
-  <%= image_tag 'atoms/A_go_button.png', alt: 'Посмотреть маршрут' %>
-<% end %>
-
 </div>
-

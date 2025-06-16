@@ -1,0 +1,65 @@
+<div class="profile-header">
+  <!-- Left Section: Publications and Trails -->
+
+    <div class="trails">
+      <span>(<%= @profile.trails.count %>)</span>
+      <p>созданные маршруты</p>
+    </div>
+
+  <!-- Middle Section: Fandoms and Cities -->
+  <div class="middle-section">
+    <!-- Fandoms -->
+    <div class="fandoms">
+      <% if @profile.fandoms.any? %>
+        <% @profile.fandoms.each do |fandom| %>
+          <%= link_to fandom.name, fandom_path(fandom) %>
+        <% end %>
+      <% else %>
+        <p>Нет фандомов</p>
+      <% end %>
+    </div>
+
+    <!-- Cities -->
+    <div class="cities">
+      <% if profile.city.is_a?(Hash) %>
+            <%= profile.city["name"] %>
+        <% else %>
+            <%= profile.city %>
+        <% end %>
+    </div>
+  </div>
+
+  <!-- Right Section: User Info -->
+  <div class="right-section">
+    <!-- Avatar -->
+    <div class="avatar">
+    <% if profile.avatar.present? %>
+        <%= image_tag profile.avatar.url %>
+    <% else %>
+        <p>No avatar available</p>
+    <% end %>
+    </div>
+
+    <!-- Nickname and Contact -->
+    <div class="user-info">
+      <h1><%= profile.nickname %></h1>
+      <p><%#= link_to "связаться", contact_user_path(@user) %></p>
+    </div>
+
+    <!-- City and Fandoms -->
+    <div class="details">
+      <p><%= @profile.city %></p>
+      <p>
+        <% if @profile.fandoms.any? %>
+          <%= @profile.fandoms.map(&:name).join(', ') %>
+        <% else %>
+          Нет фандомов
+        <% end %>
+      </p>
+    </div>
+  </div>
+</div>
+
+<%= turbo_frame_tag "profile_trails" do %>
+<%= render "profiles/#{@tab}", trails: @trails %>
+<% end %>

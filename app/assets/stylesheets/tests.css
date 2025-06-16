@@ -1,0 +1,335 @@
+ /* тест звезд —>работает */
+
+ .rating-stars {
+     display: inline-flex;
+     align-items: center;
+     margin-bottom: 8px;
+ }
+
+ /* Скрыть радиокнопки */
+ .rating-stars input[type="radio"] {
+     display: none;
+     /* Скрываем радиокнопки */
+ }
+
+ /* Стилизация звёздочек */
+ .rating-stars label {
+     font-size: 20px;
+     color: gray;
+     cursor: pointer;
+     transition: color 0.2s;
+ }
+
+ /* Заполнение звёздочек при выборе */
+ .rating-stars input[type="radio"]:checked+label,
+ .rating-stars input[type="radio"]:checked~label {
+     color: black;
+     /* Заполненные звёздочки */
+ }
+
+ /* Эффект при наведении */
+ .rating-stars label:hover,
+ .rating-stars label:hover~label {
+     color: black;
+     /* Подсвечиваем звёздочки при наведении */
+ }
+
+ /* тест стилей для фото и обрезки */
+
+ .image-grid {
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+     gap: 10px;
+ }
+
+ .image-grid img {
+     width: 100%;
+     height: auto;
+     object-fit: cover;
+ }
+
+ /* Стили для сетки изображений -> работает хуйво */
+ .trail-images {
+     margin-top: 20px;
+ }
+
+ .image-item {
+     flex-shrink: 0;
+     /* Предотвращает уменьшение размера элементов при листании */
+     width: 200px;
+     /* Ширина каждого изображения */
+     height: 200px;
+     /* Высота каждого изображения */
+     overflow: hidden;
+     /* Обрезает изображения, которые выходят за пределы контейнера */
+ }
+
+ .image-item img {
+     width: 100%;
+     /* Изображение заполняет всю ширину родительского элемента */
+     height: 100%;
+     /* Изображение заполняет всю высоту родительского элемента */
+     object-fit: cover;
+     /* Кадрирование изображения */
+ }
+
+ /* тест фильторв */
+
+ .filters {
+     display: flex;
+     justify-content: space-between;
+ }
+
+ .filter-group {
+     margin-bottom: 20px;
+ }
+
+ .filter-group a {
+     margin-right: 10px;
+     text-decoration: none;
+     color: #333;
+     font-weight: bold;
+ }
+
+ .filter-group a.active {
+     color: #007bff;
+     /* Активный фильтр */
+ }
+
+ /* еще блять тест фильтров */
+
+ .fandom-item:hover .fandom-trails-preview {
+     display: block;
+     position: absolute;
+     background: white;
+     z-index: 10;
+     /* style as needed */
+ }
+
+ .fandom-trails-preview {
+     min-width: 200px;
+     border: 1px solid #ccc;
+     padding: 8px;
+ }
+
+ /* больше ебучих фильтров */
+
+ .filters {
+     font-family: Arial, sans-serif;
+ }
+
+ .filter-group {
+     margin-bottom: 20px;
+ }
+
+ .toggle-button {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     width: 100%;
+     background: none;
+     border: none;
+     cursor: pointer;
+     font-size: 18px;
+     padding: 10px;
+     text-align: left;
+ }
+
+ .toggle-button h3 {
+     margin: 0;
+     font-weight: bold;
+ }
+
+ .arrow {
+     transition: transform 0.3s ease;
+ }
+
+ .arrow.rotated {
+     transform: rotate(180deg);
+ }
+
+ .filter-content {
+     padding-left: 20px;
+     max-height: 0;
+     overflow: hidden;
+     transition: max-height 0.3s ease, padding 0.3s ease;
+ }
+
+ .filter-content.open {
+     max-height: 500px;
+     /* Установите значение, достаточное для отображения контента */
+     padding-top: 10px;
+     padding-bottom: 10px;
+ }
+
+ .filter-content {
+     display: none;
+     transition: max-height 0.3s ease;
+     overflow: hidden;
+ }
+
+ .filter-content.open {
+     display: block;
+ }
+
+ .arrow {
+     display: inline-block;
+     transition: transform 0.3s;
+ }
+
+ .arrow.rotated {
+     transform: rotate(180deg);
+ }
+
+ .toggle-checkbox ~ .filter-content {
+  display: none;
+}
+.toggle-checkbox:checked ~ .filter-content {
+  display: block;
+}
+.toggle-label {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+.arrow {
+  margin-left: 8px;
+  transition: transform 0.3s;
+}
+.toggle-checkbox:checked + .toggle-label .arrow {
+  transform: rotate(180deg);
+}
+
+ /*  */
+
+ /* тест фильтор заебали */
+
+ .toggle-checkbox~.filter-content {
+     display: none;
+ }
+
+ .toggle-checkbox:checked~.filter-content {
+     display: block;
+ }
+
+ .toggle-label {
+     cursor: pointer;
+     display: flex;
+     align-items: center;
+ }
+
+ .arrow {
+     margin-left: 8px;
+     transition: transform 0.3s;
+ }
+
+ .toggle-checkbox:checked+.toggle-label .arrow {
+     transform: rotate(180deg);
+ }
+
+ /*  */
+
+ /* тест для обрезки фоток на fandom/index.html */
+
+/* stylesheets/application.css */
+.trail-cover {
+    position: relative;
+    width: 20.52vw;
+    height: 9.27vw;
+    overflow: hidden;
+}
+
+.trail-cover-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(5px);
+    /* Ensures the image fills the container while maintaining aspect ratio */
+    
+    /* Smooth transition for hover effect */
+}
+
+.trail-cover:hover .trail-cover-img {
+    filter: blur(0px);
+    transition: filter 0.2s ease;
+    /* Blur the image on hover */
+}
+
+ /*  */
+
+ /* тест поиска */
+ .global-search-form {
+     display: flex;
+     align-items: center;
+     gap: 0.5em;
+ }
+
+ .global-search-input {
+     padding: 0.5em;
+     border-radius: 4px;
+     border: 1px solid #ccc;
+ }
+
+ .global-search-btn {
+     background: none;
+     border: none;
+     font-size: 1.2em;
+     cursor: pointer;
+ }
+
+ .global-search-results {
+     background: #fff;
+     border: 1px solid #eee;
+     margin: 1em 0;
+     padding: 1em;
+     border-radius: 8px;
+     max-width: 600px;
+ }
+
+ .global-search-react {
+     position: relative;
+     display: inline-block;
+ }
+
+ .global-search-results {
+     position: absolute;
+     top: 100%;
+     left: 0;
+     background: #fff;
+     border: 1px solid #eee;
+     z-index: 1000;
+     width: 300px;
+     max-height: 400px;
+     overflow-y: auto;
+     border-radius: 8px;
+     padding: 1em;
+ }
+
+ .global-search-results ul {
+     list-style: none;
+     margin: 0;
+     padding: 0;
+ }
+
+ .global-search-results li {
+     margin-bottom: 0.5em;
+ }
+
+ .global-search-input {
+     padding: 0.5em;
+     border-radius: 4px;
+     border: 1px solid #ccc;
+ }
+
+/* тест уведомлений */
+
+.notification-badge {
+    /* background: #e74c3c; */
+    color: #fff;
+    border-radius: 50%;
+    padding: 0.2em 0.6em;
+    font-size: 0.9em;
+    margin-left: 0.3em;
+    vertical-align: top;
+}

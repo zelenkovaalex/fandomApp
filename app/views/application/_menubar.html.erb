@@ -1,14 +1,32 @@
 <nav class="menuBar">
-  <div class='O_header'>
-
-    <ul class="M_upper_menu_items">
+    <div class="A_leftBlock">
       <%= link_to "фандомы", fandoms_url %>
       <%= link_to "сообщество", profiles_url %>
       <%= link_to "о нас", about_path %>
+      <%= link_to "создать", new_admin_trail_url %>
+    </div>
+
       <%= link_to "rutas", root_url %>
-      <%#= link_to "уведомления", notifications_path %> <!-- заменить на нужный путь -->
-      <%#= link_to "поиск", search_path %> <!-- заменить на нужный путь -->
+
+    <div class="A_rightBlock">
+      
+      <%= link_to "уведомления", notifications_path, class: "notification-link" %>
+      <%= turbo_frame_tag "notification_count" do %>
+        <%# unread_count = current_user.notifications.unread.count %>
+        <%# if unread_count > 0 %>
+          <span class="notification-badge"><%#= unread_count %></span>
+        <%# end %>
+      <% end %>
+      <%= turbo_stream_from "notifications_#{current_user.id}" if user_signed_in? %>
+
+      <%= form_with url: search_path, method: :get, data: { turbo_frame: "global_search_results" }, class: "global-search-form" do |f| %>
+        <%= f.text_field :q, placeholder: "Поиск...", class: "global-search-input" %>
+        <%= f.submit "🔍", class: "global-search-btn" %>
+      <% end %>
+      
+      <%= turbo_frame_tag "global_search_results" %>
       <%= link_to "профиль", profile_path(current_user.profile) if user_signed_in? && current_user.profile %>
-    </ul>
-  </div>
+    </div>
 </nav>
+
+<div id="global-search-root"></div>

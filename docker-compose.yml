@@ -1,13 +1,60 @@
+# version: "3.9"
+
+# services:
+#   fandom_app:
+#     build:
+#       dockerfile: Dockerfile
+#     # volumes:
+#     #   - .:/rails:cached
+#     #   - .:/rails:rw
+#     environment:
+#       - RAILS_MASTER_KEY=4ed2c966852a224490b3140f224f957b
+#     ports:
+#       - '3000:3000'
+
 version: "3.9"
 
 services:
   fandom_app:
     build:
       dockerfile: Dockerfile
-    # volumes:
-    #   - .:/rails:cached
-    #   - .:/rails:rw
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis # Add Redis as a dependency if needed
     environment:
       - RAILS_MASTER_KEY=4ed2c966852a224490b3140f224f957b
+      - DATABASE_HOST=db # Database hostname matches the service name
+      - DATABASE_USER=user
+      - DATABASE_PASSWORD=password
+      - DATABASE_NAME=app_development
+      - REDIS_URL=redis://redis:6379/0 # Redis connection URL if used
     ports:
       - '3000:3000'
+    networks:
+      - app-network
+
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: app_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist PostgreSQL data
+    networks:
+      - app-network
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379' # Expose Redis port if needed
+    networks:
+      - app-network
+
+volumes:
+  postgres_data: # Define a named volume for PostgreSQL data persistence
+
+networks:
+  app-network: # Define a custom network for inter-container communication

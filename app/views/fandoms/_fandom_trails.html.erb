@@ -1,0 +1,5 @@
+<div id="fandom_<%= fandom.id %>_trails">
+  <% fandom.trails.each do |trail| %>
+    <p><%= link_to trail.title, trail_path(trail) %></p>
+  <% end %>
+</div>

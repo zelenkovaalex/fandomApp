@@ -1,93 +1,98 @@
 <body class='show' style="width: 100%;">
   <p style="color: green"><%= notice %></p>
 
-  <div class="image-grid" data-turbo-frame="image-grid">
-    <% if @trail.trail_points.any? %>
-      <div class="image-slider" id="image-slider">
-        <% @trail.trail_points.each do |point| %>
-          <div class="image-item">
-            <%= image_tag point.image_url, alt: point.name %>
-          </div>
-        <% end %>
-      </div>
-    <% else %>
-      <p>Нет фотографий</p>
-    <% end %>
-  </div>
-
-  <div class='O_info'>
+  <div class='O_infoTrail'>
     <% if @trail %>
-      <div class="left-column">
         <%= link_to "← назад", :back, class: "back-link" %>
 
-        <h1 class="trail-title"><%= @trail.title %></h1>
+        <h1 class="A_trailTitle"><%= @trail.title %></h1>
 
-        <div class="author-info">
-          <%= image_tag @trail.profile.avatar.url, alt: "Аватар", class: "A_avatar" %>
-          <div class="author-details">
-            <span class="nickname"><%= @trail.profile.nickname %></span>
-            <span class="date"><%= @trail.created_at.strftime("%d.%m.%Y") %></span>
-          </div>
-        </div>
+        <%= link_to profile_path(@trail.profile), class: "W_authorInfo" do %>
+            <%= image_tag @trail.profile.avatar.url, alt: "Аватар", class: "A_avatar" %>
+            <div class="M_details">
+              <p class="A_nickname"><%= @trail.profile.nickname %></p>
+              <p class="A_date"><%= @trail.created_at.strftime("%d.%m.%Y") %></p>
+            </div>
+        <% end %>
 
-        <div class="trail-description">
+        <div class="A_trailBody">
           <%= @trail.body %>
         </div>
 
-        <div class="meta-data">
-          <div class="meta-item">
-            <span>локация</span>
-            <span class="value"><%= @trail.city %></span>
+        <div class="W_trailData">
+          <div class="M_dataInfo">
+            <p>локация</p>
+            <p class="value"><%= @trail.city %></p>
           </div>
-          <div class="meta-item">
-            <span>фандом</span>
-            <span class="value"><%= @trail.fandom.name %></span>
+          <div class="M_dataInfo">
+            <p>фандом</p>
+            <p class="value"><%= @trail.fandom.name %></p>
           </div>
-          <div class="meta-item">
-            <span>длительность</span>
-            <span class="value"><%= @trail.duration %></span>
+          <div class="M_dataInfo">
+            <p>длительность</p>
+            <p class="value"><%= @trail.duration %></p>
           </div>
-          <div class="meta-item">
-            <span>расстояние</span>
-            <span class="value"><%= @trail.distance %> км</span>
+          <div class="M_dataInfo">
+            <p>расстояние</p>
+            <p class="value"><%= @trail.distance %> км</p>
           </div>
-          <div class="meta-item">
-            <span>сложность</span>
-            <span class="value"><%= @trail.difficulty %></span>
+          <div class="M_dataInfo" style="border-bottom:none;">
+            <p>сложность</p>
+            <p class="value"><%= @trail.difficulty %></p>
           </div>
         </div>
 
+      <div class="W_buy">
+        <% if current_user && current_user != @trail.user && !current_user.admin? && !current_user.purchased_trails.include?(@trail) %>
+          <%= button_to "купить (#{@trail.price} ₽)", purchase_trail_path(@trail), method: :get, class: "A_buyButton" %>
+          <div class="M_buttonNote">
+            <p style="color:var(--green)">*</p>
+            <p>чтобы перейти на локации этого маршрута, тебе нужно его купить</p>
+          </div>
+        <% end %>
+
         <% if current_user != @trail.user && !current_user.admin? %>
           <% if current_user.purchased_trails.exists?(@trail.id) %>
-            <button class="buy-button" disabled>Куплено</button>
+            <button class="A_buyButton active" disabled>Куплено</button>
           <% else %>
-            <%= button_to "купить (150 ₽)", purchase_trail_path(@trail), method: :post, class: "buy-button" %>
-            <div class="buy-note">
-              <span>* чтобы перейти на локации этого маршрута, тебе нужно его купить</span>
+            <%= button_to "купить (150 ₽)", purchase_trail_path(@trail), method: :post, class: "A_buyButton" %>
+            <div class="M_buttonNote">
+              <p style="color:var(--green)">*</p>
+              <p>чтобы перейти на локации этого маршрута, тебе нужно его купить</p>
             </div>
           <% end %>
         <% end %>
-      </div>
-
-      <div class="M_pic">
-        <%#= image_tag @trail.image.url, alt: @trail.title %>
       </div>
 
       <!-- Кнопки управления -->
       <div class="W_buttons">
         <% if @trail && current_user && (current_user.admin? || current_user == @trail.user) %>
           <%= link_to "редактировать", edit_admin_trail_path(@trail) %>
-          <button class="custom-delete-button" data-url="<%= admin_fandom_path(@trail) %>">Удалить</button>
-        <% end %> <br>
-        <%= link_to "вернуться к фандому", fandom_path(@trail.fandom), class: 'back' %>
+          <button class="A_deleteButton" data-url="<%= admin_fandom_path(@trail) %>">Удалить</button>
+        <% end %>
       </div>
     <% else %>
       <p>Маршрут не найден.</p>
     <% end %>
   </div>
 
+  <div class="W_photoPreviewTrail" data-turbo-frame="image-grid" style="display:none;">
+    <% if @trail.trail_points.any? %>
+        <div class="M_previewPointPhotoTurbo">
+          <% @trail.trail_points.each do |point| %>
+            <div class="M_previewPointPhoto">
+              // добавить каунтер
+              <%= image_tag point.image_url, alt: point.name %>
+            </div>
+          <% end %>
+        </div>
+    <% else %>
+      <p>Нет фотографий</p>
+    <% end %>
+  </div>
+
   <!-- Кнопочки -->
-  <div class="M_trailButtons">
+  <div class="M_trailButtons" style="display:none;">
     <%= link_to "Точки", trail_path(@trail, tab: "points"), data: { turbo_frame: "trail-tabs" }, class: "A_buttonTrails #{params[:tab] != 'reviews' ? 'active' : ''}" %>
     <%= link_to "Отзывы", trail_path(@trail, tab: "reviews"), data: { turbo_frame: "trail-tabs" }, class: "A_buttonTrails #{params[:tab] == 'reviews' ? 'active' : ''}" %>
   </div>

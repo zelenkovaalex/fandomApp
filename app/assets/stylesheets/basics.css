@@ -10,192 +10,47 @@ body {
     
     nav {
         width: 100%;
-        padding: 1.5vw 5vw;
+        padding: 0 3vw;
         position: relative;
         display: flex;
         justify-content: space-between;
         flex-direction: row;
         background-color: var(--white);
 
+        a {
+            font-size: 1.25rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-transform: lowercase;
+            display: flex;
+            align-items: center;
+            height: 5vw;
+        }
+
+        a:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
         .burger {
             display: none;
         }
 
-        .A_profile_icon {
-            img {
-                height: 30px;
-            }
+        .A_leftBlock {
+            display: flex;
+            gap: 3.39vw;
         }
 
-        .A_logo {
-            img {
-                height: 30px;
-            }
-        }
-
-        a {
-            font-size: 1.7rem;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 103.233%;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration-line: underline;
-        }
-
-        .A_Name {
-            font-weight: 600;
-        }
-
-        .M_upper_menu_items, .A_profile_icon, .O_header {
-            display: inline-flex;
-            gap: 30px;
+        .A_rightBlock {
+            display: flex;
+            gap: 3.39vw;
         }
     }
 
     .content {
         flex: 1;
     }
-
-    .custom-delete-button {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: var(--white);
-        color: black;
-        border: 1px solid #000;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-
-        &:hover {
-            background-color: var(--green);
-            border: none;
-        }
-
-        &:active {
-            background-color: var(--green);
-            border: none;
-        }
-    }
-
-    /* тест звезд —>работает */
-
-    .rating-stars {
-        display: inline-flex;
-        align-items: center;
-        margin-bottom: 8px;
-    }
-
-    /* Скрыть радиокнопки */
-    .rating-stars input[type="radio"] {
-        display: none;
-        /* Скрываем радиокнопки */
-    }
-
-    /* Стилизация звёздочек */
-    .rating-stars label {
-        font-size: 20px;
-        color: gray;
-        cursor: pointer;
-        transition: color 0.2s;
-    }
-
-    /* Заполнение звёздочек при выборе */
-    .rating-stars input[type="radio"]:checked+label,
-    .rating-stars input[type="radio"]:checked~label {
-        color: black;
-        /* Заполненные звёздочки */
-    }
-
-    /* Эффект при наведении */
-    .rating-stars label:hover,
-    .rating-stars label:hover~label {
-        color: black;
-        /* Подсвечиваем звёздочки при наведении */
-    }
-
-    /* тест кнопок —> работает */
-    .M_trailButtons {
-        display: flex;
-        gap: 10px;
-        margin: 2vw 0 1vw 5vw;
-    }
-
-    /* тест стилей для фото и обрезки */
-
-    .image-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 10px;
-    }
-
-    .image-grid img {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
-    }
-
-    /* Стили для сетки изображений -> работает хуйво */
-    .trail-images {
-        margin-top: 20px;
-    }
-
-    .image-slider {
-        display: flex;
-        overflow-x: auto;
-        /* Добавляет горизонтальный скролл */
-        gap: 10px;
-        /* Расстояние между изображениями */
-        white-space: nowrap;
-        /* Изображения не переносятся на новую строку */
-    }
-
-    .image-item {
-        flex-shrink: 0;
-        /* Предотвращает уменьшение размера элементов при листании */
-        width: 200px;
-        /* Ширина каждого изображения */
-        height: 200px;
-        /* Высота каждого изображения */
-        overflow: hidden;
-        /* Обрезает изображения, которые выходят за пределы контейнера */
-    }
-
-    .image-item img {
-        width: 100%;
-        /* Изображение заполняет всю ширину родительского элемента */
-        height: 100%;
-        /* Изображение заполняет всю высоту родительского элемента */
-        object-fit: cover;
-        /* Кадрирование изображения */
-    }
-
-    /* тест фильторв */
-
-    .filters {
-        display: flex;
-        justify-content: space-between;
-    }
-
-    .filter-group {
-        margin-bottom: 20px;
-    }
-
-    .filter-group a {
-        margin-right: 10px;
-        text-decoration: none;
-        color: #333;
-        font-weight: bold;
-    }
-
-    .filter-group a.active {
-        color: #007bff;
-        /* Активный фильтр */
-    }
-
-    /*  */
 
     .A_buttonTrails {
         padding: 10px 20px;
@@ -226,28 +81,62 @@ body {
     footer {
         display: inline-flex;
         justify-content: space-between;
-        align-items: center;
-        background-color: var(--grey);
-        height: 7.92vw;
-        padding: 1.5vw 5vw;
+        height: 8.13vw;
+        padding: 1.5vw 3vw 0 0;
+        background-color: var(--black);
+        margin-top: 3vw;
 
         width: 100%;
 
-        h4 {
-            font-size: 22px;
-            font-weight: 400;
-            line-height: 4;
-        }
-
         a {
-            font-size: 28px;
+            font-size: 1.25rem;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 103.233%;
+            text-transform: lowercase;
             color: var(--white);
+        }
+        
+        .A_nameLink {
+            width: 47vw;
+            display: flex;
+            margin-top: -3.9vw;
+            width: 47vw;
+            background-color: var(--green);
+
+            a {
+                background-color: var(--black);
+                color: var(--white);
+                width: inherit;
+                height: 2.40vw;
+                display: flex;
+                align-items: center;
+                padding: 0vw 3vw;
+            }
         }
 
         .M_menu_items {
             display: flex;
             flex-direction: row;
             gap: 2vw;
+
+            .A_leftLimks {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5vw;
+            }
+
+            .A_middleLinks {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5vw;
+            }
+
+            .A_rightLinks {
+                display: flex;
+                flex-direction: column;
+                width: 8vw;
+            }
         }
     }
 

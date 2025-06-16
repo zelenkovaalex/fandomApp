@@ -1,0 +1,22 @@
+<div class="purchase-header">
+  <span class="purchase-title">покупка маршрута</span>
+  <span class="purchase-price">( <%= @trail.price %> ₽ )</span>
+</div>
+<%= form_with url: pay_trail_path(@trail), method: :post, class: "purchase-form" do |f| %>
+  <div class="form-group">
+    <label>номер карты</label>
+    <%= f.text_field :card_number, placeholder: "0000 0000 0000 0000" %>
+  </div>
+  <div class="form-group">
+    <label>срок</label>
+    <%= f.text_field :expiry, placeholder: "00 / 00 / 0000" %>
+  </div>
+  <div class="form-group">
+    <label>cvc</label>
+    <%= f.text_field :cvc, placeholder: "000" %>
+  </div>
+  <div class="form-actions">
+    <%= f.submit "оплатить", class: "pay-btn" %>
+    <%= link_to "отменить", trail_path(@trail), class: "cancel-link" %>
+  </div>
+<% end %>

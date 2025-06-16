@@ -1,35 +1,72 @@
-<body class="fandoms"> 
+<body class="fandoms" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;"> 
 
-<div class="W_Fandoms">
+<div class="W_hitTrails">
 
-  <div class='O_trails'>
+    <h1 class="A_heading">хиты по фандомам</h1>
 
-    <div class="W_titles">
-      <%#= link_to "Все маршруты", trails_path %>
-      <% if current_user && current_user.profile %>
-        <%= link_to "мои маршруты", profile_path(current_user.profile) %>
-      <% end %>
-    </div>
 
-    <div class='M_briks'>
-      <% @random_trails.each do |trail| %>
-        <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
-      <% end %>
-    </div>
+<%= turbo_frame_tag "W_carouselFandoms" do %>
 
+  <div class="W_carouselControls">
+    <!-- Previous Button -->
+    <%= button_to "<", fandoms_path(carousel_page: [@carousel_page - 1, 0].max), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-prev" %>
+    <%= @carousel_page %> / <%= (@all_trails.size / @trails_per_page.to_f).ceil %>
+    <!-- Next Button -->
+    <%= button_to ">", fandoms_path(carousel_page: [@carousel_page + 1, (@all_trails.size / @trails_per_page).to_i]), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-next" %>
   </div>
 
-  <div class="O_fandoms">
-    <h1>фандомы</h1>
-
-      <% @fandoms.each do |fandom| %>
-        <%= render partial: "fandom", locals: { fandom: fandom } %>
-      <% end %>
-
-    <%= link_to "новый фандом", new_admin_fandom_path %>
+  <div class="W_carouselItems">
+    <% @carousel_trails.each do |trail| %>
+      <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
+    <% end %>
   </div>
+<% end %>
 
 </div>
 
+<div class="W_fandomsSections">
+  <div class="W_fandomCategories">
+    <% @categories.each do |cat| %>
+      <%= link_to fandoms_path(category: cat), data: { turbo_frame: "fandoms_list" }, class: "M_fandomCatName #{'active' if cat == @selected_category}" do %>
+        <span class="A_fandomCategoryName"><%= cat %></span>
+        <span class="A_fandomCategoryCounter">(<%= Fandom.where(category: cat).count %>)</span>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%= turbo_frame_tag "W_fandomCatShow", data: { count: 'more-than-9' } do %>
+    <% @fandoms.each do |fandom| %>
+      <div class="W_fandomShow" data-fandom-id="<%= fandom.id %>">
+        <div class="M_fandomNameShow">
+          <div class="A_fandomName">
+            <% if user_signed_in? && current_user.admin? %>
+              <%= link_to fandom.name, fandom_path(fandom), class: "A_fandomName" %>
+            <% elsif user_signed_in? %>
+              <%= link_to fandom.name, fandom_path(fandom), class: "A_fandomName" %>
+            <% else %>
+              <%= fandom.name %>
+            <% end %>
+          </div>
+
+          <div class="A_trailCounter">
+            <span class="fandom-trail-count">( <%= fandom.trails.count %> )</span>
+          </div>
+        </div>
+        <!-- Place W_fandomTrailsShow immediately after M_fandomNameShow -->
+        <div class="W_fandomTrailsShow" data-fandom-id="<%= fandom.id %>">
+          <div class="M_trailColumns">
+            <% fandom.trails.each do |trail| %>
+              <div class="A_trailNameShow">
+                <%= link_to trail.title, trail_path(trail) %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+
+  <%#= link_to "Новый фандом", new_admin_fandom_path %>
+</div>
+
 </body>
-ёё

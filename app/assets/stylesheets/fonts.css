@@ -1,3 +1,20 @@
+/* Steinbeck */
+@font-face {
+    font-family: 'Steinbeck';
+    src: url('Steinbeck-Regular.ttf') format('ttf');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: 'Steinbeck';
+    src: url('Steinbeck-Italic.ttf') format('ttf');
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+/* IBMPlexSans  */
 @font-face {
     font-family: 'IBMPlexSans';
     src: url('IBMPlexSans-Thin.ttf') format('ttf');

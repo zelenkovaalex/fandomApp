@@ -1,32 +1,44 @@
 <body class="community" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
 
-  <div class="A_title">
-    <h1>Сообщество</h1>
-  </div>
-
-  <div class="filters">
-    <div class="filter-group">
+<div class="filters">
+  <div class="filter-group">
+    <input type="checkbox" id="toggle-cities" class="toggle-checkbox" hidden>
+    <label for="toggle-cities" class="toggle-label">
       <h3>Города</h3>
+      <span class="arrow">▼</span>
+    </label>
+    <div class="filter-content">
       <% @cities.each do |city| %>
-        <a href="#" data-filter="city-<%= city %>"><%= city %></a>
+        <%= link_to city, profiles_path(filter: "city-#{city}"), data: { turbo_frame: "profiles_container" }, class: "filter-link" %>
       <% end %>
     </div>
+  </div>
 
-    <div class="filter-group">
+  <div class="filter-group">
+    <button class="toggle-button" aria-expanded="false" aria-controls="fandoms-list">
       <h3>Фандомы</h3>
+      <span class="arrow">▼</span>
+    </button>
+    <div id="fandoms-list" class="filter-content" style="display: none;">
       <% @fandoms.each do |fandom| %>
-        <a href="#" data-filter="fandom-<%= fandom %>"><%= fandom %></a>
+        <%= link_to fandom, profiles_path(filter: "fandom-#{fandom}"), data: { turbo_frame: "profiles_container" }, class: "filter-link" %>
       <% end %>
     </div>
   </div>
+</div>
 
+  <%= link_to "Сбросить фильтр", profiles_path, data: { turbo_frame: "profiles_container" }, class: "filter-link" %>
+
+
+  <h1 class="A_heading">авторы хитов</h1>
   <!-- Один большой контейнер для всех профилей -->
-  <div class="W_wrapprof">
-    <% @profiles.each do |profile| %>
-      <div class="M_profInf">
-        <%= render 'profiles/profileShow', profile: profile %>
-      </div>
-    <% end %>
-  </div>
-
+  <%= turbo_frame_tag "profiles_container" do %>
+    <div class="W_wrapprof">
+      <% @profiles.each do |profile| %>
+        <div class="W_profileShow">
+          <%= render 'profiles/profileShow', profile: profile %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
 </body>

@@ -10,7 +10,7 @@ class Trail < ApplicationRecord
 
   has_many :comments, dependent: :destroy
   
-  has_many :likes, as: :likeable
+  has_many :likes, as: :likeable, dependent: :destroy
   has_many :likers, through: :likes, source: :user
 
   acts_as_taggable_on :tags
@@ -24,6 +24,7 @@ class Trail < ApplicationRecord
 
   has_many :trail_purchases
   has_many :buyers, through: :trail_purchases, source: :user
+  has_many :purchasers, through: :trail_purchases, source: :user
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   # метод для обложки трейла

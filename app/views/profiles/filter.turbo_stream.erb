@@ -1,0 +1,9 @@
+<%= turbo_stream.replace "profiles_container" do %>
+  <div class="W_wrapprof">
+    <% @profiles.each do |profile| %>
+      <div class="M_profInf">
+        <%= render 'profiles/profileShow', profile: profile %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

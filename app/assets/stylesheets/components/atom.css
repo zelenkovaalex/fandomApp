@@ -9,11 +9,110 @@
     margin-left: 50%;
 }
 
+.A_deleteButton {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: var(--light-grey);
+    border: none;
+    color: black;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: fit-content;
+
+    &:hover {
+        background-color: var(--green);
+        border: none;
+    }
+
+    &:active {
+        background-color: var(--green);
+        border: none;
+    }
+}
+
 /* trails blocks */
 
 .A_fandonName {
     padding: 0 7vw 0.3vw 0;
     text-transform: lowercase;
+}
+
+.A_trailTitle {
+    font-family: "Steinbeck";
+    font-size: 1.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    /* 1.67756rem */
+    text-transform: lowercase;
+    width: 31.82vw;
+}
+
+.A_trailName {
+    display: flex;
+    height: 30px;
+    padding: 10px;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    background-color: var(--black);
+    padding: 10px;
+
+    color: #FEFEFE;
+    font-family: 'Steinbeck';
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    /* 1.67756rem */
+    text-transform: lowercase;
+}
+
+.A_heart {
+    width: 20px;
+    height: 18px;
+
+    position: absolute;
+    margin: -9vw 0vw 0vw 19vw;
+}
+
+.A_pointImange {
+    width: 20.52vw;
+    height: 20.52vw;
+    object-fit: cover;
+    overflow: hidden;
+}
+
+.A_pointNumber {
+    color: var(--light-grey);
+    font-family: "Steinbeck";
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 95.388%;
+}
+
+.A_pointBody {
+    width: 13.39vw;
+    color: var(--grey);
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    /* 1.16138rem */
+    text-transform: lowercase;
+}
+
+.A_pointLocation {
+    a{
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-decoration-line: underline;
+        text-transform: lowercase;
+    }
 }
 
 /* comments */
@@ -151,10 +250,39 @@
 /* profiles */
 
 .A_avatar {
-    width: 19.17vw;
-    height: 19.17vw;
+    width: 7.81vw;
+    height: 7.81vw;
     object-fit: cover;
     overflow: hidden;
+}
+
+.A_nickname {
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    /* 1.16138rem */
+    text-transform: lowercase;
+}
+
+.A_date {
+    color: var(--grey);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    /* 0.77425rem */
+    text-transform: lowercase;
+}
+
+.A_trailBody {
+    width: 20.57vw;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    /* 1.16138rem */
+    text-transform: lowercase;
 }
 
 /* decorations */
@@ -187,7 +315,7 @@
 
 a.A_diagonal_arrow {
     img {
-        height: 50px;
+        height: 1.46vw;
         width: fit-content;
     }
 }
@@ -214,4 +342,56 @@ a.A_diagonal_arrow {
     width: 100%;
     height: auto;
     object-fit: cover;
+}
+
+/* stuff */
+
+.A_heading {
+    font-family: Steinbeck;
+    font-size: 2.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    text-transform: lowercase;
+}
+
+/* fandoms */
+.A_fandomCategoryName {
+    padding: 0.5vw 0 0.5vw 0;
+    width: fit-content;
+}
+
+.A_fandomCategoryCounter {
+    color: var(--grey);
+    padding: 0.5vw 0 0.5vw 0;
+    margin: -1.5vw 0 0;
+    width: fit-content;
+    height: fit-content;
+}
+
+.A_fandomName {
+    padding: 0.5vw 0 0.5vw 0;
+    font-size: 1.25rem;
+}
+
+.A_trailCounter {
+    color: var(--grey);
+    padding: 0.5vw 0 0.5vw 0;
+    margin: -1.5vw 0 0;
+    width: fit-content;
+    height: fit-content;
+}
+
+.A_trailNameShow {
+    a {
+        font-family: 'Steinbeck';
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        /* 1.67756rem */
+        text-transform: lowercase;
+        color: var(--grey);
+        text-decoration: underline;
+    }
 }

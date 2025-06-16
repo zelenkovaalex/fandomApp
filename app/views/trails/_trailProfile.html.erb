@@ -1,36 +1,40 @@
-<div class="O_trailProfile">
-  <!-- Изображение маршрута -->
-  <% if trail.image.present? %>
-    <%= image_tag trail.image.url, alt: trail.title, class: "A_trailImage" %>
-  <% else %>
-    <p>No image available</p>
-  <% end %>
+<div class="O_trailProfileInf">
 
-  <!-- Заголовок маршрута -->
-  <div class="W_trailHead">
-    <h2><%= trail.title %></h2>
-    <h3><%= trail.fandom.name %></h3>
-  </div>
-
-  <!-- Кнопки действий для маршрута -->
-  <div class='W_buttons'>
-    <!-- Лайки -->
-    <%= link_to toggle_like_path(trail.id), method: :get, class: "like-button", remote: true, data: { type: :json } do %>
-      <% if trail.liked_by?(current_user) %>
-        <%= image_tag 'atoms/Default.svg', alt: 'Лайк' %>
+  <div class="M_trailUpperInf">
+    <% cover_point = trail.trail_points.find { |p| p.image.present? } %>
+    <% cover_url = cover_point&.image&.url %>
+    <div class="trail-cover">
+      <% if cover_url.present? %>
+        <%= image_tag cover_url, alt: trail.title, class: "trail-cover-img" %>
       <% else %>
-        <%= image_tag 'atoms/Selected.svg', alt: 'Лайк' %>
+        <!-- Fallback image -->
+        <%= image_tag "default_trail_cover.png", alt: "Нет фото", class: "trail-cover-img" %>
       <% end %>
-    <% end %>
+    </div>
 
-    <!-- Редактирование -->
-    <% if current_user != nil && (current_user.id == trail.user_id || current_user.admin?) %>
-      <%= link_to 'редактировать', edit_admin_trail_path(trail), class: "custom-button" %>
-    <% end %>
+    <div class='A_heart'>
+      <%= link_to toggle_like_path(trail.id), method: :get, class: "like-button", remote: true, data: { type: :json } do %>
+        <% if trail.liked_by?(current_user) %>
+          <%= image_tag 'atoms/Selected.svg', alt: 'Лайк' %>
+        <% else %>
+          <%= image_tag 'atoms/Default.svg', alt: 'Лайк' %>
+        <% end %>
+      <% end %>
+    </div>
 
-    <!-- Посмотреть маршрут -->
+    <h2 class="A_trailName"><%= trail.title %></h2>
+  </div>
+
+
+  <div class="O_trailLowerInf">
+    <div class='M_trailTags'>
+      <h3><%= trail.city %></h3>
+      <h3><%= trail.fandom.name %></h3>
+    </div>
+
     <%= link_to trail_path(trail), class: 'A_diagonal_arrow' do %>
-      <%= image_tag 'atoms/A_go_button.png', alt: 'Посмотреть маршрут' %>
+      <%= image_tag 'atoms/A_go_arrow.svg', alt: 'Посмотреть маршрут' %>
     <% end %>
   </div>
+
 </div>

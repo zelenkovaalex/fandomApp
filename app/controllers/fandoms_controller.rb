@@ -5,9 +5,9 @@ class FandomsController < ApplicationController
 
   # GET /fandoms or /fandoms.json
   def index
-    @fandoms = Fandom.all
-    # @allFandoms = Fandom.all
-    # @trails = Trail.find_by(id: params[:id])
+    @categories = Fandom.distinct.pluck(:category)
+    @selected_category = params[:category] || @categories.first
+    @fandoms = Fandom.where(category: @selected_category)
     @trails = Trail.all.order(created_at: :desc)
 
     if current_user && current_user.admin?
@@ -23,6 +23,10 @@ class FandomsController < ApplicationController
     
     @random_trails = Trail.order("RANDOM()").limit(4)
 
+    @all_trails = Trail.order('RANDOM()').limit(32)
+    @carousel_page = params[:carousel_page].to_i || 0
+    @trails_per_page = 4
+    @carousel_trails = @all_trails[@carousel_page * @trails_per_page, @trails_per_page] || []
   end
 
   # GET /fandoms/1 or /fandoms/1.json
@@ -64,6 +68,19 @@ class FandomsController < ApplicationController
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @fandom.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def show_fandom_trails
+    fandom = Fandom.find(params[:id])
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.update(
+          "fandom_#{fandom.id}_trails",
+          partial: "fandom_trails",
+          locals: { fandom: fandom }
+        )
       end
     end
   end

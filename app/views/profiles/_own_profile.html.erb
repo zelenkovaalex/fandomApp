@@ -1,0 +1,52 @@
+<div class="profile-card">
+  <!-- Avatar -->
+  <div class="avatar">
+    <% if profile.avatar.present? %>
+        <%= image_tag profile.avatar.url %>
+    <% else %>
+        <p>No avatar available</p>
+    <% end %>
+  </div>
+
+  <!-- Nickname and Actions -->
+  <div class="profile-info">
+    <h2><%= link_to @profile.nickname, edit_profile_path(@profile), class: "nickname" %></h2>
+    <div class="actions">
+      <!-- Edit Profile Button -->
+      <%= link_to edit_profile_path(@profile) do %>
+        <%#= icon("edit") %> <!-- Replace with actual icon or text -->
+      <% end %>
+
+      <!-- Exit Button -->
+      <%= link_to "Выход", destroy_user_session_path, data: { "turbo-method": :delete } %>
+    </div>
+
+    <!-- City and Fandoms -->
+    <div class="details">
+      <p><%= @profile.city %></p>
+      <ul>
+        <% @profile.fandoms.each do |fandom| %>
+          <li><%= link_to fandom.name, fandom_path(fandom) %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>
+      
+      <div class="profile-tabs">
+        <%= link_to "мои маршруты", profile_path(@profile, tab: "my_trails"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'my_trails'}" %>
+        <span class="profile-tab-count"><%= @profile.user.trails.count %></span>
+
+        <%= link_to "пройденные", profile_path(@profile, tab: "finished"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'finished'}" %>
+        <span class="profile-tab-count"><%#= @profile.user.finished_trails.count %></span>
+
+        <%= link_to "избранное", profile_path(@profile, tab: "favourites"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'favourites'}" %>
+        <span class="profile-tab-count"><%= @profile.user.favourite_trails.count %></span>
+
+        <%= link_to "купленные", profile_path(@profile, tab: "bought"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'bought'}" %>
+        <span class="profile-tab-count"><%#= @profile.user.purchased_trails.count %></span>
+      </div>
+
+      <%= turbo_frame_tag "profile_trails" do %>
+        <%= render "profiles/#{@tab}", trails: @trails %>
+      <% end %>

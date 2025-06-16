@@ -15,24 +15,29 @@ class LikeController < ApplicationController
   end
 
   def toggle
-    unless params[:trail_id].present?
-      return render json: { success: false, error: 'Trail ID is missing' }, status: :unprocessable_entity
-    end
+    @trail = Trail.find(params[:trail_id])
+    like = current_user.likes.find_by(likeable: @trail)
 
-    @trail = Trail.find_by(id: params[:trail_id])
-    unless @trail
-      return render json: { success: false, error: 'Trail not found' }, status: :not_found
-    end
-
-    if current_user.liked?(@trail)
-      current_user.unlike(@trail)
+    if like
+      like.destroy
       liked = false
     else
-      current_user.like(@trail)
+      like = current_user.likes.create!(likeable: @trail)
       liked = true
+
+      # Create notification for the trail's author (unless the liker is the author)
+      if @trail.user != current_user
+        Notification.create!(
+          user: @trail.user,
+          notifiable: like,
+          notification_type: "like",
+          data: { trail_title: @trail.title, liker: current_user.nickname }
+        )
+      end
     end
 
     respond_to do |format|
+      format.turbo_stream
       format.json { render json: { success: true, liked: liked } }
     end
   end

@@ -1,13 +1,22 @@
 <footer>
-  <div class='A_logo'>
-    <%= link_to root_url do %>
-      <%= image_tag 'atoms/A_logo_white.png', alt: 'Логотип' %>
-    <% end %>
+  <div class='A_nameLink'>
+    <%= link_to "rutas", root_url %>
   </div>
 
   <div class='M_menu_items'>
-    <%= link_to "rutas", root_url %>
-    <a href="https://t.me/rutas_media" class="A_nav_menu_item">тг</a>
-    <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://design.hse.ru/&ved=2ahUKEwjF17buzKuMAxVwFxAIHeTvK58QFnoECCEQAQ&usg=AOvVaw27P2gHXInq8gCn1uF_VR9g" class="A_nav_menu_item">2024 adc</a>
+    <div class="A_leftLimks">
+      <%= link_to "о нас", about_path %>
+      <a href="https://t.me/+aLIJrMhUirQ5YjFi">помощь</a>
+    </div>
+
+    <div class="A_middleLinks">
+      <a href="https://t.me/rutas_media" class="A_nav_menu_item">tg</a>
+      <a href="https://t.me/rutas_media" class="A_nav_menu_item">vk</a>
+      <a href="https://t.me/rutas_media" class="A_nav_menu_item">дзен</a>
+    </div>
+
+    <div class="A_rightLinks">
+      <a href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://design.hse.ru/&ved=2ahUKEwjF17buzKuMAxVwFxAIHeTvK58QFnoECCEQAQ&usg=AOvVaw27P2gHXInq8gCn1uF_VR9g" class="A_nav_menu_item">adc community 2024 — 2025</a>
+    </div>
   </div>
 </footer>

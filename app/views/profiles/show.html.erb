@@ -1,19 +1,13 @@
 <body class="profiles" style="width: auto;">
   <div class="W_directionBlocks">
     <div class="W_sizeBoxes">
-      <%= render @profile %>
-
-      <div class='O_trails'>
-        <div class="W_titles">
-          <%= link_to "публикации", profile_path(current_user.profile) %>
-        </div>
-
-        <div class='M_briks'>
-          <% @trails.each do |trail| %>
-            <%= render 'trails/trailProfile', trail: trail %>
-          <% end %>
-        </div>
-      </div> 
+      <% if current_user&.id == @profile.user_id %>
+        <!-- Если это профиль текущего пользователя -->
+        <%= render "profiles/own_profile", profile: @profile %>
+      <% else %>
+        <!-- Если это профиль другого пользователя -->
+        <%= render "profiles/other_profile", profile: @profile %>
+      <% end %>
     </div>
   </div>
 </body>

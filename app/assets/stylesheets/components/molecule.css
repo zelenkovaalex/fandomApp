@@ -8,6 +8,44 @@
     justify-content: space-between;
 }
 
+.M_trailUpperInf {
+    width: max-content;
+}
+
+.M_trailTags {
+    font-size: 1.125rem;
+    font-style: normal;
+    font-weight: 400;
+    text-decoration-line: underline;
+    text-transform: lowercase;
+}
+
+.M_previewPointPhotoTurbo {
+    display: flex;
+    overflow-x: auto;
+    /* Добавляет горизонтальный скролл */
+    gap: 10px;
+    /* Расстояние между изображениями */
+    white-space: nowrap;
+    /* Изображения не переносятся на новую строку */
+}
+
+.M_dataInfo {
+    display: flex;
+    flex-direction: row;
+    width: 17.86vw;
+    justify-content: space-between;
+    border-bottom: solid 2px;
+    padding: 0.3vw 0.2vw;
+    color: var(--grey);
+}
+
+.M_pointImgName {
+    .A_trailName {
+        background-color: var(--light-grey);
+    }
+}
+
 /* comments */
 
 .M_comment {
@@ -48,26 +86,33 @@
     }
 
     p {
-        font-size: 1.375rem;
+        font-size: 1rem;
         font-style: normal;
         font-weight: 400;
         line-height: 103.233%;
-    }
 
-    .A_avatar {
-        width: 100%;
-        height: auto;
-        object-fit: cover;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        align-self: stretch;
     }
 }
 
 .M_profileTags {
-    font-size: 1.375rem;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 103.233%;
     text-decoration-line: underline;
     text-decoration-style: solid;
+}
+
+.M_details {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.3vw;
 }
 
 
@@ -116,9 +161,69 @@
     }
 }
 
-.M_profileTags {
-    font-size: 0.9em;
+/* fandoms */
+
+.M_fandomCatName {
+    font-family: "Steinbeck";
+    font-size: 1.625rem;
+    font-weight: 400;
+    font-style: normal;
+    display: flex;
 }
 
+.M_fandomCatName:hover {
+
+    .A_fandomCategoryName {
+        background-color: var(--green);
+    }
+
+    .A_fandomCategoryCounter {
+        background-color: var(--black);
+        color: var(--white);
+    }
+}
+
+.M_fandomNameShow {
+    font-family: "Steinbeck";
+    font-size: 1.25rem;
+    font-weight: 400;
+    font-style: normal;
+    display: flex;
+    text-transform: lowercase;
+
+    width: 20vw;
+    justify-content: space-between;
+}
+
+.M_fandomNameShow:hover {
+    .A_fandomName {
+        background-color: var(--light-grey);
+        width: 17.4vw;
+    }
+
+    .A_trailCounter {
+        color: var(--white);
+        background-color: black;
+    }
+
+    + .W_fandomTrailsShow {
+        display: block;
+    }
+}
+
+.M_trailsFandomShow {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1.5vw 5vw 4vw;
+    gap: 1.5vw;
+    width: 100%;
+} 
 
 
+/* some shit */
+
+.M_trailButtons {
+    display: flex;
+    gap: 10px;
+    margin: 2vw 0 1vw 5vw;
+}

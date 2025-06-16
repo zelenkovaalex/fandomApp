@@ -1,19 +1,27 @@
-<div class="O_trailPoints active" id="points">
-  <h2>Точки маршрута:</h2>
-  <% if trail_points.any? %>
-    <ul>
-      <% trail_points.each do |point| %>
-        <li>
-          <h3><%= point.name %></h3>
-          <p><%= point.description %></p>
-          <% if point.image_url.present? %>
-            <img src="<%= point.image.url %>" alt="<%= point.name %>" style="max-width: 300px;">
-          <% end %>
-          <p><%= link_to 'Открыть на карте', point.map_link, target: '_blank' if point.map_link.present? %></p>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>Для этого маршрута пока нет точек.</p>
-  <% end %>
-</div>
+<% if trail_points.any? %>
+  <div class="W_trailPoints active" id="points">
+    <% trail_points.each_with_index do |point, index| %>
+      <div class="O_trailPoint">
+        <div class="O_pointImgNumber">
+          <p class="A_pointNumber"><%= "(0#{index + 1})" %></p>
+          <div class="M_pointImgName">
+            <div class="A_pointImange">
+              <% if point.image_url.present? %>
+                <img src="<%= point.image.url %>" alt="<%= point.name %>">
+              <% end %>
+            </div>
+            <h3 class="A_trailName"><%= "#{point.name}" %></h3>
+          </div>
+        </div>
+        <p class="A_pointBody"><%= point.description %></p>
+        <% if current_user&.admin? || current_user == @trail.user || current_user.purchased_trails.include?(@trail) %>
+          <p class="A_pointLocation"><%= link_to 'локация', point.map_link, target: '_blank' if point.map_link.present? %></p>
+        <% else %>
+          <p class="locked-location">Купить маршрут, чтобы увидеть локации</p>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p>Для этого маршрута пока нет точек.</p>
+<% end %>
