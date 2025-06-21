@@ -25,7 +25,11 @@
       <% end %>
       
       <%= turbo_frame_tag "global_search_results" %>
-      <%= link_to "профиль", profile_path(current_user.profile) if user_signed_in? && current_user.profile %>
+      <% if user_signed_in? && current_user.profile.present? %>
+        <%= link_to "профиль", profile_path(current_user.profile) %>
+      <% else %>
+        <%= link_to "профиль", profiles_path %>
+      <% end %>
     </div>
 </nav>
 

@@ -190,3 +190,29 @@ body {
         border-radius: 20px;
     }
 }
+
+body#logIN {
+    background-image: url('A_signInCover.jpg');
+    background-size: cover;
+
+    nav {
+        background: none;
+        a {
+            color: var(--white);
+        }
+    }
+}
+
+
+body#signUp {
+    background-image: url('atoms/A_signUpCover.jpg');
+    background-size: cover;
+
+    nav {
+        background: none;
+        a {
+            color: var(--white);
+        }
+    }
+}
+

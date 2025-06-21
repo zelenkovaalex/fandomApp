@@ -1,4 +1,4 @@
-<body class="signUp" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
+<body id="signUp" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
   
   <div class="A_authorisation_decor">
     <%= image_tag 'atoms/A_authorisation_decor.png', class: 'A_authorisation_decor' %>
@@ -6,28 +6,33 @@
 
   <div class="W_form" style="height:44vw;">
     <div class="M_hello">
-    <h2>привет!</h2>
-    <p>зарегестрируйстя, чтобы публиковать маршруты и участвовать в обсуждениях</p>
+    <h2>присоединяйся</h2>
   </div>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {class: "W_inputs"}) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="A_input">
-      <p>почта</p>
-      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "введите почту" %>
+      <div style="display:inline-flex; gap:10px; margin-left:-1vw;">
+        <p style="color:var(--green)">*</p>
+        <p>почта</p>
+      </div>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "укажи свою почту" %>
     </div>
     <div class="A_input">
-      <p>пароль</p>
-      <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em>
-      <% end %><br />
-      <%= f.password_field :password, autocomplete: "new-password", placeholder: "введите пароль" %>
+      <div style="display:inline-flex; gap:10px; margin-left:-1vw;">
+        <p style="color:var(--green)">*</p>
+        <p>пароль</p>
+      </div>
+      <%= f.password_field :password, autocomplete: "new-password", placeholder: "придумай пароль, больше 6 знаков" %>
     </div>
 
     <div class="A_input">
-      <p>подтверждение пароля</p>
-      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "введите пароль" %>
+      <div style="display:inline-flex; gap:10px; margin-left:-1vw;">
+        <p style="color:var(--green)">*</p>
+        <p>повтор пароля</p>
+      </div>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "введи пароль ещё раз" %>
     </div>
 
     <div class="A_commit">

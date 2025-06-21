@@ -1,4 +1,4 @@
-<body class="logIN" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
+<body id="logIN" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
 
   <div class="A_authorisation_decor">
     <%= image_tag 'atoms/A_authorisation_decor.png', class: 'A_authorisation_decor' %>
@@ -6,17 +6,23 @@
 
   <div class="W_form">
     <div class="M_hello">
-      <h2>привет!</h2>
+      <h2>привет, путник!</h2>
       <p>Авторизуйся, чтобы публиковать маршруты и участвовать в обсуждениях</p>
     </div>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {class: "W_inputs"}) do |f| %>
       <div class="A_input">
-        <p>почта</p>
+        <div style="display:inline-flex; gap:10px; margin-left:-1vw;">
+          <p style="color:var(--green)">*</p>
+          <p>почта</p>
+        </div>
         <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "введите почту" %>
       </div>
       <div class="A_input">
-        <p>пароль</p>
+        <div style="display:inline-flex; gap:10px; margin-left:-1vw;">
+          <p style="color:var(--green)">*</p>
+          <p>пароль</p>
+        </div>
         <%= f.password_field :password, autocomplete: "current-password", placeholder: "введите пароль" %>
       </div>
       <% if devise_mapping.rememberable? %>
@@ -27,8 +33,23 @@
       <% end %>
       <div class="A_commit">
         <%= f.submit "войти" %>
+
+        <div class="A_sessions">
+          <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+            <%= link_to "не помню пароль", new_password_path(resource_name) %><br />
+          <% end %>
+        </div>
       </div>
-      <%= render "devise/shared/links" %>
+      
+      <div class="A_commit">
+        <p>ещё нет аккаунта?</p>
+
+        <div class="A_sessions">
+          <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+            <%= link_to "присоединиться", new_registration_path(resource_name) %><br />
+          <% end %>
+        </div>
+      </div>
     <% end %>
   </div>
 
