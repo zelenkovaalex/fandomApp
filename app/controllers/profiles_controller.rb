@@ -62,18 +62,29 @@ class ProfilesController < ApplicationController
   # GET /profiles/:id
   def show
     @tab = params[:tab] || 'my_trails'
+    sort_order = params[:sort] == "asc" ? :asc : :desc
+
     @trails = case @tab
       when 'my_trails'
-        @profile.user.trails
+        @profile.user.trails.order(created_at: sort_order)
       when 'finished'
-        @profile.user.finished_trails # You need to implement this association or method
+        @profile.user.finished_trails.order(created_at: sort_order)
       when 'favourites'
-        @profile.user.favourite_trails
+        @profile.user.favourite_trails.order(created_at: sort_order)
       when 'bought'
-        @profile.user.purchased_trails
+        @profile.user.purchased_trails.order(created_at: sort_order)
       else
-        @profile.user.trails
+        @profile.user.trails.order(created_at: sort_order)
       end
+
+    # Количество публикаций
+    @trails_count = @trails.count
+
+    # Уникальные города, где есть маршруты пользователя
+    @cities = @trails.map(&:city).uniq.compact
+
+    # Уникальные фандомы, к которым принадлежат маршруты пользователя
+    @fandoms = @trails.map(&:fandom).uniq.compact
   end
 
   # GET /profiles/new

@@ -60,6 +60,9 @@ def seed
   create_trails
   create_comments(2..4)
   create_comment_replies(1..3)
+  create_trail_purchases
+  create_favourites
+  create_finished_trails
 end
 
 def create_fandoms
@@ -182,7 +185,7 @@ def create_users(quantity)
 
     # Присоединение фандомов (1-2 для каждого профиля)
     random_fandoms = Fandom.all.sample(rand(1..2))
-    profile.update!(fandom_names: random_fandoms.map(&:name))
+    profile.update!(fandom_names: random_fandoms.map(&:name).join(", "))
 
     created_nicknames << nickname
   end
@@ -263,6 +266,55 @@ def create_comment_replies(quantity)
       reply_body = @replies.sample
       comment_reply = comment.replies.create(comment_id: comment.id, body: reply_body)
       # puts "Comment reply with id #{comment_reply.id} for trail with id #{comment.trail.id} just created"
+    end
+  end
+end
+
+def create_trail_purchases
+  users = User.all
+  trails = Trail.all
+
+  users.each do |user|
+    # Покупаем 2-4 случайных маршрута для каждого пользователя
+    purchased = trails.sample(rand(2..4))
+    purchased.each do |trail|
+      Purchase.find_or_create_by!(
+        user: user,
+        trail: trail,
+        price: trail.price,
+        purchased_at: Time.current,
+        status: "completed"
+      )
+    end
+  end
+end
+
+def create_favourites
+  users = User.all
+  trails = Trail.all
+
+  users.each do |user|
+    # Лайкаем 2-3 случайных маршрута для каждого пользователя
+    favourites = trails.sample(rand(2..3))
+    favourites.each do |trail|
+      Like.find_or_create_by!(user: user, likeable: trail)
+    end
+  end
+end
+
+def create_finished_trails
+  users = User.all
+  trails = Trail.all
+
+  users.each do |user|
+    # Для каждого пользователя выбираем 1-3 случайных маршрута
+    finished = trails.sample(rand(1..3))
+    finished.each do |trail|
+      FinishedTrail.find_or_create_by!(
+        user: user,
+        trail: trail,
+        finished_at: Time.current
+      )
     end
   end
 end

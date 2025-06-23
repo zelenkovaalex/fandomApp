@@ -1,1 +1,1 @@
-json.extract! comment, :id, :body
+json.extract! comment, :id, :body, :rating_value, :trail_id

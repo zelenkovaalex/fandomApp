@@ -180,3 +180,9 @@ a.back {
         background-color: var(--green);
     }
 }
+
+.O_ownProfileInfo {
+    display: flex;
+    flex-direction: row;
+    gap: 1vw;
+}

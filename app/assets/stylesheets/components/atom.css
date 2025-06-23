@@ -61,7 +61,7 @@
 
     color: #FEFEFE;
     font-family: 'Steinbeck';
-    font-size: 1.5rem;
+    font-size: 1.25rem;
     font-style: normal;
     font-weight: 400;
     line-height: 103.233%;
@@ -176,6 +176,7 @@
     gap: 20px;
 
     input {
+        color: var(--light-grey);
         border: none;
         border-bottom: 2px solid var(--white);
         /* background-color: var(--white); */
@@ -276,6 +277,13 @@
     overflow: hidden;
 }
 
+.A_ownProfileAvatar {
+    width: 9.79vw;
+    height: 9.79vw;
+    object-fit: cover;
+    overflow: hidden;
+}
+
 .A_nickname {
     font-size: 1.125rem;
     font-style: normal;
@@ -283,6 +291,35 @@
     line-height: 103.233%;
     /* 1.16138rem */
     text-transform: lowercase;
+}
+
+.A_nicknameProfile {
+    font-family: "Steinbeck";
+    font-size: 1.625rem;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.A_filterTapsCount {
+    margin-left: auto;
+    font-weight: bold;
+    color: black;
+
+    font-family: "Steinbeck";
+    font-size: 1.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 95.388%;
+
+    margin-top: 1vw;
+}
+
+.A_filterTapsName {
+    font-family: "Steinbeck";
+    font-size: 1.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 95.388%;
 }
 
 .A_date {
@@ -303,6 +340,16 @@
     line-height: 103.233%;
     /* 1.16138rem */
     text-transform: lowercase;
+}
+
+.A_arrowDown {
+    transform: rotate(0deg);
+    /* Стрелка вниз */
+}
+
+.A_arrowDown.arrow-up {
+    transform: rotate(180deg);
+    /* Стрелка вверх */
 }
 
 /* decorations */

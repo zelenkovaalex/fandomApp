@@ -333,3 +333,17 @@
     margin-left: 0.3em;
     vertical-align: top;
 }
+
+/* тест иконок */
+.edit-icon,
+.exit-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.edit-icon:hover,
+.exit-icon:hover {
+    filter: brightness(0.8);
+    /* Уменьшаем яркость при наведении */
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_16_120758) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
   create_table "comments", force: :cascade do |t|
     t.text "body"
     t.integer "user_id", null: false
@@ -47,6 +47,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_16_120758) do
     t.datetime "updated_at", null: false
     t.index ["trail_id"], name: "index_favourites_on_trail_id"
     t.index ["user_id"], name: "index_favourites_on_user_id"
+  end
+
+  create_table "finished_trails", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "trail_id", null: false
+    t.datetime "finished_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trail_id"], name: "index_finished_trails_on_trail_id"
+    t.index ["user_id", "trail_id"], name: "index_finished_trails_on_user_id_and_trail_id", unique: true
+    t.index ["user_id"], name: "index_finished_trails_on_user_id"
   end
 
   create_table "likes", force: :cascade do |t|
@@ -152,17 +163,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_16_120758) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trail_id"], name: "index_trail_points_on_trail_id"
-  end
-
-  create_table "trail_purchases", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "trail_id", null: false
-    t.datetime "purchased_at", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["trail_id"], name: "index_trail_purchases_on_trail_id"
-    t.index ["user_id", "trail_id"], name: "index_trail_purchases_on_user_id_and_trail_id", unique: true
-    t.index ["user_id"], name: "index_trail_purchases_on_user_id"
   end
 
   create_table "trails", force: :cascade do |t|

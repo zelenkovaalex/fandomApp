@@ -27,6 +27,14 @@ class Trail < ApplicationRecord
   has_many :purchasers, through: :trail_purchases, source: :user
   validates :price, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
+  has_many :finished_trails, dependent: :destroy
+  has_many :favourite_trails, dependent: :destroy
+
+  # доступ к пользователям
+  has_many :users_finished, through: :finished_trails, source: :user
+  has_many :users_favourited, through: :favourite_trails, source: :user
+  has_many :users_purchased, through: :purchased_trails, source: :user
+
   # метод для обложки трейла
   def cover_image
     trail_points.first&.image_url

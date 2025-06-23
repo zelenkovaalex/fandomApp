@@ -332,6 +332,44 @@
     margin: 2vw 3vw;
 }
 
+.W_trailsOwnProfile {
+    display: flex;
+    flex-direction: column;
+}
+
+.W_ownProfileInf {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    padding: 1.5vw 3vw;
+    /* width: 45.81vw; */
+}
+
+.W_butts {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5vw;
+}
+
+.W_otherProfileHead {
+    display: flex;
+    flex-direction: row;
+}
+
+.W_middleSectionOtherProfile {
+    p, a {
+        color: var(--light-grey);
+        font-size: 1.125rem;
+        line-height: 103.233%;
+        text-decoration-line: underline;
+        text-transform: lowercase;
+    }
+}
+
+.W_citiesOtherProfile {
+    display: flex;
+    flex-direction: row;
+}
 
 /* authorisation shit */
 

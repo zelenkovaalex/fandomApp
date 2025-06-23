@@ -16,7 +16,8 @@ class User < ApplicationRecord
   
   has_many :favourite_trails, through: :likes, source: :likeable, source_type: 'Trail'
 
-  has_many :finished_trails, -> { where('trail_purchases.finished = ?', true) }, through: :trail_purchases, source: :trail
+  has_many :finished_trails_records, class_name: 'FinishedTrail'
+  has_many :finished_trails, through: :finished_trails_records, source: :trail
 
   after_create :create_profile
 

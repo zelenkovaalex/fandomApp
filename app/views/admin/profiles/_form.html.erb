@@ -1,0 +1,58 @@
+<%= form_with(model: profile, html: { class: "W_inputs" }) do |form| %>
+  <% if profile.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+      <ul>
+        <% profile.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="A_input">
+    <p>имя</p>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="A_input">
+    <p>кликуха</p>
+    <%= form.text_field :nickname %>
+  </div>
+
+  <div class="A_input">
+    <p>место проживания</p>
+    <%= form.text_field :city %>
+  </div>
+
+  <div class="A_input">
+    <p>фандомы (через запятую)</p>
+    <%= form.text_field :fandom_names, value: Array(profile.fandom_names).join(", ") %>
+  </div>
+
+  <div class="A_input">
+    <p>обо мне</p>
+    <%= form.text_area :bio %>
+  </div>
+
+  <div class="A_input">
+    <form id="upload-form">
+      <input type="file" id="avatar-input" />
+      <button type="submit">Upload</button>
+    </form>  
+  </div>
+
+  <div>
+    <img id="preview" src="#" alt="Preview" style="display: none; max-width: 200px;" />
+  </div>
+
+  <div class="A_commit">
+    <%= form.submit "обновиться" %>
+  </div>
+
+  <div class="A_sessions">
+    <%= link_to "посмотреть мой профиль", @profile %> <br>
+    <%= link_to "назад в сообщество", profiles_path %>
+  </div>
+<% end %>

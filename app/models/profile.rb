@@ -27,7 +27,11 @@ class Profile < ApplicationRecord
     end
 
     def fandom_names
-        read_attribute(:fandom_names) || []
+        self[:fandom_names] || []
+    end
+
+    def fandom_names=(names)
+        self[:fandom_names] = names.split(",").map(&:strip)
     end
 
 end

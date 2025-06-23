@@ -1,52 +1,94 @@
-<div class="profile-card">
-  <!-- Avatar -->
-  <div class="avatar">
-    <% if profile.avatar.present? %>
-        <%= image_tag profile.avatar.url %>
-    <% else %>
-        <p>No avatar available</p>
-    <% end %>
-  </div>
+<div class="W_ownProfile" style="display:inline-flex;">
 
-  <!-- Nickname and Actions -->
-  <div class="profile-info">
-    <h2><%= link_to @profile.nickname, edit_profile_path(@profile), class: "nickname" %></h2>
-    <div class="actions">
-      <!-- Edit Profile Button -->
-      <%= link_to edit_profile_path(@profile) do %>
-        <%#= icon("edit") %> <!-- Replace with actual icon or text -->
-      <% end %>
-
-      <!-- Exit Button -->
-      <%= link_to "Выход", destroy_user_session_path, data: { "turbo-method": :delete } %>
-    </div>
-
-    <!-- City and Fandoms -->
-    <div class="details">
-      <p><%= @profile.city %></p>
-      <ul>
-        <% @profile.fandoms.each do |fandom| %>
-          <li><%= link_to fandom.name, fandom_path(fandom) %></li>
+  <div class="W_ownProfileInf">
+    <div class="O_ownProfileInfo">
+      <div class="A_ownProfileAvatar">
+        <% if profile.avatar.present? %>
+            <%= image_tag profile.avatar.url %>
+        <% else %>
+            <p>No avatar available</p>
         <% end %>
-      </ul>
-    </div>
-  </div>
-</div>
-      
-      <div class="profile-tabs">
-        <%= link_to "мои маршруты", profile_path(@profile, tab: "my_trails"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'my_trails'}" %>
-        <span class="profile-tab-count"><%= @profile.user.trails.count %></span>
-
-        <%= link_to "пройденные", profile_path(@profile, tab: "finished"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'finished'}" %>
-        <span class="profile-tab-count"><%#= @profile.user.finished_trails.count %></span>
-
-        <%= link_to "избранное", profile_path(@profile, tab: "favourites"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'favourites'}" %>
-        <span class="profile-tab-count"><%= @profile.user.favourite_trails.count %></span>
-
-        <%= link_to "купленные", profile_path(@profile, tab: "bought"), data: { turbo_frame: "profile_trails" }, class: "profile-tab-link #{'active' if @tab == 'bought'}" %>
-        <span class="profile-tab-count"><%#= @profile.user.purchased_trails.count %></span>
       </div>
 
-      <%= turbo_frame_tag "profile_trails" do %>
-        <%= render "profiles/#{@tab}", trails: @trails %>
+
+      <div class="M_profileInfo">
+        <div class="M_UpperInf">
+          <%= link_to @profile.nickname, edit_profile_path(@profile), class: "A_nicknameProfile" %>
+        <div class="W_butts">
+          <% if current_user && (current_user.admin? || current_user == @profile.user) %>
+            <%= link_to edit_admin_profile_path(@profile), data: { turbo_method: :patch } do %>
+              <%= image_tag 'atoms/A_edit_icon.svg', alt: "Редактировать", class: "edit-icon" %>
+            <% end %>
+          <% end %>
+
+          <%= link_to destroy_user_session_path, method: :delete, data: { turbo_method: :delete } do %>
+            <%= image_tag 'atoms/A_exit_icon.svg', alt: "Выйти", class: "exit-icon" %>
+          <% end %>
+        </div>
+        </div>
+
+        <div class="M_profileTags">
+          <p><%= @profile.city %></p>
+          <p>
+            <% fandom_names = profile.fandom_names %>
+            <% if fandom_names.present? %>
+              <% if fandom_names.is_a?(String) %>
+                <% fandom_names = fandom_names.split(',').map(&:strip).reject(&:blank?) %>
+              <% elsif fandom_names.is_a?(Array) %>
+                <% fandom_names = fandom_names.map { |fandom| fandom.is_a?(Hash) ? fandom["name"] : fandom }.compact %>
+              <% elsif fandom_names.is_a?(Hash) %>
+                <% fandom_names = [fandom_names["name"]] %>
+              <% end %>
+
+              <% if fandom_names.any? %>
+                <%= fandom_names.map { |name|
+                      fandom = Fandom.find_by(name: name)
+                      fandom ? link_to(fandom.name, fandom_path(fandom)) : name
+                    }.join(', ').html_safe %>
+              <% else %>
+                Нет фандомов
+              <% end %>
+            <% else %>
+              Нет фандомов
+            <% end %>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="W_trailsFilterTaps">
+      <div class="M_filterTapsProfile">
+        <%= link_to "мои маршруты", profile_path(@profile, tab: "my_trails"), data: { turbo_frame: "A_filterTapsName" }, class: "A_filterTapsName" %>
+        <p class="A_filterTapsCount"><%= @profile.user.trails.count %></p>
+      </div>
+
+      <div class="M_filterTapsProfile">
+        <%= link_to "пройденные", profile_path(@profile, tab: "finished"), data: { turbo_frame: "A_filterTapsName" }, class: "A_filterTapsName" %>
+        <p class="A_filterTapsCount"><%= @profile.user.finished_trails.count %></p>
+      </div>
+
+      <div class="M_filterTapsProfile">
+        <%= link_to "избранное", profile_path(@profile, tab: "favourites"), data: { turbo_frame: "A_filterTapsName" }, class: "A_filterTapsName" %>
+        <p class="A_filterTapsCount"><%= @profile.user.favourite_trails.count %></p>
+      </div>
+
+      <div class="M_filterTapsProfile">
+        <%= link_to "купленные", profile_path(@profile, tab: "bought"), data: { turbo_frame: "A_filterTapsName" }, class: "A_filterTapsName" %>
+        <p class="A_filterTapsCount"><%#= @profile.user.purchase.count %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="W_trailsOwnProfile">
+      <%= link_to profile_path(@profile, tab: @tab, sort: params[:sort] == "asc" ? "desc" : "asc"), 
+          data: { turbo_frame: "profile_trails" }, 
+          class: "M_dataSort" do %>
+        <p>дата</p>
+        <%= image_tag "atoms/A_arrowDown.svg", class: "A_arrowDown #{'arrow-up' if params[:sort] == 'asc'}" %>
       <% end %>
+
+    <%= turbo_frame_tag "profile_trails" do %>
+      <%= render "profiles/#{@tab}", trails: @trails %>
+    <% end %>
+  </div>
+ </div>
