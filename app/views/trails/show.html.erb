@@ -3,7 +3,10 @@
 
   <div class='O_infoTrail'>
     <% if @trail %>
-        <%= link_to "← назад", :back, class: "back-link" %>
+        <%= link_to request.referer || root_path, class: "A_return" do %>
+          <%= image_tag("atoms/A_return.svg", alt: "Назад", class: "back-icon") %>
+          <span class="back-text">назад</span>
+        <% end %>
 
         <h1 class="A_trailTitle"><%= @trail.title %></h1>
 

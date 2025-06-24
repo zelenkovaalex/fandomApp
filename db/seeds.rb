@@ -181,7 +181,7 @@ def create_users(quantity)
     upload_random_avatar(profile)
     profile.save!
 
-    puts "Profile created for user with id #{user.id}: #{profile.nickname}"
+      puts "Profile created for user with id #{user.id}: #{profile.nickname}"
 
     # Присоединение фандомов (1-2 для каждого профиля)
     random_fandoms = Fandom.all.sample(rand(1..2))
@@ -201,47 +201,47 @@ def create_trails
     fandom = Fandom.find_by(name: trail_data['fandom'])
     next unless fandom
 
-    user = User.all.sample
-    profile = user.profile
+      user = User.all.sample
+      profile = user.profile
     next unless profile
 
-    trail = Trail.new(
+      trail = Trail.new(
       title: trail_data["title"],
       body: trail_data["body"],
-      fandom: fandom,
-      city: @cities.sample,
-      user: user,
-      profile: profile,
+        fandom: fandom,
+        city: @cities.sample,
+        user: user,
+        profile: profile,
       trail_time: rand(30..90),
       trail_level: rand(1..10),
       public: [true, false].sample,
-      duration: rand(30..300),
-      distance: rand(1..10),
+        duration: rand(30..300),
+        distance: rand(1..10),
       price: 150,
       difficulty: ["легкий", "средний", "сложный"].sample
-    )
+      )
 
-    if trail.save
-      puts "Trail with title #{trail.title} just created"
+      if trail.save
+        puts "Trail with title #{trail.title} just created"
 
       if trail_data["points"].present?
         trail_data["points"].each do |point_data|
-          point = trail.trail_points.build(
+            point = trail.trail_points.build(
             name: point_data["name"],
             description: point_data["description"],
             map_link: point_data["map_link"]
           )
-          upload_random_trail_image(point, :image)
-          point.save!
+            upload_random_trail_image(point, :image)
+            point.save!
+          end
+          puts "Added points to trail #{trail.title}"
+        else
+          puts "No points data found for trail #{trail.title}"
         end
-        puts "Added points to trail #{trail.title}"
       else
-        puts "No points data found for trail #{trail.title}"
+        puts "Error creating trail: #{trail.errors.full_messages.join(', ')}"
       end
-    else
-      puts "Error creating trail: #{trail.errors.full_messages.join(', ')}"
     end
-  end
   puts "Total trails created: #{Trail.count}"
 end
 

@@ -1,0 +1,36 @@
+<div class="W_favourites">
+  <% if @profile.user.finished_trails.any? %>
+    <% @profile.user.finished_trails.each do |trail| %>
+      <div class="O_trailProfileInf">
+
+        <div class="M_trailUpperInf">
+          <% cover_point = trail.trail_points.find { |p| p.image.present? } %>
+          <% cover_url = cover_point&.image&.url %>
+          <div class="trail-cover">
+            <% if cover_url.present? %>
+              <%= image_tag cover_url, alt: trail.title, class: "trail-cover-img" %>
+            <% else %>
+              <%= image_tag "default_trail_cover.png", alt: "Нет фото", class: "trail-cover-img" %>
+            <% end %>
+          </div>
+
+          <h2 class="A_trailName"><%= trail.title %></h2>
+        </div>
+
+        <div class="O_trailLowerInf">
+          <div class='M_trailTags'>
+            <h3><%= trail.city %></h3>
+            <h3><%= trail.fandom.name %></h3>
+          </div>
+
+          <%= link_to trail_path(trail), class: 'A_diagonal_arrow' do %>
+            <%= image_tag 'atoms/A_go_arrow.svg', alt: 'Посмотреть маршрут' %>
+          <% end %>
+        </div>
+
+      </div>
+    <% end %>
+  <% else %>
+    <p>Нет пройденных маршрутов.</p>
+  <% end %>
+</div>

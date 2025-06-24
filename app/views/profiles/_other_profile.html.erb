@@ -1,31 +1,36 @@
 <div class="otherProfile" style="display:flex; flex-direction: column;">
   <div class="W_otherProfileHead">
-    <div class="profile-header__left">
+
+    <%= link_to request.referer || root_path, class: "A_return people" do %>
+      <%= image_tag("atoms/A_return.svg", alt: "Назад", class: "back-icon") %>
+      <p class="back-text">назад</p>
+    <% end %>
+
+    <div class="W_otherProfileHeadLeft">
       <!-- Количество публикаций -->
-      <div class="profile-header__block">
-        <p class="profile-header__count">(<%= @trails_count %>)</p>
-        <p class="profile-header__label">публикации</p>
+      <div class="M_trailUsersCounter">
+        <div class="A_grey"><p>cooбщество</p></div>
+        <p class="A_trailOtherCounter">(<%= @trails_count %>)</p>
+        <p class="A_trailOtherCounter name">публикации</p>
       </div>
 
     <div class="W_middleSectionOtherProfile">
       <!-- Города -->
         <div class="W_citiesOtherProfile">
-          <p class="profile-header__count">(<%= @cities.count.to_s.rjust(2, '0') %>)</p>
-          <p class="profile-header__label">города</p>
-          <div class="profile-header__tags">
+          <p class="A_counterOtherProfExtra" style="font-size: 1.5rem;">(<%= @cities.count.to_s.rjust(2, '0') %>)</p>
+          <div class="A_counterOtherProfExtra cities">
             <% @cities.each do |city| %>
-              <p class="profile-header__tag"><%= city %></p>
+              <p class="A_counterOtherProfExtra city"><%= city %></p>
             <% end %>
           </div>
         </div>
 
         <!-- Фандомы -->
-        <div class="profile-header__block">
-          <p class="profile-header__count">(<%= @fandoms.count.to_s.rjust(2, '0') %>)</p>
-          <p class="profile-header__label">фандомы</p>
-          <div class="profile-header__tags">
+        <div class="W_citiesOtherProfile">
+          <p class="A_counterOtherProfExtra" style="font-size: 1.5rem;">(<%= @fandoms.count.to_s.rjust(2, '0') %>)</p>
+          <div class="A_counterOtherProfExtra fandoms">
             <% @fandoms.each do |fandom| %>
-              <%= link_to fandom.name, fandom_path(fandom), class: "profile-header__tag" %>
+              <%= link_to fandom.name, fandom_path(fandom), class: "A_counterOtherProfExtra fandom" %>
             <% end %>
           </div>
         </div>
@@ -43,42 +48,58 @@
       </div>
 
       <!-- Nickname and Contact -->
-      <div class="user-info">
-        <h1><%= profile.nickname %></h1>
-        <p><%#= link_to "связаться", contact_user_path(@user) %></p>
-      </div>
+      <div class="O_otherUserInfo">
+        <div class="M_personalOther">
+          <h1 class='A_nicknameProfile'><%= profile.nickname %></h1>
+          <p><%#= link_to "связаться", contact_user_path(@user) %></p>
+        </div>
+        <div class="M_profileTags">
+          <p><%= @profile.city %></p>
+          <p>
+            <% fandom_names = profile.fandom_names %>
+            <% if fandom_names.present? %>
+              <% if fandom_names.is_a?(String) %>
+                <% fandom_names = fandom_names.split(',').map(&:strip).reject(&:blank?) %>
+              <% elsif fandom_names.is_a?(Array) %>
+                <% fandom_names = fandom_names.map { |fandom| fandom.is_a?(Hash) ? fandom["name"] : fandom }.compact %>
+              <% elsif fandom_names.is_a?(Hash) %>
+                <% fandom_names = [fandom_names["name"]] %>
+              <% end %>
 
-      <!-- City and Fandoms -->
-      <div class="M_profileTags">
-        <p><%= @profile.city %></p>
-        <p>
-          <% fandom_names = profile.fandom_names %>
-          <% if fandom_names.present? %>
-            <% if fandom_names.is_a?(String) %>
-              <% fandom_names = fandom_names.split(',').map(&:strip).reject(&:blank?) %>
-            <% elsif fandom_names.is_a?(Array) %>
-              <% fandom_names = fandom_names.map { |fandom| fandom.is_a?(Hash) ? fandom["name"] : fandom }.compact %>
-            <% elsif fandom_names.is_a?(Hash) %>
-              <% fandom_names = [fandom_names["name"]] %>
-            <% end %>
-
-            <% if fandom_names.any? %>
-              <%= fandom_names.map { |name|
-                    fandom = Fandom.find_by(name: name)
-                    fandom ? link_to(fandom.name, fandom_path(fandom)) : name
-                  }.join(', ').html_safe %>
+              <% if fandom_names.any? %>
+                <%= fandom_names.map { |name|
+                      fandom = Fandom.find_by(name: name)
+                      fandom ? link_to(fandom.name, fandom_path(fandom)) : name
+                    }.join(', ').html_safe %>
+              <% else %>
+                Нет фандомов
+              <% end %>
             <% else %>
               Нет фандомов
             <% end %>
-          <% else %>
-            Нет фандомов
-          <% end %>
-        </p>
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
+  <div class="M_filterOtherButts">
+    <%= link_to profile_path(@profile, tab: @tab, sort: "date", direction: params[:sort] == "date" && params[:direction] == "asc" ? "desc" : "asc"), 
+          data: { turbo_frame: "profile_trails" }, 
+          class: "M_dataSortOther profile-filter-link #{'active' if params[:sort] == 'date' || params[:sort].blank?}" do %>
+      <p>дата</p>
+      <%= image_tag "atoms/A_arrowDown.svg", class: "A_arrowDown #{'arrow-up' if params[:sort] == 'date' && params[:direction] == 'asc'}" %>
+    <% end %>
+
+    <%= link_to profile_path(@profile, tab: @tab, sort: "best", direction: params[:sort] == "best" && params[:direction] == "asc" ? "desc" : "asc"), 
+          data: { turbo_frame: "profile_trails" }, 
+          class: "M_dataSortOther profile-filter-link #{'active' if params[:sort] == 'best'}" do %>
+      <p>лучшие</p>
+      <%= image_tag "atoms/A_arrowDown.svg", class: "A_arrowDown #{'arrow-up' if params[:sort] == 'best' && params[:direction] == 'asc'}" %>
+    <% end %>
+  </div>
+
   <%= turbo_frame_tag "profile_trails" do %>
-  <%= render "profiles/#{@tab}", trails: @trails %>
+    <%= render "profiles/#{@tab}", trails: @trails %>
   <% end %>
 </div>

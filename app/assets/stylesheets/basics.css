@@ -15,7 +15,7 @@ body {
         display: flex;
         justify-content: space-between;
         flex-direction: row;
-        background-color: var(--white);
+        /* background-color: var(--white); */
 
         a {
             font-size: 1.25rem;

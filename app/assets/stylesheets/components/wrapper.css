@@ -354,21 +354,48 @@
 .W_otherProfileHead {
     display: flex;
     flex-direction: row;
+    padding: 0vw 4vw 0 13vw;
+    justify-content: space-between;
 }
 
 .W_middleSectionOtherProfile {
     p, a {
         color: var(--light-grey);
-        font-size: 1.125rem;
+        font-size: 1.25rem;
         line-height: 103.233%;
         text-decoration-line: underline;
         text-transform: lowercase;
     }
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.W_rightSecOftherProfile {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 1vw;
+}
+
+.W_otherProfileHeadLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
 }
 
 .W_citiesOtherProfile {
     display: flex;
     flex-direction: row;
+    gap: 12vw;
+}
+
+.W_favourites {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1.5vw 4vw 4vw;
+    gap: 1.5vw;
+    justify-content: space-between;
 }
 
 /* authorisation shit */

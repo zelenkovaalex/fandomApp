@@ -31,7 +31,7 @@ class LikeController < ApplicationController
           user: @trail.user,
           notifiable: like,
           notification_type: "like",
-          data: { trail_title: @trail.title, liker: current_user.nickname }
+          data: { trail_title: @trail.title, liker: current_user.profile.nickname }
         )
       end
     end

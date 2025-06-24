@@ -62,20 +62,31 @@ class ProfilesController < ApplicationController
   # GET /profiles/:id
   def show
     @tab = params[:tab] || 'my_trails'
-    sort_order = params[:sort] == "asc" ? :asc : :desc
+    sort = params[:sort] || 'date'
+    direction = params[:direction] == 'asc' ? :asc : :desc
 
     @trails = case @tab
       when 'my_trails'
-        @profile.user.trails.order(created_at: sort_order)
+        @profile.user.trails
       when 'finished'
-        @profile.user.finished_trails.order(created_at: sort_order)
+        @profile.user.finished_trails
       when 'favourites'
-        @profile.user.favourite_trails.order(created_at: sort_order)
+        @profile.user.favourite_trails
       when 'bought'
-        @profile.user.purchased_trails.order(created_at: sort_order)
+        @profile.user.purchased_trails
       else
-        @profile.user.trails.order(created_at: sort_order)
+        @profile.user.trails
       end
+
+    @trails = @trails
+    if params[:sort] == 'best'
+      @trails = @trails
+        .left_joins(:comments)
+        .group('trails.id')
+        .order('AVG(comments.rating_value) ' + (params[:direction] == 'asc' ? 'ASC' : 'DESC'))
+    elsif params[:sort] == 'date'
+      @trails = @trails.order(created_at: (params[:direction] == 'asc' ? :asc : :desc))
+    end
 
     # Количество публикаций
     @trails_count = @trails.count
@@ -85,6 +96,11 @@ class ProfilesController < ApplicationController
 
     # Уникальные фандомы, к которым принадлежат маршруты пользователя
     @fandoms = @trails.map(&:fandom).uniq.compact
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
 
   # GET /profiles/new

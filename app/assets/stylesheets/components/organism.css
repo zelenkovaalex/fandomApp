@@ -186,3 +186,10 @@ a.back {
     flex-direction: row;
     gap: 1vw;
 }
+
+.O_otherUserInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 9.79vw;
+}

@@ -42,8 +42,9 @@ class Trail < ApplicationRecord
 
   # метод для расчёта рейтинга (чтобы не забыть)
   def average_rating
-    rated_comments = comments.where.not(rating_value: nil) # только комменты с оценками
-    rated_comments.average(:rating_value).to_f.round(2) || 0
+    rated_comments = comments.where.not(rating_value: nil)
+    avg = rated_comments.average(:rating_value)
+    avg ? avg.to_f.round(2) : 0
   end
 
   # количество отзывов
@@ -79,6 +80,10 @@ class Trail < ApplicationRecord
   #метод дизайлов
   def decrement_likes
     update(likes_count: [self.likes_count - 1, 0].max)
+  end
+
+  def cover_image
+    self.image
   end
 
   mount_uploader :image, TrailUploader 

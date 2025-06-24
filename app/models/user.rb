@@ -51,6 +51,10 @@ class User < ApplicationRecord
     likes.find_by(likeable: likeable)&.destroy
   end
 
+  # def nickname
+  #   self.nickname.presence || self.email.split('@').first
+  # end
+
   private
 
   def create_profile
