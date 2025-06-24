@@ -7,22 +7,16 @@ class ProfilesController < ApplicationController
     fields_to_check = [:nickname, :bio, :avatar]
     conditions = fields_to_check.map { |field| "#{field} IS NOT NULL AND #{field} != ''" }.join(' AND ')
 
-    @cities = Profile.distinct.pluck(:city).compact
+    @cities = YAML.load_file(Rails.root.join('db', 'seeds', 'cities.yml'))
     @fandoms = Fandom.all.pluck(:name)
 
-    @cities = YAML.load_file(Rails.root.join('db', 'seeds', 'cities.yml'))
-    @profiles = if params[:filter]&.start_with?('city-')
-                  city_name = params[:filter].sub('city-', '')
-                  Profile.where(city: city_name)
-                else
-                  Profile.all
-                end
-
-    @profiles = Profile.includes(:user).all
+    @profiles = Profile
+      .select('profiles.*')
       .joins(user: :trails)
       .where(conditions)
       .group("profiles.id")
       .having("COUNT(trails.id) > 0")
+      .order("profiles.id ASC")
 
     if params[:filter].present?
       if params[:filter].start_with?('city-')
@@ -30,11 +24,14 @@ class ProfilesController < ApplicationController
         @profiles = @profiles.where(city: city)
       elsif params[:filter].start_with?('fandom-')
         fandom = params[:filter].sub('fandom-', '')
-        @profiles = @profiles.joins(:fandoms).where(fandoms: { name: fandom }).distinct
+        @profiles = @profiles
+          .joins(:fandoms)
+          .where(fandoms: { name: fandom })
+          .distinct
       end
     end
 
-    @profiles = @profiles.limit(10)
+    @profiles = @profiles.limit(15)
   end
 
   def filter
@@ -61,6 +58,9 @@ class ProfilesController < ApplicationController
 
   # GET /profiles/:id
   def show
+    @profile = Profile.find(params[:id])
+    @active_menu_item = @profile.user == current_user ? :profile : :community
+
     @tab = params[:tab] || 'my_trails'
     sort = params[:sort] || 'date'
     direction = params[:direction] == 'asc' ? :asc : :desc
@@ -91,6 +91,7 @@ class ProfilesController < ApplicationController
     # Количество публикаций
     @trails_count = @trails.count
 
+    
     # Уникальные города, где есть маршруты пользователя
     @cities = @trails.map(&:city).uniq.compact
 

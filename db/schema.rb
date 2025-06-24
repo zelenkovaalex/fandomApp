@@ -10,11 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
+ActiveRecord::Schema[7.2].define(version: 2025_06_24_191219) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "comments", force: :cascade do |t|
     t.text "body"
-    t.integer "user_id", null: false
-    t.integer "trail_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "trail_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "comment_id"
@@ -29,20 +32,21 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "category"
+    t.string "title"
     t.index ["name"], name: "index_fandoms_on_name", unique: true
   end
 
   create_table "fandoms_profiles", id: false, force: :cascade do |t|
-    t.integer "fandom_id"
-    t.integer "profile_id"
+    t.bigint "fandom_id"
+    t.bigint "profile_id"
     t.index ["fandom_id", "profile_id"], name: "index_fandoms_profiles_on_fandom_id_and_profile_id", unique: true
     t.index ["fandom_id"], name: "index_fandoms_profiles_on_fandom_id"
     t.index ["profile_id"], name: "index_fandoms_profiles_on_profile_id"
   end
 
   create_table "favourites", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "trail_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "trail_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["trail_id"], name: "index_favourites_on_trail_id"
@@ -60,6 +64,13 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
     t.index ["user_id"], name: "index_finished_trails_on_user_id"
   end
 
+  create_table "galleries", force: :cascade do |t|
+    t.bigint "trail_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trail_id"], name: "index_galleries_on_trail_id"
+  end
+
   create_table "likes", force: :cascade do |t|
     t.string "likeable_type"
     t.integer "likeable_id"
@@ -69,10 +80,10 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.string "notification_type"
     t.string "notifiable_type", null: false
-    t.integer "notifiable_id", null: false
+    t.bigint "notifiable_id", null: false
     t.boolean "read", default: false
     t.json "data"
     t.datetime "created_at", null: false
@@ -91,12 +102,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
     t.string "city"
     t.string "nickname"
     t.string "link"
-    t.text "fandom_names"
+    t.text "fandom_names", array: true
   end
 
   create_table "purchases", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "trail_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "trail_id", null: false
     t.decimal "price", precision: 10, scale: 2
     t.string "status", default: "pending"
     t.datetime "purchased_at"
@@ -113,8 +124,8 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
   end
 
   create_table "tag_selecteds", force: :cascade do |t|
-    t.integer "trail_id", null: false
-    t.integer "tag_id", null: false
+    t.bigint "trail_id", null: false
+    t.bigint "tag_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tag_id"], name: "index_tag_selecteds_on_tag_id"
@@ -122,11 +133,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer "tag_id"
+    t.bigint "tag_id"
     t.string "taggable_type"
-    t.integer "taggable_id"
+    t.bigint "taggable_id"
     t.string "tagger_type"
-    t.integer "tagger_id"
+    t.bigint "tagger_id"
     t.string "context", limit: 128
     t.datetime "created_at", precision: nil
     t.string "tenant", limit: 128
@@ -153,7 +164,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
   end
 
   create_table "trail_points", force: :cascade do |t|
-    t.integer "trail_id", null: false
+    t.bigint "trail_id", null: false
     t.string "name"
     t.text "description"
     t.string "image"
@@ -174,12 +185,12 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
     t.string "fandom_id"
     t.integer "duration"
     t.string "duration_unit"
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "public", default: false
     t.string "city"
-    t.integer "profile_id", null: false
+    t.bigint "profile_id", null: false
     t.string "image"
     t.integer "distance"
     t.string "difficulty"
@@ -211,6 +222,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_06_23_101601) do
   add_foreign_key "fandoms_profiles", "profiles"
   add_foreign_key "favourites", "trails"
   add_foreign_key "favourites", "users"
+  add_foreign_key "galleries", "trails"
   add_foreign_key "notifications", "users"
   add_foreign_key "purchases", "trails"
   add_foreign_key "purchases", "users"

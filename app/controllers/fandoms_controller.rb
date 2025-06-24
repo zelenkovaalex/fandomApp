@@ -33,6 +33,14 @@ class FandomsController < ApplicationController
   def show
     @fandom = Fandom.find_by(id: params[:id])
     @trails = @fandom.trails
+
+    # Пагинация карусели
+    @trails_per_page = 8
+    @all_trails = Trail.all.order(created_at: :desc) # или Fandom.find(...).trails
+    @total_pages = (@all_trails.size / @trails_per_page.to_f).ceil
+
+    page = params[:carousel_page].to_i.clamp(0, @total_pages - 1)
+    @carousel_trails = @all_trails.slice(page * @trails_per_page, @trails_per_page) || []
   end
 
   # GET /fandoms/new

@@ -28,7 +28,6 @@
           </p>
 
           <!-- Fandoms -->
-          <p>
             <% fandom_names = profile.fandom_names %>
             <% if fandom_names.present? %>
               <% if fandom_names.is_a?(String) %>
@@ -43,14 +42,13 @@
                 <%= fandom_names.map { |name|
                       fandom = Fandom.find_by(name: name)
                       fandom ? link_to(fandom.name, fandom_path(fandom)) : name
-                    }.join(', ').html_safe %>
+                    }.join('').html_safe %>
               <% else %>
                 Нет фандомов
               <% end %>
             <% else %>
               Нет фандомов
             <% end %>
-          </p>
         </div>
       </div>
     </div>

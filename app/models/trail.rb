@@ -1,7 +1,11 @@
 class Trail < ApplicationRecord
+  include PgSearch::Model
   belongs_to :fandom
   belongs_to :user
   belongs_to :profile
+
+  has_one :gallery, dependent: :destroy
+  accepts_nested_attributes_for :gallery
 
   validates :title, presence: true, length: { minimum: 3 }
   validates :fandom_id, presence: true
@@ -34,6 +38,12 @@ class Trail < ApplicationRecord
   has_many :users_finished, through: :finished_trails, source: :user
   has_many :users_favourited, through: :favourite_trails, source: :user
   has_many :users_purchased, through: :purchased_trails, source: :user
+
+  pg_search_scope :search_by_title_and_body,
+    against: { title: 'A', body: 'B' },
+    using: {
+      tsearch: { prefix: true }
+    }
 
   # метод для обложки трейла
   def cover_image

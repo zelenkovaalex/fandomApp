@@ -46,6 +46,8 @@ gem "acts-as-taggable-on"
 gem "rack-cors"
 gem 'devise-jwt'
 gem "jwt"
+gem 'pg_search'
+gem 'pg'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

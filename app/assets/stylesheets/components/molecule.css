@@ -100,12 +100,17 @@
 }
 
 .M_profileTags {
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 103.233%;
-    text-decoration-line: underline;
-    text-decoration-style: solid;
+    display: flex;
+    flex-direction: column;
+   p, a {
+        font-size: 0.75rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-decoration-line: underline;
+        text-decoration-style: solid;
+        text-transform: lowercase;
+    }
 }
 
 .M_details {
@@ -223,7 +228,7 @@
 }
 
 .M_trailUsersCounter {
-    margin-left: -2.5vw;
+    margin-left: -0.8vw;
 }
 
 .M_personalOther {

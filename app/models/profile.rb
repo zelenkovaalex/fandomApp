@@ -1,4 +1,5 @@
 class Profile < ApplicationRecord
+    include PgSearch::Model
     belongs_to :user
 
     has_and_belongs_to_many :fandoms
@@ -18,6 +19,12 @@ class Profile < ApplicationRecord
 
     validates :city, inclusion: { in: ->(_) { YAML.load_file(Rails.root.join('db', 'seeds', 'cities.yml')) } }
 
+    pg_search_scope :search_by_name_and_bio,
+    against: { nickname: 'A', bio: 'B' },
+    using: {
+      tsearch: { prefix: true }
+    }
+    
     def log_profile
         Rails.logger.debug "Profile before save: #{self.inspect}"
     end

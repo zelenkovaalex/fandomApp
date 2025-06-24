@@ -5,14 +5,16 @@
     <h1 class="A_heading">хиты по фандомам</h1>
 
 
-<%= turbo_frame_tag "W_carouselFandoms" do %>
-
+<%= turbo_frame_tag "carousel" do %>
   <div class="W_carouselControls">
-    <!-- Previous Button -->
-    <%= button_to "<", fandoms_path(carousel_page: [@carousel_page - 1, 0].max), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-prev" %>
-    <%= @carousel_page %> / <%= (@all_trails.size / @trails_per_page.to_f).ceil %>
-    <!-- Next Button -->
-    <%= button_to ">", fandoms_path(carousel_page: [@carousel_page + 1, (@all_trails.size / @trails_per_page).to_i]), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-next" %>
+    <!--<%= button_to "‹", trails_path(carousel_page: [@carousel_page - 1, 0].max), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-prev" %>
+
+  
+    <% (0...@total_pages).each do |i| %>
+      <%= link_to i + 1, trails_path(carousel_page: i), method: :get, data: { turbo_frame: "carousel" }, class: "indicator #{'active' if i == @carousel_page}" %>
+    <% end %>
+
+    <%= button_to "›", trails_path(carousel_page: [@carousel_page + 1, @total_pages - 1].min), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-next" %>-->
   </div>
 
   <div class="W_carouselItems">

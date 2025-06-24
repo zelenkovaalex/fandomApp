@@ -26,9 +26,15 @@ body {
             display: flex;
             align-items: center;
             height: 5vw;
+            padding: 0 0.5vw;
         }
 
         a:hover {
+            background-color: var(--black);
+            color: var(--white);
+        }
+
+        a.active {
             background-color: var(--black);
             color: var(--white);
         }

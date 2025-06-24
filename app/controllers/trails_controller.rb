@@ -5,6 +5,9 @@ class TrailsController < ApplicationController
   before_action :set_trail, only: [:show, :update, :destroy]
 
   def index
+    @trail = Trail.find(params[:id])
+    @active_menu_item = :home
+
     @trails = Trail.all.order(created_at: :desc)
 
     if current_user && current_user.admin?
@@ -179,7 +182,8 @@ class TrailsController < ApplicationController
       :duration_unit,
       :trail_level,
       :fandom_id,
-      trail_points_attributes: [:id, :name, :description, :image_url, :latitude, :longitude, :_destroy]
+      trail_points_attributes: [:id, :name, :description, :image_url, :latitude, :longitude, :_destroy],
+      gallery_attributes: [:id, images: []]
     )
   end
 end

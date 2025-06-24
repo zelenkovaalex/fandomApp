@@ -97,7 +97,9 @@ Rails.application.routes.draw do
   
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get 'search', to: 'search#index'
+  get "search", to: "search#index"
+  resources :profiles, only: [:index]
+  resources :fandoms, only: [:index]
 
   resources :notifications, only: [:index]
 

@@ -707,3 +707,33 @@
         text-decoration-line: underline;
     }
 }
+
+/* home page */
+
+.W_loopContainer {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: auto;
+}
+
+.W_loopContent {
+    display: flex;
+    gap: 20px;
+    transition: transform 0.5s ease-in-out;
+    animation: marqueeLoop 20s linear infinite;
+}
+
+@keyframes marqueeLoop {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.W_loopContainer:hover .W_loopContent {
+    animation-play-state: paused;
+}

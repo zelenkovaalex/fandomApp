@@ -10,7 +10,9 @@ class BasePagesController < ApplicationController
         'Наруто' , 'Сумерки' , 'Клуб романтики' , 'Космическая Одиссея' ,
         'Однажды в сказке' , 'Великолепный век' 
         ]
+    @random_trails = Trail.order("RANDOM()").limit(6)
   end
+    
 
   def about
   end

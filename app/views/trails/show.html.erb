@@ -79,6 +79,28 @@
     <% end %>
   </div>
 
+  <% if @trail.trail_points.any? %>
+    <div class="W_photoPreviewTrail">
+      <!-- Точки-переключатели -->
+      <div class="M_galleryIndicators">
+        <% @trail.trail_points.each_with_index do |point, index| %>
+          <span class="indicator <%= 'active' if index == 0 %>" data-index="<%= index %>"></span>
+        <% end %>
+      </div>
+
+      <!-- Прокручиваемая галерея -->
+      <div class="M_previewPointPhotoTurbo" id="galleryCarousel">
+        <% @trail.trail_points.each_with_index do |point, index| %>
+          <div class="M_previewPointPhoto" data-index="<%= index %>">
+            <%= image_tag point.image_url, alt: point.name %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% else %>
+    <p>Нет фотографий</p>
+  <% end %>
+
   <div class="W_photoPreviewTrail" data-turbo-frame="image-grid" style="display:none;">
     <% if @trail.trail_points.any? %>
         <div class="M_previewPointPhotoTurbo">
@@ -94,17 +116,7 @@
     <% end %>
   </div>
 
-  <!-- Кнопочки -->
-  <div class="M_trailButtons" style="display:none;">
-    <%= link_to "Точки", trail_path(@trail, tab: "points"), data: { turbo_frame: "trail-tabs" }, class: "A_buttonTrails #{params[:tab] != 'reviews' ? 'active' : ''}" %>
-    <%= link_to "Отзывы", trail_path(@trail, tab: "reviews"), data: { turbo_frame: "trail-tabs" }, class: "A_buttonTrails #{params[:tab] == 'reviews' ? 'active' : ''}" %>
-  </div>
-
-  <%= turbo_frame_tag "trail-tabs" do %>
-    <% if params[:tab] == "reviews" %>
-      <%= render partial: "trails/reviews", locals: { trail: @trail } %>
-    <% else %>
-      <%= render partial: "trails/points", locals: { trail: @trail, trail_points: @trail_points } %>
-    <% end %>
-  <% end %>
+    <%= render partial: "trails/points", locals: { trail: @trail, trail_points: @trail_points } %>
+    <%= render partial: "trails/reviews", locals: { trail: @trail } %>
+  
 </body>

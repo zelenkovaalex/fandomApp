@@ -1,36 +1,33 @@
-<body style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
-    <%= turbo_stream.replace "global_search_results" do %>
-        <div class="global-search-results">
-            <% if @query.present? %>
-            <h3>Результаты поиска для: <%= @query %></h3>
-            <% if @trails.any? %>
-                <h4>Маршруты</h4>
-                <ul>
-                <% @trails.each do |trail| %>
-                    <li><%= link_to trail.title, trail_path(trail) %></li>
-                <% end %>
-                </ul>
-            <% end %>
-            <% if @profiles.any? %>
-                <h4>Профили</h4>
-                <ul>
-                <% @profiles.each do |profile| %>
-                    <li><%= link_to profile.nickname, profile_path(profile) %></li>
-                <% end %>
-                </ul>
-            <% end %>
-            <% if @fandoms.any? %>
-                <h4>Фандомы</h4>
-                <ul>
-                <% @fandoms.each do |fandom| %>
-                    <li><%= link_to fandom.name, fandom_path(fandom) %></li>
-                <% end %>
-                </ul>
-            <% end %>
-            <% if @trails.empty? && @profiles.empty? && @fandoms.empty? %>
-                <p>Ничего не найдено.</p>
-            <% end %>
-            <% end %>
-        </div>
-        <% end %>
-</body>
+<!-- app/views/search/index.html.erb -->
+<h1>Результаты поиска по запросу: <%= params[:q] %></h1>
+
+<% if @profiles.any? %>
+  <h2>Профили</h2>
+  <ul>
+    <% @profiles.each do |profile| %>
+      <li><%= link_to profile.name, profile %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @fandoms.any? %>
+  <h2>Фандомы</h2>
+  <ul>
+    <% @fandoms.each do |fandom| %>
+      <li><%= link_to fandom.title, fandom %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @trails.any? %>
+  <h2>Маршруты</h2>
+  <ul>
+    <% @trails.each do |trail| %>
+      <li><%= link_to trail.title, trail %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @profiles.empty? && @fandoms.empty? && @trails.empty? %>
+  <p>Ничего не найдено.</p>
+<% end %>
