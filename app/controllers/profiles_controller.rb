@@ -32,6 +32,12 @@ class ProfilesController < ApplicationController
     end
 
     @profiles = @profiles.limit(15)
+    respond_to do |format|
+      format.html
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace("profiles_container", partial: "profiles/list", locals: { profiles: @profiles })
+      end
+    end
   end
 
   def filter

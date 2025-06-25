@@ -25,4 +25,16 @@ $(document).ready(function() {
       }
     });
   });
+
+
+  var toggleButton = document.querySelector('.toggle-button[aria-controls="fandoms-list"]');
+    var fandomsList = document.getElementById('fandoms-list');
+    if (toggleButton && fandomsList) {
+      toggleButton.addEventListener('click', function() {
+        var expanded = toggleButton.getAttribute('aria-expanded') === 'true';
+        toggleButton.setAttribute('aria-expanded', !expanded);
+        fandomsList.style.display = expanded ? 'none' : 'block';
+        toggleButton.querySelector('.arrow').textContent = expanded ? '▼' : '▲';
+      });
+    }
 });

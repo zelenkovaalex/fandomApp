@@ -23,10 +23,23 @@ class FandomsController < ApplicationController
     
     @random_trails = Trail.order("RANDOM()").limit(4)
 
-    @all_trails = Trail.order('RANDOM()').limit(32)
-    @carousel_page = params[:carousel_page].to_i || 0
     @trails_per_page = 4
-    @carousel_trails = @all_trails[@carousel_page * @trails_per_page, @trails_per_page] || []
+    @total_trails = Trail.count
+    @total_pages = (@total_trails / @trails_per_page.to_f).ceil
+
+    @carousel_page = [params[:carousel_page].to_i, 0].max
+    @carousel_page = [@carousel_page, @total_pages - 1].min
+
+    @carousel_trails = Trail
+      .includes(:trail_points, :comments, :fandom)
+      .order('created_at DESC')
+      .offset(@carousel_page * @trails_per_page)
+      .limit(@trails_per_page)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream { render partial: "fandoms/carousel", formats: :html }
+    end
   end
 
   # GET /fandoms/1 or /fandoms/1.json
@@ -98,7 +111,7 @@ class FandomsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_fandom
-      @fandom = Fandom.where(params[:id])
+      @fandom = Fandom.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

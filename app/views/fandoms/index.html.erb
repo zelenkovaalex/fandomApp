@@ -5,25 +5,18 @@
     <h1 class="A_heading">хиты по фандомам</h1>
 
 
-<%= turbo_frame_tag "carousel" do %>
-  <div class="W_carouselControls">
-    <!--<%= button_to "‹", trails_path(carousel_page: [@carousel_page - 1, 0].max), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-prev" %>
-
-  
-    <% (0...@total_pages).each do |i| %>
-      <%= link_to i + 1, trails_path(carousel_page: i), method: :get, data: { turbo_frame: "carousel" }, class: "indicator #{'active' if i == @carousel_page}" %>
-    <% end %>
-
-    <%= button_to "›", trails_path(carousel_page: [@carousel_page + 1, @total_pages - 1].min), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-next" %>-->
-  </div>
-
-  <div class="W_carouselItems">
-    <% @carousel_trails.each do |trail| %>
-      <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
-    <% end %>
-  </div>
-<% end %>
-
+  <%= turbo_frame_tag "carousel" do %>
+    <div class="W_carouselControls">
+        <%= button_to "‹", fandoms_path(carousel_page: @carousel_page - 1), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-prev", disabled: @carousel_page == 0 %>
+        <%= "%02d" % (@carousel_page + 1) %> / <%= "%02d" % @total_pages %>
+        <%= button_to "›", fandoms_path(carousel_page: @carousel_page + 1), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-next", disabled: @carousel_page >= @total_pages - 1 %>
+    </div>
+    <div class="W_carouselItems">
+      <% @carousel_trails.each do |trail| %>
+        <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
 
 <div class="W_fandomsSections">

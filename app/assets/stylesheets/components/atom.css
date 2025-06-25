@@ -498,6 +498,10 @@ a.A_diagonal_arrow {
     text-transform: lowercase;
 }
 
+.A_heading.profiles {
+    margin: 0 3vw;
+}
+
 /* fandoms */
 .A_fandomCategoryName {
     padding: 0.5vw 0 0.5vw 0;

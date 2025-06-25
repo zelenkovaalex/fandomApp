@@ -75,27 +75,6 @@
 
  /* тест фильторв */
 
- .filters {
-     display: flex;
-     justify-content: space-between;
- }
-
- .filter-group {
-     margin-bottom: 20px;
- }
-
- .filter-group a {
-     margin-right: 10px;
-     text-decoration: none;
-     color: #333;
-     font-weight: bold;
- }
-
- .filter-group a.active {
-     color: #007bff;
-     /* Активный фильтр */
- }
-
  /* еще блять тест фильтров */
 
  .fandom-item:hover .fandom-trails-preview {
@@ -113,92 +92,6 @@
  }
 
  /* больше ебучих фильтров */
-
- .filters {
-     font-family: Arial, sans-serif;
- }
-
- .filter-group {
-     margin-bottom: 20px;
- }
-
- .toggle-button {
-     display: flex;
-     align-items: center;
-     justify-content: space-between;
-     width: 100%;
-     background: none;
-     border: none;
-     cursor: pointer;
-     font-size: 18px;
-     padding: 10px;
-     text-align: left;
- }
-
- .toggle-button h3 {
-     margin: 0;
-     font-weight: bold;
- }
-
- .arrow {
-     transition: transform 0.3s ease;
- }
-
- .arrow.rotated {
-     transform: rotate(180deg);
- }
-
- .filter-content {
-     padding-left: 20px;
-     max-height: 0;
-     overflow: hidden;
-     transition: max-height 0.3s ease, padding 0.3s ease;
- }
-
- .filter-content.open {
-     max-height: 500px;
-     /* Установите значение, достаточное для отображения контента */
-     padding-top: 10px;
-     padding-bottom: 10px;
- }
-
- .filter-content {
-     display: none;
-     transition: max-height 0.3s ease;
-     overflow: hidden;
- }
-
- .filter-content.open {
-     display: block;
- }
-
- .arrow {
-     display: inline-block;
-     transition: transform 0.3s;
- }
-
- .arrow.rotated {
-     transform: rotate(180deg);
- }
-
- .toggle-checkbox ~ .filter-content {
-  display: none;
-}
-.toggle-checkbox:checked ~ .filter-content {
-  display: block;
-}
-.toggle-label {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-.arrow {
-  margin-left: 8px;
-  transition: transform 0.3s;
-}
-.toggle-checkbox:checked + .toggle-label .arrow {
-  transform: rotate(180deg);
-}
 
  /*  */
 
@@ -472,4 +365,18 @@
     flex: 0 0 calc(33.333% - 14px);
     /* 3 колонки */
     box-sizing: border-box;
+}
+
+/*  */
+#filters-content {
+    transition: opacity 0.3s ease;
+}
+
+.A_toggleButton {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
 }

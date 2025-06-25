@@ -1,37 +1,43 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const indicators = document.querySelectorAll(".M_galleryIndicators .indicator");
-  const carousel = document.getElementById("galleryCarousel");
+import { Controller } from "@hotwired/stimulus"
 
-  indicators.forEach((indicator) => {
-    indicator.addEventListener("click", () => {
-      const index = parseInt(indicator.getAttribute("data-index"));
-      const target = carousel.children[index];
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", inline: "center" });
-      }
+export default class extends Controller {
+  static targets = ["indicator", "carousel"]
 
-      // Обновляем активный индикатор
-      indicators.forEach((i) => i.classList.remove("active"));
-      indicator.classList.add("active");
-    });
-  });
+  connect() {
+    this.indicators = this.indicatorTargets
+    this.carousel = this.carouselTarget
 
-  // Автоматическое обновление точки при скролле
-  carousel.addEventListener("scroll", () => {
-    const midpoint = window.innerWidth / 2;
-    let closestIndex = 0;
-    let minDistance = Infinity;
+    this.indicators.forEach((indicator) => {
+      indicator.addEventListener("click", () => {
+        const index = parseInt(indicator.getAttribute("data-index"))
+        const target = this.carousel.children[index]
+        if (target) {
+          target.scrollIntoView({ behavior: "smooth", inline: "center" })
+        }
+        this.updateActiveIndicator(index)
+      })
+    })
 
-    Array.from(carousel.children).forEach((item, index) => {
-      const rect = item.getBoundingClientRect();
-      const distance = Math.abs(rect.left + rect.width / 2 - midpoint);
+    this.carousel.addEventListener("scroll", () => this.onScroll())
+  }
+
+  updateActiveIndicator(index) {
+    this.indicators.forEach((i, idx) => i.classList.toggle("active", idx === index))
+  }
+
+  onScroll() {
+    const midpoint = window.innerWidth / 2
+    let closestIndex = 0
+    let minDistance = Infinity
+
+    Array.from(this.carousel.children).forEach((item, index) => {
+      const rect = item.getBoundingClientRect()
+      const distance = Math.abs(rect.left + rect.width / 2 - midpoint)
       if (distance < minDistance) {
-        minDistance = distance;
-        closestIndex = index;
+        minDistance = distance
+        closestIndex = index
       }
-    });
-
-    indicators.forEach((i) => i.classList.remove("active"));
-    indicators[closestIndex]?.classList.add("active");
-  });
-});
+            })
+  this.updateActiveIndicator(closestIndex)
+  }
+}
