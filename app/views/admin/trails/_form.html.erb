@@ -1,56 +1,83 @@
 <%= form_with(model: @trail, url: trails_path, method: :post, data: { turbo_frame: "trail-form" }, html: { class: "trail-main-form" }) do |form| %>
-  <div class="form-row">
-    <div class="form-group">
-      <label>★ название</label>
-      <%= form.text_field :title, placeholder: "название маршрута", maxlength: 56 %>
-      <span class="char-count"><%= @trail.title&.length || 0 %> / 56</span>
+  
+  <div class="W_formTrail">
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">название</p>
+      </div>
+      <%= form.text_field :title, placeholder: "название маршрута", maxlength: 56, class: "A_inputForm" %>
     </div>
-    <div class="form-group">
-      <label>★ локация</label>
-      <%= form.text_field :city, placeholder: "город маршрута" %>
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">локация</p>
+      </div>
+      <%= form.text_field :city, placeholder: "город маршрута", class: "A_inputForm" %>
     </div>
-    <div class="form-group">
-      <label>★ длительность</label>
-      <div class="duration-fields">
-        <%= form.number_field :duration_hours, min: 0, max: 99, placeholder: "00", class: "duration-input" %> ч
-        <%= form.number_field :duration_minutes, min: 0, max: 59, placeholder: "00", class: "duration-input" %> мин
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">длительность</p>
+      </div>
+      <div class="M_hours">
+        <%= form.number_field :duration_hours, min: 0, max: 99, placeholder: "00", class: "duration-input", class: "A_inputForm hours" %> <p>ч</p>
+        <%= form.number_field :duration_minutes, min: 0, max: 59, placeholder: "00", class: "duration-input", class: "A_inputForm hours" %> <p>мин</p>
       </div>
     </div>
-    <div class="form-group">
-      <label>★ сложность</label>
-      <%= form.select :difficulty, [['лёгкий', 'легкий'], ['средний', 'средний'], ['продвинутый', 'продвинутый']], {}, class: "difficulty-select" %>
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">сложность</p>
+      </div>
+      <%= form.select :difficulty, [['лёгкий', 'легкий'], ['средний', 'средний'], ['продвинутый', 'продвинутый']], {}, class: "A_inputForm select" %>
     </div>
   </div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label>★ описание</label>
-      <%= form.text_area :body, placeholder: "описание маршрута", maxlength: 170 %>
-      <span class="char-count"><%= @trail.body&.length || 0 %> / 170</span>
+  <div class="W_formTrail">
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">описание</p>
+      </div>
+      <%= form.text_area :body, placeholder: "описание маршрута", maxlength: 170, class: "A_inputForm" %>
     </div>
-    <div class="form-group">
-      <label>★ фандом</label>
-      <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом' %>
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">фандом</p>
+      </div>
+      <%= form.collection_select :fandom_id, Fandom.all, :id, :name, prompt: 'Выбрать фандом', class: "A_inputForm" %>
     </div>
-    <div class="form-group">
-      <label>★ расстояние</label>
-      <div class="distance-fields">
-        <%= form.number_field :distance_km, min: 0, max: 99, placeholder: "00", class: "distance-input" %> км
-        <%= form.number_field :distance_m, min: 0, max: 999, placeholder: "00", class: "distance-input" %> м
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">расстояние</p>
+      </div>
+      <div class="M_hours">
+        <%= form.number_field :distance_km, min: 0, max: 99, placeholder: "00", class: "A_inputForm hours" %> <p>км</p>
+        <%= form.number_field :distance_m, min: 0, max: 999, placeholder: "00", class: "A_inputForm hours" %> <p>м</p>
       </div>
     </div>
-    <div class="form-group">
-      <label>★ стоимость</label>
-      <%= form.number_field :price, min: 0, placeholder: "0", class: "price-input" %> ₽
+    <div class="M_formInput">
+      <div style="display:inline-flex; gap:0.5vw;">
+        <p class="A_nameForm star">*</p>
+        <p class="A_nameForm">стоимость</p>
+      </div>
+      <%= form.number_field :price, min: 0, placeholder: "0 ₽", class: "A_inputForm cost" %>
     </div>
   </div>
 
-  <div class="form-note">
-    <span>★ маршрут требует минимум две точки</span>
+  <div class="M_break">
+    <p class="A_trailPointsFormHeading number">(02)</p>
+    <p class="A_trailPointsFormHeading name">точки</p>
   </div>
 
-  <%= form.hidden_field :step, value: "main" %>
-  <div class="form-actions">
-    <%= form.submit "Далее", class: "next-step-btn" %>
+  <div class="A_note">
+    <p style="color:var(--green)">*</p>
+    <p>маршрут требует <br> минимум две точки</p>
   </div>
+
+  <%= render "admin/trails/form_points", form: form %>
+
 <% end %>

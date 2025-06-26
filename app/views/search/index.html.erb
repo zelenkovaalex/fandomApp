@@ -1,33 +1,34 @@
-<!-- app/views/search/index.html.erb -->
-<h1>Результаты поиска по запросу: <%= params[:q] %></h1>
+<body style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
+  
+  <h1 class="A_secondHeader">Результаты поиска по запросу: <%= params[:q] %></h1>
 
-<% if @profiles.any? %>
-  <h2>Профили</h2>
-  <ul>
+  <% if @profiles.any? %>
     <% @profiles.each do |profile| %>
-      <li><%= link_to profile.name, profile %></li>
-    <% end %>
-  </ul>
-<% end %>
+        <div class="W_profileShow search">
+          <%= render 'profiles/profileShow', profile: profile %>
+        </div>
+      <% end %>
+  <% end %>
 
-<% if @fandoms.any? %>
-  <h2>Фандомы</h2>
-  <ul>
-    <% @fandoms.each do |fandom| %>
-      <li><%= link_to fandom.title, fandom %></li>
-    <% end %>
-  </ul>
-<% end %>
+  <% if @fandoms.any? %>
+    <h2>Фандомы</h2>
+    <ul>
+      <% @fandoms.each do |fandom| %>
+        <li><%= link_to fandom.title, fandom %></li>
+      <% end %>
+    </ul>
+  <% end %>
 
-<% if @trails.any? %>
-  <h2>Маршруты</h2>
-  <ul>
-    <% @trails.each do |trail| %>
-      <li><%= link_to trail.title, trail %></li>
-    <% end %>
-  </ul>
-<% end %>
+  <% if @trails.any? %>
+    <div class='M_briks'>
+        <% @trails.each do |trail| %>
+        <%= render 'trails/trailProfile', trail: trail %>
+        <% end %>
+    </div>
+  <% end %>
 
-<% if @profiles.empty? && @fandoms.empty? && @trails.empty? %>
-  <p>Ничего не найдено.</p>
-<% end %>
+  <% if @profiles.empty? && @fandoms.empty? && @trails.empty? %>
+    <p class="A_searchNone">Ничего не найдено.</p>
+  <% end %>
+
+</body>

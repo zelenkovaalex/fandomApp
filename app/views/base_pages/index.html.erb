@@ -1,4 +1,17 @@
 <body id='welcome'>
+
+  <div class="W_introduction">
+    <div class="M_leftBlock">
+      <div class="A_decoration"></div>
+      <div class="A_mainHeading">rutas</div>
+    </div>  
+    <div class="M_rightBlock">
+      <p class="A_textIntroduction">тут маршруты, где оживают вселенные, <br>
+        и какой бы путь ты не выбрал, именно <br>
+        он приведёт тебя туда, где ты и должен быть, давай ходить-бродить вместе</p>
+    </div>
+  </div>
+
   <div class="W_loopContainer">
     <div class="W_loopContent">
       <!-- Первый набор элементов -->
@@ -16,4 +29,121 @@
       <% end %>
     </div>
   </div>
+
+  <h2 class="A_secondHeader">Популярные маршруты</h2>
+  <div class="W_topTrails">
+    <div class="M_carouselItems">
+      <% @top_trails.each do |trail| %>
+        <div class="O_trailInf">
+          <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <h2 class="A_secondHeader">тебе понравится</h2>
+  <div class="W_MarvelTrails">
+    <div class="M_smallNaming">
+      <p class="A_decorativeNaming count">(04)</p>
+      <p class="A_decorativeNaming name">маршуты питера паркера</p>
+    </div>
+    <div class="A_backgroungMarvel"></div>
+    <div class="W_marvelTrails">
+      <div class="M_carouselItems marvel">
+        <% if @marvel_trails.present? %>
+          <% @marvel_trails.each do |trail| %>
+            <div class="O_trailInf">
+              <%= render partial: "trails/trailProfile", locals: { trail: trail } %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>Маршрутов пока нет</p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="A_secondHeader">ЛЮБИМЫЕ ФАНДОМЫ</h2>
+  <div class="W_fandomsSections">
+    <div class="W_fandomCategories">
+      <% @categories.each do |cat| %>
+        <%= link_to fandoms_path(category: cat), data: { turbo_frame: "fandoms_list" }, class: "M_fandomCatName #{'active' if cat == @selected_category}" do %>
+          <span class="A_fandomCategoryName"><%= cat %></span>
+          <span class="A_fandomCategoryCounter">(<%= Fandom.where(category: cat).count %>)</span>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= turbo_frame_tag "W_fandomCatShow", data: { count: 'more-than-9' } do %>
+      <% @fandoms.each do |fandom| %>
+        <div class="W_fandomShow" data-fandom-id="<%= fandom.id %>">
+          <div class="M_fandomNameShow">
+            <div class="A_fandomName">
+              <% if user_signed_in? && current_user.admin? %>
+                <%= link_to fandom.name, fandom_path(fandom), class: "A_fandomName" %>
+              <% elsif user_signed_in? %>
+                <%= link_to fandom.name, fandom_path(fandom), class: "A_fandomName" %>
+              <% else %>
+                <%= fandom.name %>
+              <% end %>
+            </div>
+
+            <div class="A_trailCounter">
+              <span class="fandom-trail-count">( <%= fandom.trails.count %> )</span>
+            </div>
+          </div>
+          <!-- Place W_fandomTrailsShow immediately after M_fandomNameShow -->
+          <div class="W_fandomTrailsShow" data-fandom-id="<%= fandom.id %>">
+            <div class="M_trailColumns">
+              <% fandom.trails.each do |trail| %>
+                <div class="A_trailNameShow">
+                  <%= link_to trail.title, trail_path(trail) %>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <h2 class="A_secondHeader">Частые вопросы</h2>
+  <div class="W_fag">
+    <div class="M_fag">
+      <p class="A_fag number">(01)</p>
+      <p class="A_fag">можно ли проходить маршруты на компьютере или на ноутбуке?</p>
+      <p class="A_answer">если вам удобно проходить маршруты <br> с ноутбуком в руках, то в добрый путь!</p>
+    </div>
+    <div class="M_fag">
+      <p class="A_fag number">(02)</p>
+      <p class="A_fag">маршруты только пешие или есть варианты <br> на велосипеде и транспорте?</p>
+      <p class="A_answer">маршруты расчитаны на пешее прохождение, но вы можете  выбирать любой способ </p>
+    </div>
+    <div class="M_fag">
+      <p class="A_fag number">(03)</p>
+      <p class="A_fag">можно ли проходить маршруты в одиночку <br> или лучше в группе</p>
+      <p class="A_answer">можно и так, и так, но в компании всегда веселее!</p>
+    </div>
+    <div class="M_fag">
+      <p class="A_fag number">(04)</p>
+      <p class="A_fag">можно ли изменять маршрут или пропускать часть пути, если устал или не успеваешь?</p>
+      <p class="A_answer">да, маршруты можно корректировать под свои возможности, просто проходя их так, как вам удобно</p>
+    </div>
+  </div>
+
+  <div class="A_persons"></div>
+
+  <div class="W_mailer">
+    <div class="W_textTitles">
+        <h1>давай вместе ходить-бродить?</h1>
+        <p>Оставь здесь свой e-mail, и мы <br>
+          предупредим тебя о новосятх rutas</p>
+    </div>
+
+    <div id="new_subscription">
+      <%= render 'subscriptions/form' %>
+    </div>
+  </div>
+  </div>
+
 </body>

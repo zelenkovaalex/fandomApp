@@ -10,12 +10,11 @@
       <%= nav_link "создать", new_admin_trail_url %>
     </div>
 
-      <%= nav_link "rutas", root_url, class: ("active" if controller_name == "trails" && action_name == "show") %>
+    <%= nav_link "rutas", root_url, class: ("active" if controller_name == "trails" && action_name == "show") %>
 
     <div class="A_rightBlock">
-      <%= form_with url: search_path, method: :get, class: "global-search-form" do |form| %>
-        <%= form.text_field :q, placeholder: "Поиск...", value: params[:q], data: { action: "input->search#suggest" } %>
-        <%= form.submit "🔍" %>
+      <%= form_with url: search_path, method: :get, class: "A_searchInput" do |form| %>
+        <%= form.text_field :q, placeholder: "Поиск", value: params[:q], data: { action: "input->search#suggest" } %>
       <% end %>
       
       <%= turbo_frame_tag "global_search_results" %>

@@ -1,9 +1,11 @@
 <body class="newTrail" style="width: 100%;">
-  <div class="M_hello">
-    <h2>новый маршрут</h2>
-  </div>
-  <%= turbo_frame_tag "trail-form" do %>
+  <%= link_to request.referer || root_path, class: "A_return form" do %>
+    <%= image_tag("atoms/A_return.svg", alt: "Назад", class: "back-icon") %>
+    <span class="back-text">назад</span>
+  <% end %>
+
+  <%= form_with(model: @trail, url: admin_trails_path, method: :post) do |form| %>
     <%= render "form", trail: @trail %>
-    <%= render "form_points", trail: @trail %>
+    <%= render "form_points", form: form %>
   <% end %>
 </body>

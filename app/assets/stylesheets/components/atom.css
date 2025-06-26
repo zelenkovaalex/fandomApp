@@ -1,4 +1,43 @@
 /* main blockes */
+.A_searchInput {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+
+    input {
+        background-color: var(--white);
+        width: fit-content;
+        border: none;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        text-transform: lowercase;
+        display: flex;
+        align-items: center;
+        padding: 0 0.5vw;
+
+    }
+}
+
+.A_searchNone {
+    color: var(--grey);
+    font-size: 1.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 95.388%;
+    /* 1.55006rem */
+    margin: 2vw 3vw;
+}
+
+.A_toggleButton {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
 .A_title {
     font-size: 2.5rem;
@@ -134,7 +173,7 @@
     }
 
     input {
-        border: 1px solid var(--black);
+        border: none;
         background-color: var(--light-grey);
 
         font-size: 1.375rem;
@@ -286,10 +325,44 @@
 }
 
 .A_ownProfileAvatar {
-    width: 9.79vw;
-    height: 9.79vw;
-    object-fit: cover;
-    overflow: hidden;
+    img {
+        width: 9.79vw;
+        height: 9.79vw;
+        object-fit: cover;
+        overflow: hidden;
+    }
+}
+
+.A_ownTrailsCounter {
+    font-family: "Steinbeck";
+    font-size: 1.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 95.388%;
+    /* 1.55006rem */
+
+    width: 103px;
+    height: 45px;
+    background-color: var(--green);
+    padding: 0.6vw 1.7vw;
+    margin-left: 170px;
+}
+
+.A_ownTrails {
+    font-family: "Steinbeck";
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 95.388%;
+    /* 1.43081rem */
+
+    padding: 0.5vw 0.1vw;
+    width: fit-content;
+    background-color: var(--light-grey);
+    text-align: right;
+
+    display: flex;
+    justify-content: flex-end;
 }
 
 .A_nickname {
@@ -319,7 +392,7 @@
     font-weight: 400;
     line-height: 95.388%;
 
-    margin-top: 1vw;
+    margin: 1vw;
 }
 
 .A_filterTapsName {
@@ -328,6 +401,22 @@
     font-style: normal;
     font-weight: 400;
     line-height: 95.388%;
+
+    height: fit-content;
+    padding: 0.2vw;
+}
+
+.A_summery {
+    display: flex;
+    flex-direction: column;
+
+    p {
+        font-family: "Steinbeck";
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+    }
 }
 
 .A_counterOtherProfExtra.cities {
@@ -386,6 +475,21 @@
     align-items: center;
 }
 
+.A_return.form {
+    margin-left: 3vw;
+    margin-top: 2vw;
+}
+
+.A_note {
+    color: var(--grey);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    text-transform: lowercase;
+    margin-left: 3vw;
+}
+
 .A_return.people {
     position: absolute;
     top: 5.5vw;
@@ -429,6 +533,42 @@
     transform: rotate(180deg);
     /* Стрелка вверх */
 }
+
+/* form */
+
+.A_inputForm {
+    width: 16.98vw;
+    background-color: var(--white);
+    border: none;
+    border-bottom: 1px solid var(--grey);
+
+    margin-left: 1vw;
+}
+
+.A_inputForm.hours {
+    width: fit-content;
+    border-bottom: none;
+}
+
+.A_inputForm.select {
+    width: fit-content;
+}
+
+#trail_fandom_id {
+    background-color: var(--white);
+    border: none;
+    border-bottom: 1px solid var(--grey);
+
+    margin-left: 1vw;
+    width: fit-content;
+}
+
+.A_inputForm.cost {
+margin-left: 3vw;
+width: fit-content;
+border-bottom: none;
+}
+
 
 /* decorations */
 
@@ -501,6 +641,55 @@ a.A_diagonal_arrow {
 .A_heading.profiles {
     margin: 0 3vw;
 }
+
+.A_decoration {
+    width: 48.5vw;
+    height: 2.60vw;
+    background-color: var(--black);
+}
+
+.A_mainHeading {
+    font-family: "Steinbeck";
+    font-size: 18.625rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    text-transform: lowercase;
+    margin-left: 3vw;
+}
+
+.A_secondHeader {
+    font-family: "Steinbeck";
+    font-size: 2.875rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 103.233%;
+    /* 2.96794rem */
+    text-transform: lowercase;
+
+    margin: 3vw;
+}
+
+.A_backgroungMarvel {
+    background-image: url('spiderManBack.svg');
+    background-size: cover;
+
+    width: 70.68vw;
+    height: 20.52vw;
+    margin: 0 auto;
+
+    position: relative;
+    z-index: -1;
+}
+
+.A_persons{
+    background-image: url('personsJoin.svg');
+    background-size: cover;
+    width: 100%;
+    height: 29vw;
+    margin: 4vw 0;
+}
+
 
 /* fandoms */
 .A_fandomCategoryName {

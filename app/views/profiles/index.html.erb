@@ -1,9 +1,10 @@
 <body class="community" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;">
 
 <div class="W_filters">
-  <details>
-    <summary>Показать фильтры</summary>
-    <div style="display:flex; flex-direction:row;">
+  <details class="O_details">
+    <summary class="A_summery"><p>Показать фильтры</p></summary>
+    <%= link_to "Сбросить фильтр", profiles_path, data: { turbo_frame: "profiles_container" }, class: "A_binFilters" %>
+    <div style="display:flex; flex-direction:row; gap:1vw;">
       <div class="O_filterGropu">
         <div class="M_filterContent">
           <% @cities.each do |city| %>
@@ -11,16 +12,15 @@
           <% end %>
         </div>
       </div>
-    <div class="O_filterGropu">
+      <div class="O_filterGropu">
         <div id="fandoms-list" class="M_filterContent">
           <% @fandoms.each do |fandom| %>
             <%= link_to fandom, profiles_path(filter: "fandom-#{fandom}"), data: { turbo_frame: "profiles_container" }, class: "filter-link" %>
           <% end %>
-        </div>
       </div>
     </div>
+    </div>
   </details>
-  <%= link_to "Сбросить фильтр", profiles_path, data: { turbo_frame: "profiles_container" }, class: "A_binFilters" %>
 </div>
 
   <h1 class="A_heading profiles">авторы хитов</h1>

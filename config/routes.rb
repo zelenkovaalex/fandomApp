@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   get "like/toggle"
   get "/fandoms", to: "fandoms#index"
 
-  devise_for :users 
+  devise_for :users
 
   resources :profiles do
     collection do

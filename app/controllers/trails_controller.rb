@@ -103,8 +103,7 @@ class TrailsController < ApplicationController
 
   def new
     @trail = Trail.new
-    @trail.trail_points.build
-    @step = params[:step] || "main"
+    2.times { @trail.trail_points.build }
   end
 
   def create
@@ -182,7 +181,7 @@ class TrailsController < ApplicationController
       :duration_unit,
       :trail_level,
       :fandom_id,
-      trail_points_attributes: [:id, :name, :description, :image_url, :latitude, :longitude, :_destroy],
+      trail_points_attributes: [:id, :name, :description, :map_link, :image_url, :_destroy],
       gallery_attributes: [:id, images: []]
     )
   end

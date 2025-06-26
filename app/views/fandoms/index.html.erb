@@ -1,15 +1,14 @@
 <body class="fandoms" style="width: 100%;display: flex;flex-direction: column;min-height: 100vh;"> 
 
 <div class="W_hitTrails">
-
-    <h1 class="A_heading">хиты по фандомам</h1>
-
+  
+  <h1 class="A_heading" style="margin-top:1vw;">хиты по фандомам</h1>
 
   <%= turbo_frame_tag "carousel" do %>
     <div class="W_carouselControls">
-        <%= button_to "‹", fandoms_path(carousel_page: @carousel_page - 1), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-prev", disabled: @carousel_page == 0 %>
-        <%= "%02d" % (@carousel_page + 1) %> / <%= "%02d" % @total_pages %>
-        <%= button_to "›", fandoms_path(carousel_page: @carousel_page + 1), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-next", disabled: @carousel_page >= @total_pages - 1 %>
+        <%#= button_to "‹", fandoms_path(carousel_page: @carousel_page - 1), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-prev", disabled: @carousel_page == 0 %>
+        <%#= "%02d" % (@carousel_page + 1) %>  <%#= "%02d" % @total_pages %>
+        <%#= button_to "›", fandoms_path(carousel_page: @carousel_page + 1), method: :get, data: { turbo_frame: "carousel" }, class: "carousel-next", disabled: @carousel_page >= @total_pages - 1 %>
     </div>
     <div class="W_carouselItems">
       <% @carousel_trails.each do |trail| %>

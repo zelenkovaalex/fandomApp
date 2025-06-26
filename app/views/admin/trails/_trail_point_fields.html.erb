@@ -1,0 +1,20 @@
+<div class="point-card">
+  <span class="point-number">(0<%= f.index + 1 %>)</span>
+
+  <div class="point-photo-upload">
+    <p>★ фото точки</p>
+    <%= f.file_field :image_url %>
+  </div>
+
+  <div class="point-fields">
+    <p>★ название точки</p>
+    <%= f.text_field :name, maxlength: 56, placeholder: "название точки" %>
+
+    <p>★ описание точки</p>
+    <%= f.text_area :description, maxlength: 100, placeholder: "описание точки" %>
+
+    <p>★ ссылка на локацию точки</p>
+    <%= f.url_field :map_link, placeholder: "ссылка на локацию точки" %>
+  </div>
+  <button type="button" class="remove-trail-point">Удалить точку</button>
+</div>

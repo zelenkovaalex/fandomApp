@@ -12,19 +12,18 @@
   <% end %>
 
   <div class="A_commentInput">
-    <p>комментарий</p>
+    <div class="A_ratingInput">
+      <p>оценка</p>
+      <div class="rating-stars">
+        <% (1..5).each do |star| %>
+          <%= form.radio_button :rating_value, star, id: "comment_rating_#{star}", class: "star" %>
+          <label for="comment_rating_<%= star %>">★</label>
+        <% end %>
+      </div>
+    </div>
     <%= form.text_area :body %>
   </div>
 
-  <div class="A_ratingInput">
-    <p>оценка</p>
-    <div class="rating-stars">
-      <% (1..5).each do |star| %>
-        <%= form.radio_button :rating_value, star, id: "comment_rating_#{star}", class: "star" %>
-        <label for="comment_rating_<%= star %>">★</label>
-      <% end %>
-    </div>
-  </div>
 
   <% if defined? parent_comment_id %>
     <%= form.hidden_field :comment_id, value: parent_comment_id %>

@@ -1,7 +1,8 @@
 <body class='show' style="width: 100%;">
   <p style="color: green"><%= notice %></p>
 
-  <div class='O_infoTrail'>
+  <div style="display:flex; flex-direction: row;">
+    <div class='O_infoTrail'>
     <% if @trail %>
         <%= link_to request.referer || root_path, class: "A_return" do %>
           <%= image_tag("atoms/A_return.svg", alt: "Назад", class: "back-icon") %>
@@ -81,14 +82,6 @@
 
   <% if @trail.trail_points.any? %>
     <div class="W_photoPreviewTrail">
-      <!-- Точки-переключатели -->
-      <div class="M_galleryIndicators">
-        <% @trail.trail_points.each_with_index do |point, index| %>
-          <span class="indicator <%= 'active' if index == 0 %>" data-index="<%= index %>"></span>
-        <% end %>
-      </div>
-
-      <!-- Прокручиваемая галерея -->
       <div class="M_previewPointPhotoTurbo" id="galleryCarousel">
         <% @trail.trail_points.each_with_index do |point, index| %>
           <div class="M_previewPointPhoto" data-index="<%= index %>">
@@ -100,6 +93,7 @@
   <% else %>
     <p>Нет фотографий</p>
   <% end %>
+  </div>
 
   <div class="W_photoPreviewTrail" data-turbo-frame="image-grid" style="display:none;">
     <% if @trail.trail_points.any? %>

@@ -1,3 +1,7 @@
+<div class="O_nameAndCounter">
+    <p class="A_ownTrailsCounter"><%#= @profile.user.purchase.count %></p>
+    <p class="A_ownTrails">купленные</p>
+</div>
 <div class="W_favourites">
   <% if @profile.user.purchased_trails.any? %>
     <% @profile.user.purchased_trails.each do |trail| %>

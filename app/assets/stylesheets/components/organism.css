@@ -88,39 +88,19 @@
 
     #comment_body {
         outline: none;
-        border-bottom: 1px solid var(--black);
+        border-bottom: 1px solid var(--light-grey);
     }
 
     p {
         width: 50%;
         font-size: 22px;
         font-weight: 400;
-        margin: 2vw 0 0.5vw 0;
     }
 
-}
-
-.O_replyComment {
-
-    display: flex;
-    justify-content: flex-end;
-    width: 50%;
-
-    h2 {
-        padding: 0 0 1vw 0;
-    }
-
-    #comment_body {
-        width: 50%;
-        outline: none;
-        border-bottom: 1px solid var(--black);
-    }
-
-    p {
-        width: 50%;
-        font-size: 22px;
-        font-weight: 400;
-        margin: 2vw 0 0.5vw 0;
+    .A_ratingInput {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
 }
@@ -172,6 +152,53 @@ a.back {
         font-style: normal;
         font-weight: 400;
         line-height: 103.233%;
+    }
+}
+
+.O_nameAndCounter {
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 56.8vw;
+    position: absolute;
+    margin-top: -3.9vw;
+}
+
+.O_details {
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.O_comment {
+    padding: 3vw;
+    width: 44.48vw;
+    height: 11.98vw;
+    border-bottom: 2px solid var(--light-grey);
+
+    .O_commentTurbo {
+        display: flex;
+        flex-direction: column;
+        gap: 4vw;
+    }
+
+    p {
+        font-size: 1.125rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        /* 1.16138rem */
+        text-transform: lowercase;
+    }
+
+    h3 {
+        font-family: "Steinbeck";
+        font-size: 1.625rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 103.233%;
+        /* 1.67756rem */
+        text-transform: lowercase;
     }
 }
 

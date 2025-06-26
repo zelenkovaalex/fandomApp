@@ -3,12 +3,11 @@
     <% if @query.present? %>
       <h3>Результаты поиска для: <%= @query %></h3>
       <% if @trails.any? %>
-        <h4>Маршруты</h4>
-        <ul>
-          <% @trails.each do |trail| %>
-            <li><%= link_to trail.title, trail_path(trail) %></li>
-          <% end %>
-        </ul>
+          <div class='M_briks'>
+              <% @trails.each do |trail| %>
+              <%= render 'trails/trailProfile', trail: trail %>
+              <% end %>
+          </div>
       <% end %>
       <% if @profiles.any? %>
         <h4>Профили</h4>

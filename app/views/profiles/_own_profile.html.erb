@@ -27,9 +27,8 @@
         </div>
         </div>
 
-        <div class="M_profileTags">
+        <div class="M_profileTags own">
           <p><%= @profile.city %></p>
-          <p>
             <% fandom_names = profile.fandom_names %>
             <% if fandom_names.present? %>
               <% if fandom_names.is_a?(String) %>
@@ -44,14 +43,13 @@
                 <%= fandom_names.map { |name|
                       fandom = Fandom.find_by(name: name)
                       fandom ? link_to(fandom.name, fandom_path(fandom)) : name
-                    }.join(', ').html_safe %>
+                    }.join('').html_safe %>
               <% else %>
                 Нет фандомов
               <% end %>
             <% else %>
               Нет фандомов
             <% end %>
-          </p>
         </div>
       </div>
     </div>
@@ -70,11 +68,6 @@
       <div class="M_filterTapsProfile">
         <%= link_to "избранное", profile_path(@profile, tab: "favourites"), data: { turbo_frame: "A_filterTapsName" }, class: "A_filterTapsName" %>
         <p class="A_filterTapsCount"><%= @profile.user.favourite_trails.count %></p>
-      </div>
-
-      <div class="M_filterTapsProfile">
-        <%= link_to "купленные", profile_path(@profile, tab: "bought"), data: { turbo_frame: "A_filterTapsName" }, class: "A_filterTapsName" %>
-        <p class="A_filterTapsCount"><%#= @profile.user.purchase.count %></p>
       </div>
     </div>
   </div>

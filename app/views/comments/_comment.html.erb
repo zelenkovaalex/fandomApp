@@ -1,24 +1,26 @@
-<div class="M_comment <%= 'reply' if comment.comment_id != nil %>" id="<%= dom_id comment %>">
-  <%= turbo_frame_tag dom_id(comment) do %>
-    <h3>
-      <% if comment.user.present? && comment.user.profile.present? %>
-        <%= comment.user.profile.nickname %>
-      <% else %>
-        User Deleted
-      <% end %>
-    </h3>
-
-    <div class="rating-stars">
-      <% if comment.rating_value.present? %>
-        <% (1..5).each do |star| %>
-          <span class="star <%= 'filled' if star <= comment.rating_value %>">★</span>
+<div class="O_comment <%= 'reply' if comment.comment_id != nil %>" id="<%= dom_id comment %>">
+  <%= turbo_frame_tag dom_id(comment), class:"O_commentTurbo" do %>
+    <div class="M_commentName">
+      <h3 class="A_commentName">
+        <% if comment.user.present? && comment.user.profile.present? %>
+          <%= comment.user.profile.nickname %>
+        <% else %>
+          User Deleted
         <% end %>
-      <% else %>
-        <span>No rating</span>
-      <% end %>
+      </h3>
+
+      <div class="A_commentStars">
+        <% if comment.rating_value.present? %>
+          <% (1..5).each do |star| %>
+            <span class="star <%= 'filled' if star <= comment.rating_value %>">★</span>
+          <% end %>
+        <% else %>
+          <span>No rating</span>
+        <% end %>
+      </div>
     </div>
 
-    <p>
+    <p class="A_commentBody">
       <%= comment.body %>
     </p>
   <% end %>

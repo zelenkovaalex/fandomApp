@@ -46,11 +46,14 @@ body {
         .A_leftBlock {
             display: flex;
             gap: 3.39vw;
+            width: 43.65vw;
         }
 
         .A_rightBlock {
             display: flex;
             gap: 3.39vw;
+            width: 43.65vw;
+            justify-content: end;
         }
     }
 
@@ -79,7 +82,10 @@ body {
     }
 
     .O_trailPoints.active {
-        display: block;
+        display: flex;
+        flex-direction: column;
+        align-content: center;
+        align-items: center;
     }
 
     /*  */
